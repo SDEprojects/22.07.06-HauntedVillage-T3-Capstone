@@ -6,19 +6,27 @@ public class Menu {
 
 
     public static void startNewGame() {
-        System.out.println("Would you like to start a new game, type start to start a new game. ");
+        String playerChoice;
+        System.out.println("Would you like to start a new game? start | no ");
         boolean condition = false;
         while (!condition) {
             Scanner scanner = new Scanner(System.in);
-            String playerChoice = scanner.nextLine().trim().toLowerCase();
+            playerChoice = scanner.nextLine().trim().toLowerCase();
             if (playerChoice.equals("start")) {
                 condition = true;
+//                Controller.playGame();
                 Sound.runMusic();
+            } else if (playerChoice.equals("no")) {
+                System.out.println("Thank you for playing");
+                System.exit(0);
+            } else {
+                System.out.println("Please enter 'yes' to continue or 'no' to quit the game.");
+                startNewGame();
             }
         }
     }
 
-    public static void help(){
+    public static void help() {
         System.out.println("----------------------- Help Menu -----------------------\n");
         System.out.println("                                     enter (back) to exit\n\n");
 
@@ -42,5 +50,4 @@ public class Menu {
         System.out.println("Thanks for playing");
         System.exit(0);
     }
-
 }

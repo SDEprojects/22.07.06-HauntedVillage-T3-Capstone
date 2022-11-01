@@ -17,13 +17,10 @@ public class Controller {
     }
 
     // BUSINESS METHODS
-    public void playGame() {
+    public static void playGame() {
         Engine engine = new Engine();
 
         engine.execute();
 
     }
-
-
-
 }
