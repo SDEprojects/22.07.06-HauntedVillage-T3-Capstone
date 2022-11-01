@@ -113,7 +113,11 @@ public class Sound {
     }
 
     public static void runMusic(){
+
         File file = new File("resources/music.wav");
+
+        Console.clear();
+
         try {
             Scanner scanner = new Scanner(System.in);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
@@ -181,7 +185,7 @@ public class Sound {
                     default:
                         System.out.println("not a valid response");
                 }
-                Console.pause(1000);
+                Console.clear();
             }
         } catch (UnsupportedAudioFileException e) {
             System.out.println("runMusic() UnsupportedAudioFileException");
