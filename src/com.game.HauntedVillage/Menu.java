@@ -47,7 +47,14 @@ public class Menu {
     }
 
     public static void quit() {
-        System.out.println("Thanks for playing");
-        System.exit(0);
+        String quit;
+
+        System.out.println("Are you sure you want to 'quit'? yes| no");
+        Scanner scanner = new Scanner(System.in);
+        quit = scanner.nextLine().trim().toLowerCase();
+        if (quit.equals("yes")) {
+            System.out.println("Thank you for playing");
+            System.exit(0);
+        }
     }
 }
