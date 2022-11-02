@@ -84,7 +84,7 @@ class Engine {
             }
 
             //search command, player looks for items
-            if ("search".equals(getVerbNoun().get(0))) {
+            else if ("search".equals(getVerbNoun().get(0))) {
                 //found items retrieves locations item list
                 ArrayList<String> items = foundItems(player.getLocation(), player.getInventory());
                 if (items.size() > 0) {
@@ -99,25 +99,26 @@ class Engine {
                         }
                     }
                 }
-                if("Well".equals(player.getLocation())){
-                    System.out.println("There is a triangular indentation in the stone.");
-                    if(player.getInventory().contains("amulet")){
-                        setWellActivation(true);
-                        System.out.println("You insert the triangular amulet. The ground rumbles and a grown comes from within the well.");
-                    }
-                    else {
-                        System.out.println("Something must fit here.");
-                    }
-                    Console.pause(8000);
+            }
+            else if ("Well".equals(player.getLocation())) {
+                System.out.println("There is a triangular indentation in the stone.");
+                if (player.getInventory().contains("amulet")) {
+                    setWellActivation(true);
+                    System.out.println("You insert the triangular amulet. The ground rumbles and a grown comes from within the well.");
+                } else {
+                    System.out.println("Something must fit here.");
                 }
+                Console.pause(8000);
             }
 
             //speak command, player speaks to NPCs
-            if ("speak".equals(getVerbNoun().get(0))) {
+            else if ("speak".equals(getVerbNoun().get(0))) {
                 String character = getVerbNoun().get(1);
                 if (NPC.npcLocation(player.getLocation(), character)) {
                     System.out.println(NPC.npcConversation(character));
                     Console.pause(10000);
+                } else {
+                    System.out.println("That is not a valid input");
                 }
             }
 
@@ -131,14 +132,13 @@ class Engine {
 
 
             // use command, used to interact with static location items (ex. well)
-            if ("use".equals(getVerbNoun().get(0))) {
+            else if ("use".equals(getVerbNoun().get(0))) {
                 String interactionItem = getVerbNoun().get(1);
                 if (Item.checkStationaryItemLocation(player.getLocation(), interactionItem)) {
-                    if(amuletWellCondition(interactionItem)){
+                    if (amuletWellCondition(interactionItem)) {
                         System.out.println("You retrieve a dark blue stone");
                         player.addInventory("stone");
-                    }
-                    else {
+                    } else {
 
                         ArrayList<ArrayList<String>> result;
                         result = Item.stationaryItems(interactionItem);
@@ -158,31 +158,30 @@ class Engine {
             }
 
             //use drop command, player can drop inventory.
-            if ("drop".equals(getVerbNoun().get(0))) {
+            else if ("drop".equals(getVerbNoun().get(0))) {
                 String interactionItem = getVerbNoun().get(1);
                 if (player.getInventory().contains(interactionItem)) {
                     player.removeItem(interactionItem);
-                }else{
+                } else {
                     System.out.println(interactionItem + " is not in your inventory. ");
                     Console.pause(3000);
                 }
             }
 
             //fight command.
-            if ("fight".equals(getVerbNoun().get(0))) {
+            else if ("fight".equals(getVerbNoun().get(0))) {
                 String weapon = getVerbNoun().get(1);
                 if (player.getInventory().contains(weapon)) {
-                   if ("Woods".equals(player.getLocation())){
-                       if ("stone".equals(weapon)){
-                           finalBattle();
-                       }
-                       else{
-                           //NPC.demonDamage();
-                           System.out.println("This weapon isn’t doing anything");
-                           Console.pause(3000);
-                       }
-                   }
-                }else{
+                    if ("Woods".equals(player.getLocation())) {
+                        if ("stone".equals(weapon)) {
+                            finalBattle();
+                        } else {
+                            //NPC.demonDamage();
+                            System.out.println("This weapon isn’t doing anything");
+                            Console.pause(3000);
+                        }
+                    }
+                } else {
                     System.out.println(weapon + " is not in your inventory. ");
                     Console.pause(3000);
                 }
@@ -196,8 +195,8 @@ class Engine {
             if (Player.end() == true) {
                 endGame = true;
             }
-            }
         }
+    }
 
     private void finalBattle() {
         Art.showArt("demon");
