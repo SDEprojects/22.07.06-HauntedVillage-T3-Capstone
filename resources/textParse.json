@@ -18,9 +18,9 @@
     "fight",
     "attack",
     "map",
-    "feed",
     "drop",
-    "light"
+    "light",
+    "say"
   ],
   "noun": [
     "north",

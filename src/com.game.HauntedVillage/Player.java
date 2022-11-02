@@ -113,6 +113,9 @@ public class Player implements Serializable {
                         if (locationNode.equals(node)) {
                             System.out.println("Location: " + node.asText());
                         }
+                        if(itemsNode.equals(node)){
+                            System.out.println("Available items: " + itemsNode);
+                        }
 
                         //direction
                         if (directionsNode.equals(node)) {
