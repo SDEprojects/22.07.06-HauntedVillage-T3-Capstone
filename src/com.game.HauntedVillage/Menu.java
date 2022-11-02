@@ -20,7 +20,7 @@ public class Menu {
                 System.out.println("Thank you for playing");
                 System.exit(0);
             } else {
-                System.out.println("Please enter 'yes' to continue or 'no' to quit the game.");
+                System.out.println("Please enter 'start' to start the game  or 'no' to quit the game.");
                 startNewGame();
             }
         }
