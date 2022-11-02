@@ -104,7 +104,7 @@ class Engine {
                 System.out.println("There is a triangular indentation in the stone.");
                 if (player.getInventory().contains("amulet")) {
                     setWellActivation(true);
-                    System.out.println("You insert the triangular amulet. The ground rumbles and a grown comes from within the well.");
+                    System.out.println("You insert the triangular amulet. The ground rumbles and a groan comes from within the well.");
                 } else {
                     System.out.println("Something must fit here.");
                 }
