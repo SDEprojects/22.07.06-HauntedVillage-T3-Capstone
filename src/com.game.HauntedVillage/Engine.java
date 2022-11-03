@@ -163,7 +163,8 @@ public class Engine {
                 String interactionItem = getVerbNoun().get(1);
                 if (player.getInventory().contains(interactionItem)) {
                     player.removeItem(interactionItem);
-                }else{
+                }
+                else{
                     System.out.println(interactionItem + " is not in your inventory. ");
                 }
             }
@@ -182,7 +183,8 @@ public class Engine {
                            System.out.println("This weapon isn’t doing anything");
                        }
                    }
-                }else{
+                }
+                else{
                     System.out.println(weapon + " is not in your inventory. ");
                     Console.pause(3000);
                 }

@@ -20,7 +20,7 @@ public class Menu {
                 System.out.println("Thank you for playing");
                 System.exit(0);
             } else {
-                System.out.println("Please enter 'yes' to continue or 'no' to quit the game.");
+                System.out.println("Please enter 'start' to start the game  or 'no' to quit the game.");
                 startNewGame();
             }
         }
@@ -47,7 +47,14 @@ public class Menu {
     }
 
     public static void quit() {
-        System.out.println("Thanks for playing");
-        System.exit(0);
+        String quit;
+
+        System.out.println("Are you sure you want to 'quit'? yes| no");
+        Scanner scanner = new Scanner(System.in);
+        quit = scanner.nextLine().trim().toLowerCase();
+        if (quit.equals("yes")) {
+            System.out.println("Thank you for playing");
+            System.exit(0);
+        }
     }
 }

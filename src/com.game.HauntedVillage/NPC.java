@@ -36,7 +36,7 @@ public class NPC {
                 }
             }
             //Generate random int value from 0 to 2
-            int num = (int)(Math.random()*(3));
+            int num = (int)(Math.random()*(0));
             //random conversation
             result = convoList.get(num);
 

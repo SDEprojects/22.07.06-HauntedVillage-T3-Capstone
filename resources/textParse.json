@@ -19,7 +19,8 @@
     "attack",
     "map",
     "drop",
-    "light"
+    "light",
+    "say"
   ],
   "noun": [
     "north",

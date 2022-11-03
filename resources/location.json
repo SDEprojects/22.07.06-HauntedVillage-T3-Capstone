@@ -75,8 +75,8 @@
     "Town hall": {
       "name": "Town hall",
       "description": "You find yourself in the town hall, cool wind in the hair. It is quiet and dark.  \nWind blows through broken windows and makes squeaky noises. \nAn old clerk holding a candle in the hand walks slowly out of the shadow. \nYou come forward and talk with the clerk. The clerk tells you the recent abnormality. \nCrows from the woods hide in the town hall day and night, staying away from their home, \nthe woods in the north. Obviously, there is something unspeakable in the woods. \nThe old clerk offers you a gift. \n\nTake the gift or go west.",
-      "actions": ["take", "go", "search"],
-      "items": ["gift"],
+      "actions": ["take", "search", "go"],
+      "items": [],
       "directions": {
         "north": "Tavern",
         "west": "Southern Square"
