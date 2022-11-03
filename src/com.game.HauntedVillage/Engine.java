@@ -13,10 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
@@ -87,7 +84,7 @@ class Engine {
             }
 
             //search command, player looks for items
-            if ("search".equals(getVerbNoun().get(0))) {
+            else if ("search".equals(getVerbNoun().get(0))) {
                 //found items retrieves locations item list
                 ArrayList<String> items = foundItems(player.getLocation(), player.getInventory());
                 if (items.size() > 0) {
@@ -102,25 +99,26 @@ class Engine {
                         }
                     }
                 }
-                if("Well".equals(player.getLocation())){
-                    System.out.println("There is a triangular indentation in the stone.");
-                    if(player.getInventory().contains("amulet")){
-                        setWellActivation(true);
-                        System.out.println("You insert the triangular amulet. The ground rumbles and a grown comes from within the well.");
-                    }
-                    else {
-                        System.out.println("Something must fit here.");
-                    }
-                    Console.pause(8000);
+            }
+            else if ("Well".equals(player.getLocation())) {
+                System.out.println("There is a triangular indentation in the stone.");
+                if (player.getInventory().contains("amulet")) {
+                    setWellActivation(true);
+                    System.out.println("You insert the triangular amulet. The ground rumbles and a groan comes from within the well.");
+                } else {
+                    System.out.println("Something must fit here.");
                 }
+                Console.pause(8000);
             }
 
             //speak command, player speaks to NPCs
-            if ("speak".equals(getVerbNoun().get(0))) {
+            else if ("speak".equals(getVerbNoun().get(0))) {
                 String character = getVerbNoun().get(1);
                 if (NPC.npcLocation(player.getLocation(), character)) {
                     System.out.println(NPC.npcConversation(character));
                     Console.pause(10000);
+                } else {
+                    System.out.println("That is not a valid input");
                 }
             }
 
@@ -134,14 +132,13 @@ class Engine {
 
 
             // use command, used to interact with static location items (ex. well)
-            if ("use".equals(getVerbNoun().get(0))) {
+            else if ("use".equals(getVerbNoun().get(0))) {
                 String interactionItem = getVerbNoun().get(1);
                 if (Item.checkStationaryItemLocation(player.getLocation(), interactionItem)) {
-                    if(amuletWellCondition(interactionItem)){
+                    if (amuletWellCondition(interactionItem)) {
                         System.out.println("You retrieve a dark blue stone");
                         player.addInventory("stone");
-                    }
-                    else {
+                    } else {
 
                         ArrayList<ArrayList<String>> result;
                         result = Item.stationaryItems(interactionItem);
@@ -161,31 +158,30 @@ class Engine {
             }
 
             //use drop command, player can drop inventory.
-            if ("drop".equals(getVerbNoun().get(0))) {
+            else if ("drop".equals(getVerbNoun().get(0))) {
                 String interactionItem = getVerbNoun().get(1);
                 if (player.getInventory().contains(interactionItem)) {
                     player.removeItem(interactionItem);
-                }else{
+                } else {
                     System.out.println(interactionItem + " is not in your inventory. ");
                     Console.pause(3000);
                 }
             }
 
             //fight command.
-            if ("fight".equals(getVerbNoun().get(0))) {
+            else if ("fight".equals(getVerbNoun().get(0))) {
                 String weapon = getVerbNoun().get(1);
                 if (player.getInventory().contains(weapon)) {
-                   if ("Woods".equals(player.getLocation())){
-                       if ("stone".equals(weapon)){
-                           finalBattle();
-                       }
-                       else{
-                           //NPC.demonDamage();
-                           System.out.println("This weapon isn’t doing anything");
-                           Console.pause(3000);
-                       }
-                   }
-                }else{
+                    if ("Woods".equals(player.getLocation())) {
+                        if ("stone".equals(weapon)) {
+                            finalBattle();
+                        } else {
+                            //NPC.demonDamage();
+                            System.out.println("This weapon isn’t doing anything");
+                            Console.pause(3000);
+                        }
+                    }
+                } else {
                     System.out.println(weapon + " is not in your inventory. ");
                     Console.pause(3000);
                 }
@@ -234,7 +230,7 @@ class Engine {
         ArrayList<String> itemsList = new ArrayList<>(0);
 
         try {
-            JsonNode rootArray = mapper.readTree(new File("22.07.06-HauntedVillage/resources/location.json"));
+            JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
 
             for (JsonNode root : rootArray) {
                 // Get Name
@@ -265,7 +261,7 @@ class Engine {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            JsonNode rootArray = mapper.readTree(new File("22.07.06-HauntedVillage/resources/location.json"));
+            JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
             //Always-allowed actions are hard coded
             ArrayList<String> actionsList = new ArrayList<>(List.of("help", "quit", "look", "restore", "save","drop", "map"));
             for (JsonNode root : rootArray) {
@@ -312,7 +308,7 @@ class Engine {
                 if (actionChecker(location, result.get(0))) {
                     validInput = true;
                     //sends to event handler if a global command
-                    EventHandler.eventHandler(userInput);
+                    EventHandler.eventHandler(userInput, location);
                     setVerbNoun(result);
                 } else {
                     System.out.println("Invalid Input: Enter as Prompted (verb and noun)");
@@ -325,7 +321,7 @@ class Engine {
     private void presentInfo() {
         Art.showArt("house");
         try (JsonParser jParser = new JsonFactory()
-                .createParser(new File("22.07.06-HauntedVillage/resources/info.json"))) {
+                .createParser(new File("resources/info.json"))) {
 
             // loop until token equal to "}"
             while (jParser.nextToken() != JsonToken.END_OBJECT) {
@@ -338,7 +334,7 @@ class Engine {
                 }
             }
 
-            Console.pause(13000);
+//            Console.pause(13000);
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
@@ -355,12 +351,12 @@ class Engine {
             ObjectMapper mapper = new ObjectMapper();
 
             // convert array to list of items
-            List<Splash> splash = List.of(mapper.readValue(Paths.get("22.07.06-HauntedVillage/resources/splash.json").toFile(), Splash.class));
+            List<Splash> splash = List.of(mapper.readValue(Paths.get("resources/splash.json").toFile(), Splash.class));
 
             // print
             System.out.println(splash.get(0).getTitle());
 
-            Console.pause(3000);
+//            Console.pause(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }

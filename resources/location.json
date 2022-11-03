@@ -15,7 +15,7 @@
     "Center Courtyard": {
       "name": "Center Courtyard",
       "description": "You are in the center courtyard. You see some of the villagers gathering there. They all look very concerned.  \nTo the West is your house. To the north is the Northern Square. To the South is further outside. To the East is the tavern. \n\nYou may speak to the villagers or go in a direction.",
-      "actions": ["speak", "go"],
+      "actions": ["speak", "go", "search"],
       "items": [],
       "directions": {
         "north": "Northern Square",
@@ -58,7 +58,7 @@
     "Farm": {
       "name": "Farm",
       "description": "You find yourself in the farm. You see cows are lying on the floor, bleeding. \nA werewolf is tearing a cow apart, drinking its blood, eating its flesh. \nA scarecrow’s head is twisted and hand points to the north. \n\nFight the werewolf, wake farmer, or go back north.",
-      "actions": ["go", "take", "fight", "wake"],
+      "actions": ["go", "take", "fight", "wake", "search"],
       "items": ["shovel", "musket"],
       "directions": {
         "north": "Southern Square"
@@ -70,8 +70,8 @@
     "Town hall": {
       "name": "Town hall",
       "description": "You find yourself in the town hall, cool wind in the hair. It is quiet and dark.  \nWind blows through broken windows and makes squeaky noises. \nAn old clerk holding a candle in the hand walks slowly out of the shadow. \nYou come forward and talk with the clerk. The clerk tells you the recent abnormality. \nCrows from the woods hide in the town hall day and night, staying away from their home, \nthe woods in the north. Obviously, there is something unspeakable in the woods. \nThe old clerk offers you a gift. \n\nTake the gift or go west.",
-      "actions": ["take", "go"],
-      "items": ["gift"],
+      "actions": ["take", "search", "go"],
+      "items": [],
       "directions": {
         "north": "Tavern",
         "west": "Southern Square"
@@ -83,8 +83,8 @@
     "Tavern": {
       "name": "Tavern",
       "description": "There are broken chairs on the floor and the tavern is empty except for the bar keep. \nSorry but we have no Ale or food. Nothing left here but some animal feed.  \n\n",
-      "actions": ["take", "go"],
-      "items": ["feed"],
+      "actions": ["take", "go", "search"],
+      "items": [],
       "directions": {
         "west": "Center Courtyard"
       }
@@ -95,8 +95,8 @@
     "Church": {
       "name": "Church",
       "description": "You hear a cat >>MEOW<< from behind a pew, but don’t get startled. \nIt is a bit dark for an early afternoon visit, but you remember seeing clouds up above, possibly signaling some rain later that evening. \n\nHere you can speak to the pastor, say a prayer, light a candle, or go west to leave.",
-      "actions": ["speak", "say", "light", "go"],
-      "items": ["corn", "note"],
+      "actions": ["speak", "say", "light", "go", "take", "search"],
+      "items": [],
       "directions": {
         "west": "Northern Square"
       }
