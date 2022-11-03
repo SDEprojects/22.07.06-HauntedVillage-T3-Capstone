@@ -1,13 +1,10 @@
 package com.game.HauntedVillage;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,9 +39,9 @@ public class TextParser {
                 // loop until token equal to "}"
                 while (jParser.nextToken() != JsonToken.END_OBJECT) {
 
-                    String fieldname = jParser.getCurrentName();
+                    String fieldName = jParser.getCurrentName();
 
-                    if ("verb".equals(fieldname)) {
+                    if ("verb".equals(fieldName)) {
 
                         if (jParser.nextToken() == JsonToken.START_ARRAY) {
                             // messages is array, loop until token equal to "]"
@@ -64,7 +61,7 @@ public class TextParser {
                         }
                     }
 
-                    if ("noun".equals(fieldname)) {
+                    if ("noun".equals(fieldName)) {
 
                         if (jParser.nextToken() == JsonToken.START_ARRAY) {
                             // messages is array, loop until token equal to "]"
@@ -86,8 +83,6 @@ public class TextParser {
 
                 }
 
-            } catch (JsonGenerationException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

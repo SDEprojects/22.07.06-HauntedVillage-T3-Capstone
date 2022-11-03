@@ -72,7 +72,7 @@
     {
       "name": "pastor",
       "location": "Church",
-      "conversations": ["The pastor turns to you but he’s not who he seems. \nHe’s covered in blood with two fangs sneaking from his grin. \n“I think you have too many sins,“ he cries! as has lunges at you."],
+      "conversations": ["The pastor turns to you but he’s not who he seems. \nHe’s covered in blood with two fangs sneaking from his grin. \n“I think you have too many sins,“ he cries! as he lunges at you."],
       "actions": []
     }
   },

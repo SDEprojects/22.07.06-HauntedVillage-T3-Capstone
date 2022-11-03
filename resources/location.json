@@ -8,21 +8,23 @@
       "items": ["matches", "crucifix", "knife"],
       "directions": {
         "east": "Center Courtyard"
-      }
+      },
+      "characters": []
     }
   },
   {
     "Center Courtyard": {
       "name": "Center Courtyard",
       "description": "You are in the center courtyard. You see some of the villagers gathering there. They all look very concerned.  \nTo the West is your house. To the north is the Northern Square. To the South is further outside. To the East is the tavern. \n\nYou may speak to the villagers or go in a direction.",
-      "actions": ["speak", "go"],
+      "actions": ["speak", "go", "search"],
       "items": [],
       "directions": {
         "north": "Northern Square",
         "east": "Tavern",
         "south": "Southern Square",
         "west": "Home"
-      }
+      },
+      "characters": ["villagers"]
     }
   },
 
@@ -36,7 +38,8 @@
         "north": "Well",
         "east": "Church",
         "south": "Center Courtyard"
-      }
+      },
+      "characters": []
     }
   },
 
@@ -44,13 +47,14 @@
     "Southern Square": {
       "name": "Southern Square",
       "description": "You are in the south square.   \nTo the East is the town hall. To the north is the center courtyard.  \nTo the South is your neighbor's farm. \n\n Go on to the direction you'd like.",
-      "actions": ["go"],
+      "actions": ["go", "search"],
       "items": [],
       "directions": {
         "north": "Center Courtyard",
         "east": "Town hall",
         "south": "Farm"
-      }
+      },
+      "characters": []
     }
   },
 
@@ -58,11 +62,12 @@
     "Farm": {
       "name": "Farm",
       "description": "You find yourself in the farm. You see cows are lying on the floor, bleeding. \nA werewolf is tearing a cow apart, drinking its blood, eating its flesh. \nA scarecrow’s head is twisted and hand points to the north. \n\nFight the werewolf, wake farmer, or go back north.",
-      "actions": ["go", "take", "fight", "wake"],
+      "actions": ["go", "take", "fight", "wake", "search"],
       "items": ["shovel", "musket"],
       "directions": {
         "north": "Southern Square"
-      }
+      },
+      "characters": ["werewolf", "farmer"]
     }
   },
 
@@ -70,12 +75,13 @@
     "Town hall": {
       "name": "Town hall",
       "description": "You find yourself in the town hall, cool wind in the hair. It is quiet and dark.  \nWind blows through broken windows and makes squeaky noises. \nAn old clerk holding a candle in the hand walks slowly out of the shadow. \nYou come forward and talk with the clerk. The clerk tells you the recent abnormality. \nCrows from the woods hide in the town hall day and night, staying away from their home, \nthe woods in the north. Obviously, there is something unspeakable in the woods. \nThe old clerk offers you a gift. \n\nTake the gift or go west.",
-      "actions": ["take", "go"],
+      "actions": ["take", "go", "search"],
       "items": ["gift"],
       "directions": {
         "north": "Tavern",
         "west": "Southern Square"
-      }
+      },
+      "characters": ["clerk"]
     }
   },
 
@@ -83,11 +89,12 @@
     "Tavern": {
       "name": "Tavern",
       "description": "There are broken chairs on the floor and the tavern is empty except for the bar keep. \nSorry but we have no Ale or food. Nothing left here but some animal feed.  \n\n",
-      "actions": ["take", "go"],
+      "actions": ["take", "go", "search"],
       "items": ["feed"],
       "directions": {
         "west": "Center Courtyard"
-      }
+      },
+      "characters": ["keep"]
     }
   },
 
@@ -95,11 +102,12 @@
     "Church": {
       "name": "Church",
       "description": "You hear a cat >>MEOW<< from behind a pew, but don’t get startled. \nIt is a bit dark for an early afternoon visit, but you remember seeing clouds up above, possibly signaling some rain later that evening. \n\nHere you can speak to the pastor, say a prayer, light a candle, or go west to leave.",
-      "actions": ["speak", "say", "light", "go"],
+      "actions": ["speak", "say", "light", "go", "search"],
       "items": ["corn", "note"],
       "directions": {
         "west": "Northern Square"
-      }
+      },
+      "characters": ["pastor"]
     }
   },
 
@@ -112,7 +120,8 @@
       "directions": {
         "north": "Woods",
         "south": "Northern Square"
-      }
+      },
+      "characters": ["children"]
     }
   },
 
@@ -120,11 +129,12 @@
     "Woods": {
       "name": "Woods",
       "description": "There is hardly any light in this place, only the pale-yellow glow of the moon. \nSnickers can be heard as the wind blows hard. You make out a familiar black cat in a clearing ahead...  \n\nAs you approach, black smoke consumes the cat, transforms, and rises into a large dark beast, eyes burning red. \nI have been watching you, but you can’t stop me now, he roars! \nThe beast raises his arms and a flaming vortex bursts from the ground as he murmurs an incantation. \n\nYou can fight with something from your inventory or you can go back south to the well.",
-      "actions": ["fight", "go"],
+      "actions": ["fight", "go", "search"],
       "items": [],
       "directions": {
         "south": "Well"
-      }
+      },
+      "characters": []
     }
   }
 ]
