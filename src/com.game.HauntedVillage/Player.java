@@ -2,18 +2,20 @@ package com.game.HauntedVillage;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
-
+import java.util.List;
 
 public class Player implements Serializable {
     private String location = "Home";
     private ArrayList<String> inventory = new ArrayList<>(0);
+    private ArrayList<String> deadNPCs = new ArrayList<>(0);
     private int healthLevel = 10;
+
+    public Player() {
+    }
 
     public Player(String location, ArrayList<String> inventory, int healthLevel) {
         this.location = location;
@@ -21,7 +23,11 @@ public class Player implements Serializable {
         this.healthLevel = healthLevel;
     }
 
-    public Player() {
+    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> deadNPCs) {
+        this.location = location;
+        this.inventory = inventory;
+        this.healthLevel = healthLevel;
+        this.deadNPCs = deadNPCs;
     }
 
     private static void healthModifier(String item) {
@@ -91,6 +97,7 @@ public class Player implements Serializable {
 
     void playerCurrentInfo() {
         ObjectMapper mapper = new ObjectMapper();
+        List<String> characters = new ArrayList<>();
 
         try {
             JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
@@ -108,6 +115,7 @@ public class Player implements Serializable {
                         JsonNode locationNode = nameNode.path("name");
                         JsonNode itemsNode = nameNode.path("items");
                         JsonNode directionsNode = nameNode.path("directions");
+                        JsonNode npcNode = nameNode.path("characters");
 
                         //location
                         if (locationNode.equals(node)) {
@@ -115,6 +123,20 @@ public class Player implements Serializable {
                         }
                         if(itemsNode.equals(node)){
                             System.out.println("Available items: " + itemsNode);
+                        }
+
+                        //characters
+                        if(npcNode.equals(node)) {
+                            for(JsonNode character : npcNode) {
+                                characters.add(character.asText());
+                            }
+                            System.out.println("Characters you see: " + characters);
+                        }
+
+                        //items
+                        if(itemsNode.equals(node)) {
+
+                            System.out.println("Items you see: " + foundItems());
                         }
 
                         //direction
@@ -161,6 +183,37 @@ public class Player implements Serializable {
 
     }
 
+    //returns location specific items
+    ArrayList<String> foundItems() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<String> itemsList = new ArrayList<>(0);
+
+        try {
+            JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
+
+            for (JsonNode root : rootArray) {
+                // Get Name
+                JsonNode nameNode = root.path(getLocation());
+
+                if (!nameNode.isMissingNode()) {  // if "name" node is not missing
+                    for (JsonNode node : nameNode) {
+                        // Get node names
+                        JsonNode itemsNode = nameNode.path("items");
+                        if (itemsNode.equals(node)) {
+                            for (JsonNode item : itemsNode) {
+                                itemsList.add(item.asText());
+                            }
+                        }
+                    }
+                }
+            }
+            itemsList.removeIf(getInventory()::contains);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return itemsList;
+    }
+
     //remove an item from player's inventory
     public void removeItem(String item){
         ArrayList<String> itemToBeRemoved = getInventory();
@@ -194,5 +247,13 @@ public class Player implements Serializable {
 
     public void setInventory(ArrayList<String> inventory) {
         this.inventory = inventory;
+    }
+
+    public ArrayList<String> getDeadNPCs() {
+        return deadNPCs;
+    }
+
+    public void setDeadNPCs(ArrayList<String> deadNPCs) {
+        this.deadNPCs = deadNPCs;
     }
 }

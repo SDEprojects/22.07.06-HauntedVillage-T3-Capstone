@@ -8,19 +8,19 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Controller {
-    // FIELDS
-    //private final Scanner scanner = new Scanner(System.in);
-
-    // CONSTRUCTOR
-    public Controller() {
-    }
-
-    // BUSINESS METHODS
-    public static void playGame() {
-        Engine engine = new Engine();
-
-        engine.execute();
-
-    }
-}
+//public class Controller {
+//    // FIELDS
+//    //private final Scanner scanner = new Scanner(System.in);
+//
+//    // CONSTRUCTOR
+//    public Controller() {
+//    }
+//
+//    // BUSINESS METHODS
+//    public static void playGame() {
+//        Engine engine = new Engine();
+//
+//        engine.execute();
+//
+//    }
+//}

@@ -1,9 +1,6 @@
 package com.game.HauntedVillage;
 
-
-
 import com.apps.util.Console;
-
 import java.util.ArrayList;
 
 class EventHandler {

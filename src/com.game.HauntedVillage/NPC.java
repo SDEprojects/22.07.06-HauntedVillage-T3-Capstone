@@ -2,11 +2,11 @@ package com.game.HauntedVillage;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.List;
 
 public class NPC {
 
@@ -79,4 +79,35 @@ public class NPC {
         }
         return result;
     }
+
+//    public static List<String> areaNPCs (String location, List<String> removedNPCs) {
+//        List<String> result = new ArrayList<>();
+//        List<String> locations = new ArrayList<>();
+//        List<String> characters = new ArrayList<>();
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//        try {
+//            JsonNode rootArray = mapper.readTree(new File("resources/npc.json"));
+//
+//            for (JsonNode root : rootArray) {
+//
+//                for (JsonNode node : root) {
+//                    // Get node names
+//                    locations.add(node.path("location").toPrettyString());
+//                    characters.add(node.path("name").toPrettyString());
+//
+//                    if (actionsNode.equals(node)) {
+//                        String characterLocation = node.asText();
+//                        if (location.equals(characterLocation)) {
+//
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
+//        return result;
+//    }
 }

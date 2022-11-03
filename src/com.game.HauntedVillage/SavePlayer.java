@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class SavePlayer {
 
-    public static void savePlayer(String location, ArrayList inventory, int healthLevel) {
+    public static void savePlayer(String location, ArrayList inventory, int healthLevel, ArrayList<String> deadNPCs) {
 
-        Player player = new Player(location, inventory, healthLevel);
+        Player player = new Player(location, inventory, healthLevel, deadNPCs);
         String filename = "savePlayer.json";
 
         try {
