@@ -55,6 +55,7 @@ public class Engine {
     //game loop
     public void gameLoop() throws IOException {
 
+        String oldLocation = "";
         //game continues if player is alive
         while (!endGame) {
 
@@ -62,18 +63,26 @@ public class Engine {
             player.playerCurrentInfo();
 
             //returns location description and player prompt
-            player.prompt();
+            if(!oldLocation.equals(player.getLocation())) {
+                player.prompt();
+                oldLocation = player.getLocation();
+            }
 
             //takes user input, specific to players location
             userPromptInput(player.getLocation());
 
             //go command, player moves to given direction
             if ("go".equals(getVerbNoun().get(0))) {
-                //finds new location given cardinal direction
-                String newLocation = Map.moveFinder(player.getLocation(), getVerbNoun().get(1));
-                //if new location is not blank the location is updated
-                if (!Objects.equals(newLocation, "")) {
-                    player.setLocation(newLocation);
+                if(player.areaDirections().contains(getVerbNoun().get(1))) {
+                    //finds new location given cardinal direction
+                    String newLocation = Map.moveFinder(player.getLocation(), getVerbNoun().get(1));
+                    //if new location is not blank the location is updated
+                    if (!Objects.equals(newLocation, "")) {
+                        player.setLocation(newLocation);
+                    }
+                }
+                else {
+                    System.out.printf("Can not %s %s in %s.%n Provide valid input.%n", getVerbNoun().get(0).toUpperCase(), getVerbNoun().get(1).toUpperCase(), player.getLocation().toUpperCase());
                 }
             }
 
@@ -152,7 +161,8 @@ public class Engine {
                         int healthDelta = parseInt(result.get(0).get(4));
                         if ((player.getHealthLevel() + healthDelta > 10)) {
                             player.setHealthLevel(10);
-                        } else {
+                        }
+                        else {
                             player.setHealthLevel(player.getHealthLevel() + healthDelta);
                         }
                     }
@@ -173,7 +183,6 @@ public class Engine {
             //fight command.
             if ("fight".equals(getVerbNoun().get(0))) {
                 String target = getVerbNoun().get(1);
-//                String weapon = getVerbNoun().get(1);
                 if(player.seenNPCs().contains(target)) {
                     Scanner scanner1 = new Scanner(System.in);
                     System.out.println("Choose a weapon from your inventory.");
@@ -283,6 +292,10 @@ public class Engine {
             //verb-noun pair array using text parser
             ArrayList<String> result = parser.textParser(userInput);
             String userVerb = result.get(0);
+            String userNoun = "";
+            if(result.size() > 1) {
+                userNoun = result.get(1);
+            }
 
             //checks verbs and nouns for validity
             if (!"verb".equals(userVerb)) {
@@ -293,7 +306,7 @@ public class Engine {
                     setVerbNoun(result);
                 }
                 else {
-                    System.out.printf("Can not %s in %s.%n Provide valid input.%n", userVerb, location);
+                    System.out.printf("Can not %s %s in %s.%n Provide valid input.%n", userVerb.toUpperCase(), userNoun.toUpperCase(), location.toUpperCase());
                 }
             }
         }

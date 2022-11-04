@@ -76,10 +76,19 @@ public class Player implements Serializable {
                     for (JsonNode node : nameNode) {
                         // Get Description
                         JsonNode descriptionNode = nameNode.path("description");
+                        JsonNode description2Node = nameNode.path("description2");
 
                         if (descriptionNode.equals(node)) {
-                            System.out.println("\n\n");
-                            System.out.println(node.asText());
+                            if(!"Woods".equals(getLocation()) || ("Woods".equals(getLocation()) && getInventory().contains("stone"))) {
+                                System.out.println();
+                                System.out.println(node.asText());
+                            }
+                        }
+                        else if(description2Node.equals(node)) {
+                            if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
+                                System.out.println();
+                                System.out.println(node.asText());
+                            }
                         }
                     }
                 }
@@ -97,7 +106,6 @@ public class Player implements Serializable {
 
     void playerCurrentInfo() {
         ObjectMapper mapper = new ObjectMapper();
-        List<String> characters = new ArrayList<>();
 
         try {
             JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
@@ -113,32 +121,58 @@ public class Player implements Serializable {
                     for (JsonNode node : nameNode) {
                         // Get node names
                         JsonNode locationNode = nameNode.path("name");
-                        JsonNode itemsNode = nameNode.path("items");
-                        JsonNode directionsNode = nameNode.path("directions");
-                        JsonNode npcNode = nameNode.path("characters");
 
                         //location
                         if (locationNode.equals(node)) {
                             System.out.println("Location: " + node.asText());
                         }
+                    }
+                }
+            }
+            //directions
+            System.out.println("Directions: " + areaDirections());
 
-                        //characters
-                        if(npcNode.equals(node)) {
-//                            for(JsonNode character : npcNode) {
-//                                characters.add(character.asText());
-//                            }
-                            System.out.println("Characters you see: " + seenNPCs());
-                        }
+            //characters
+            System.out.println("Characters you see: " + seenNPCs());
 
-                        //items
-                        if(itemsNode.equals(node)) {
+            //items
+            System.out.println("Items you see: " + foundItems());
 
-                            System.out.println("Items you see: " + foundItems());
-                        }
+            //Inventory
+            System.out.println("Inventory: " + getInventory());
 
-                        //direction
+            //Health bar
+            ArrayList<String> healthIconList = new ArrayList<>(0);
+            for (int i = 0; i < getHealthLevel(); i++) {
+                healthIconList.add("♥");
+            }
+            String healthBar = healthIconList.toString().replaceAll("[\\[\\]]", "").replaceAll(",", "");
+            System.out.println("Health: " + healthBar);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //returns location specific directions
+    ArrayList<String> areaDirections() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<String> directionList = new ArrayList<>(0);
+
+        try {
+            JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
+
+            for (JsonNode root : rootArray) {
+                // Get Name
+                JsonNode nameNode = root.path(getLocation());
+
+                if (!nameNode.isMissingNode()) {  // if "name" node is not missing
+                    for (JsonNode node : nameNode) {
+                        // Get node names
+                        JsonNode directionsNode = nameNode.path("directions");
                         if (directionsNode.equals(node)) {
-                            ArrayList<String> directionList = new ArrayList<>(0);
+
                             for (JsonNode direction : directionsNode) {
                                 JsonNode northNode = node.path("north");
                                 JsonNode eastNode = node.path("east");
@@ -158,26 +192,14 @@ public class Player implements Serializable {
                                     directionList.add("west");
                                 }
                             }
-                            System.out.println("Directions: " + directionList);
                         }
                     }
                 }
             }
-            //Inventory
-            System.out.println("Inventory: " + getInventory());
-
-            //Health bar
-            ArrayList<String> healthIconList = new ArrayList<>(0);
-            for (int i = 0; i < getHealthLevel(); i++) {
-                healthIconList.add("♥");
-            }
-            String healthBar = healthIconList.toString().replaceAll("[\\[\\]]", "").replaceAll(",", "");
-            System.out.println("Health: " + healthBar);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return directionList;
     }
 
     //returns location specific items
@@ -243,6 +265,12 @@ public class Player implements Serializable {
                 }
             }
             npcList.removeIf(getNpcInventory()::contains);
+            if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
+                int demonIndex = npcList.indexOf("demon");
+                if(!(demonIndex == -1)) {
+                    npcList.remove(demonIndex);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -253,7 +281,7 @@ public class Player implements Serializable {
     public void removeNPC(String npc){
         ArrayList<String> npcToBeRemoved = getNpcInventory();
         npcToBeRemoved.remove(npc);
-        setInventory(npcToBeRemoved);
+        setNpcInventory(npcToBeRemoved);
     }
 
     public int getHealthLevel() {
