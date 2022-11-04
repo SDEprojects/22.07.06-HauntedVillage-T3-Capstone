@@ -35,14 +35,14 @@ public class Engine {
         player.setLocation(location);
         player.setInventory(inventory);
         player.setHealthLevel(healthLevel);
-        player.setDeadNPCs(deadNPCs);
+        player.setNpcInventory(deadNPCs);
     }
 
     public static void saveGame() {
-        SavePlayer.savePlayer(player.getLocation(), player.getInventory(), player.getHealthLevel(), player.getDeadNPCs());
+        SavePlayer.savePlayer(player.getLocation(), player.getInventory(), player.getHealthLevel(), player.getNpcInventory());
     }
 
-    public void execute() {
+    public void execute() throws IOException {
         Console.clear();
         splashScreen();
         Menu.startNewGame();
@@ -53,7 +53,7 @@ public class Engine {
     }
 
     //game loop
-    public void gameLoop() {
+    public void gameLoop() throws IOException {
 
         //game continues if player is alive
         while (!endGame) {
@@ -81,17 +81,17 @@ public class Engine {
             if("take".equals(getVerbNoun().get(0))) {
                 ArrayList<String> items = player.foundItems();
                 String noun = getVerbNoun().get(1);
-                if (items.size() > 0) {
+                if (items.contains(noun)) {
                     //take command, player adds item to inventory
                     for (String item : items) {
                         if (item.equals(noun)) {
                             Sound.runFX();
                             player.addInventory(noun);
                         }
-                        else {
-                            System.out.printf("There is no %s here.%n Try again.%n", noun);
-                        }
                     }
+                }
+                else {
+                    System.out.printf("There is no %s here to take.%n Try again.%n", noun);
                 }
             }
 
@@ -115,12 +115,13 @@ public class Engine {
 
             //speak command, player speaks to NPCs
             if ("speak".equals(getVerbNoun().get(0))) {
+
                 String character = getVerbNoun().get(1);
-                if (NPC.npcLocation(player.getLocation(), character)) {
+                if (NPC.npcLocation(player.getLocation(), character) && !player.getNpcInventory().contains(character)) {
                     System.out.println(NPC.npcConversation(character));
                 }
                 else {
-                    System.out.printf("%s is not here. Are you seeing ghosts?%n", character);
+                    System.out.printf("There is no %s here... Are you seeing ghosts?%n", character);
                 }
             }
 
@@ -171,22 +172,33 @@ public class Engine {
 
             //fight command.
             if ("fight".equals(getVerbNoun().get(0))) {
-//                String enemy = getVerbNoun().get(1);
-                String weapon = getVerbNoun().get(1);
-                if (player.getInventory().contains(weapon)) {
-                   if ("Woods".equals(player.getLocation())){
-                       if ("stone".equals(weapon)){
-                           finalBattle();
-                       }
-                       else{
-                           //NPC.demonDamage();
-                           System.out.println("This weapon isn’t doing anything");
-                       }
-                   }
+                String target = getVerbNoun().get(1);
+//                String weapon = getVerbNoun().get(1);
+                if(player.seenNPCs().contains(target)) {
+                    Scanner scanner1 = new Scanner(System.in);
+                    System.out.println("Choose a weapon from your inventory.");
+                    String weapon = scanner1.nextLine().trim().toLowerCase();
+                    if (player.getInventory().contains(weapon)) {
+                        if ("Woods".equals(player.getLocation())){
+                            if ("stone".equals(weapon)){
+                                finalBattle();
+                            }
+                            else{
+                                //NPC.demonDamage();
+                                System.out.println("This weapon isn’t doing anything");
+                            }
+                        }
+                        else {
+                            player.addNpcInventory(target);
+                            System.out.printf("You killed %s with the %s.%n", target, weapon);
+                        }
+                    }
+                    else{
+                        System.out.println(weapon + " is not in your inventory. ");
+                    }
                 }
-                else{
-                    System.out.println(weapon + " is not in your inventory. ");
-                    Console.pause(3000);
+                else {
+                    System.out.printf("There is no %s here... You must be seeing ghosts.%n", target);
                 }
             }
 
@@ -270,16 +282,18 @@ public class Engine {
             TextParser parser = new TextParser();
             //verb-noun pair array using text parser
             ArrayList<String> result = parser.textParser(userInput);
+            String userVerb = result.get(0);
 
             //checks verbs and nouns for validity
-            if (!"verb".equals(result.get(0))) {
-                if (actionChecker(location, result.get(0))) {
+            if (!"verb".equals(userVerb)) {
+                if (actionChecker(location, userVerb)) {
                     validInput = true;
                     //sends to event handler if a global command
                     EventHandler.eventHandler(userInput, location);
                     setVerbNoun(result);
-                } else {
-                    System.out.println("Invalid Input: Enter as Prompted (verb and noun)");
+                }
+                else {
+                    System.out.printf("Can not %s in %s.%n Provide valid input.%n", userVerb, location);
                 }
             }
         }

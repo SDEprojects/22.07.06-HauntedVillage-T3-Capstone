@@ -80,7 +80,9 @@ public class TextParser {
                             }
                         }
                     }
-
+                    if(strSplit.length >= 2) {
+                        result.set(1, strSplit[1]);
+                    }
                 }
 
             } catch (IOException e) {
