@@ -11,7 +11,7 @@ import java.util.List;
 public class Player implements Serializable {
     private String location = "Home";
     private ArrayList<String> inventory = new ArrayList<>(0);
-    private ArrayList<String> deadNPCs = new ArrayList<>(0);
+    private ArrayList<String> npcInventory = new ArrayList<>(0);
     private int healthLevel = 10;
 
     public Player() {
@@ -23,11 +23,11 @@ public class Player implements Serializable {
         this.healthLevel = healthLevel;
     }
 
-    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> deadNPCs) {
+    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> characters) {
         this.location = location;
         this.inventory = inventory;
         this.healthLevel = healthLevel;
-        this.deadNPCs = deadNPCs;
+        this.npcInventory = characters;
     }
 
     private static void healthModifier(String item) {
@@ -121,16 +121,13 @@ public class Player implements Serializable {
                         if (locationNode.equals(node)) {
                             System.out.println("Location: " + node.asText());
                         }
-                        if(itemsNode.equals(node)){
-                            System.out.println("Available items: " + itemsNode);
-                        }
 
                         //characters
                         if(npcNode.equals(node)) {
-                            for(JsonNode character : npcNode) {
-                                characters.add(character.asText());
-                            }
-                            System.out.println("Characters you see: " + characters);
+//                            for(JsonNode character : npcNode) {
+//                                characters.add(character.asText());
+//                            }
+                            System.out.println("Characters you see: " + seenNPCs());
                         }
 
                         //items
@@ -221,6 +218,44 @@ public class Player implements Serializable {
         setInventory(itemToBeRemoved);
     }
 
+    //returns location specific items
+    ArrayList<String> seenNPCs() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<String> npcList = new ArrayList<>(0);
+
+        try {
+            JsonNode rootArray = mapper.readTree(new File("resources/location.json"));
+
+            for (JsonNode root : rootArray) {
+                // Get Name
+                JsonNode nameNode = root.path(getLocation());
+
+                if (!nameNode.isMissingNode()) {  // if "name" node is not missing
+                    for (JsonNode node : nameNode) {
+                        // Get node names
+                        JsonNode itemsNode = nameNode.path("characters");
+                        if (itemsNode.equals(node)) {
+                            for (JsonNode npc : itemsNode) {
+                                npcList.add(npc.asText());
+                            }
+                        }
+                    }
+                }
+            }
+            npcList.removeIf(getNpcInventory()::contains);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return npcList;
+    }
+
+    //remove a npc from player's vision
+    public void removeNPC(String npc){
+        ArrayList<String> npcToBeRemoved = getNpcInventory();
+        npcToBeRemoved.remove(npc);
+        setInventory(npcToBeRemoved);
+    }
+
     public int getHealthLevel() {
         return healthLevel;
     }
@@ -249,11 +284,15 @@ public class Player implements Serializable {
         this.inventory = inventory;
     }
 
-    public ArrayList<String> getDeadNPCs() {
-        return deadNPCs;
+    public ArrayList<String> getNpcInventory() {
+        return npcInventory;
     }
 
-    public void setDeadNPCs(ArrayList<String> deadNPCs) {
-        this.deadNPCs = deadNPCs;
+    public void addNpcInventory(String npc) {
+        npcInventory.add(npc);
+    }
+
+    public void setNpcInventory(ArrayList<String> npcInventory) {
+        this.npcInventory = npcInventory;
     }
 }

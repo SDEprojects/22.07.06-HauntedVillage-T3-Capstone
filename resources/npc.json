@@ -32,7 +32,7 @@
     {
       "name": "werewolf",
       "location": "Farm",
-      "conversations": [],
+      "conversations": ["grrrrrrrrr"],
       "actions": []
     }
   },
@@ -42,7 +42,7 @@
     {
       "name": "farmer",
       "location": "Farm",
-      "conversations": [],
+      "conversations": ["OMG a werewolf!"],
       "actions": []
     }
   },
@@ -52,7 +52,7 @@
     {
       "name": "clerk",
       "location": "Town hall",
-      "conversations": [],
+      "conversations": ["Where did that cat come from? Have you seen it?", "The pastor sure has been actin' strange lately."],
       "actions": []
     }
   },
@@ -62,7 +62,7 @@
     {
       "name": "keep",
       "location": "Tavern",
-      "conversations": [],
+      "conversations": ["Pick your poison!", "Strange things be happenin' around here lately..."],
       "actions": []
     }
   },
