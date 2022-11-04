@@ -143,27 +143,44 @@ public class Sound {
                     case ("C"):
                     break;
                     case ("V"):
-                        System.out.println("The current music volume is " + (float) (Math.pow(10f, gainMusicControl.getValue()/20f))*50 +"/100" );
-                        System.out.println("What would you like to set the volume to? ");
-                        Scanner volScanner = new Scanner(System.in);
-                        float volumeEntry = 0;
-                        volumeEntry = Float.parseFloat(volScanner.next());
-                        if (volumeEntry <= 100 && volumeEntry >=0){
-                            setMusicLevel(volumeEntry);
-                            gainMusicControl.setValue(20f * (float) Math.log10(2*(getMusicLevel()/100)));
-                        } else {
-                            System.out.println("Not valid entry. Please enter a value between 0 and 100.");
+                        boolean validVol = false;
+                        boolean validSFX = false;
+                        String regex = "\\d+";
+                        while(!validVol) {
+                            System.out.println("The current music volume is " + (float) (Math.pow(10f, gainMusicControl.getValue()/20f))*50 +"/100" );
+                            System.out.println("What would you like to set the volume to? ");
+                            Scanner volScanner = new Scanner(System.in);
+                            String volInput = volScanner.next();
+                            if(volInput.matches(regex)) {
+                                float volumeEntry = 0;
+                                volumeEntry = Float.parseFloat(volInput);
+                                if (volumeEntry <= 100 && volumeEntry >=0){
+                                    setMusicLevel(volumeEntry);
+                                    gainMusicControl.setValue(20f * (float) Math.log10(2*(getMusicLevel()/100)));
+                                    validVol = true;
+                                }
+                                else {
+                                    System.out.println("Not valid entry. Please enter a value between 0 and 100.");
+                                }
+                            }
                         }
-                        System.out.println("The current SFX volume is " + getSoundFXLevel()*50 +"/100" );
-                        System.out.println("What would you like to set the SFX volume to? ");
-                        Scanner SFXScanner = new Scanner(System.in);
-                        float SFXEntry = 0;
-                        SFXEntry = Float.parseFloat(SFXScanner.next());
-                        if (SFXEntry <= 100 && SFXEntry >=0){
-                            setSoundFXLevel(SFXEntry);
-                            gainMusicControl.setValue(20f * (float) Math.log10(2*(getSoundFXLevel()/100)));
-                        } else {
-                            System.out.println("Not valid entry. Please enter a value between 0 and 100.");
+                        while(!validSFX) {
+                            System.out.println("The current SFX volume is " + getSoundFXLevel()*50 +"/100" );
+                            System.out.println("What would you like to set the SFX volume to? ");
+                            Scanner SFXScanner = new Scanner(System.in);
+                            String sfxInput = SFXScanner.next();
+                            if(sfxInput.matches(regex)) {
+                                float SFXEntry = 0;
+                                SFXEntry = Float.parseFloat(sfxInput);
+                                if (SFXEntry <= 100 && SFXEntry >=0){
+                                    setSoundFXLevel(SFXEntry);
+                                    gainMusicControl.setValue(20f * (float) Math.log10(2*(getSoundFXLevel()/100)));
+                                    validSFX = true;
+                                }
+                                else {
+                                    System.out.println("Not valid entry. Please enter a value between 0 and 100.");
+                                }
+                            }
                         }
                         break;
                     case ("Q"):

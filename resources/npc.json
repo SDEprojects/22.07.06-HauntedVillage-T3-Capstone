@@ -81,7 +81,7 @@
     "cat":
     {
       "name": "cat",
-      "location": "",
+      "location": "Woods",
       "conversations": ["meow"],
       "actions": []
     }
@@ -91,8 +91,8 @@
     "demon":
     {
       "name": "demon",
-      "location": "",
-      "conversations": [],
+      "location": "Woods",
+      "conversations": ["Time to feast!"],
       "actions": []
     }
   }
