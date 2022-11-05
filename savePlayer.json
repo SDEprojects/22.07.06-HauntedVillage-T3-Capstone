@@ -1,0 +1,6 @@
+{
+  "location" : "Farm",
+  "inventory" : [ "matches", "werewolf" ],
+  "npcInventory" : [ "matches", "werewolf" ],
+  "healthLevel" : 10
+}
