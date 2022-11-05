@@ -309,6 +309,9 @@ public class Engine {
                     System.out.printf("Can not %s %s in %s.%n Provide valid input.%n", userVerb.toUpperCase(), userNoun.toUpperCase(), location.toUpperCase());
                 }
             }
+            else {
+                System.out.println("Please enter a valid command");
+            }
         }
     }
 
