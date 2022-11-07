@@ -3,6 +3,7 @@ package com.game.HauntedVillage.app;
 
 import com.game.HauntedVillage.Controller;
 import com.game.HauntedVillage.Engine;
+import com.game.HauntedVillage.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,8 @@ class Main {
 //        Controller app = new Controller();
 //        app.playGame();
 
-        Engine app = new Engine();
-        app.execute();
+//        Engine app = new Engine();
+//        app.execute();
+        new GameFrame();
     }
 }
