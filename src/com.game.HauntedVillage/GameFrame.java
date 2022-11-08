@@ -1,41 +1,41 @@
 package com.game.HauntedVillage;
 
-import javax.imageio.ImageIO;
+import com.game.HauntedVillage.app.ArelysController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
 public class GameFrame extends JFrame {
 
-//    private JFrame frame;
+    ArelysController arelysController;
+    private JFrame frame;
     private JPanel panelButtons;
     private JPanel panelInventory;
     private JPanel panelNav;
     private JPanel panelMap;
-    private JPanel panelVisual;
     private JPanel panelRoomDescription;
     private JPanel panelTextFeedback;
-    private JFrame frame;
-    private JLabel labelVisual, swordObject, matchesObject;
-    private JLabel label;
-    private ImageIcon icon;
+    private JLabel label, gameObjLabel;
+    private ImageIcon icon, gameIcon;
     private JPanel boardGame;
     private JButton playButton, quitButton;
-    private JPopupMenu inspectSword, inspectMatches;
+    private JPopupMenu inspectKnife, inspectMatches, inspectCrucifix;
+    public JLabel knifeObjLabel, matchesObjLabel, crucifixObjLabel;
+    private JPopupMenu createMenu;
+    private JMenuItem[] menuOptions;
+    private JLabel[] labelVisual = new JLabel[10];
+    public JPanel[] panelVisual = new JPanel[10];
+    JTextArea gameText;
+    JPanel centerPanel, southPanel, westPanel, eastPanel, northPanel;
+    JButton NorthButton, EastButton, WestButton, SouthButton;
 
-//    JPanel[] backGroundPanel = new JPanel[10];
-//    JLabel[] backGroundLabel = new JLabel[10];
 
-
-
-    public GameFrame() {
-//        show();
-        TitleScreen();// was initialize
+    public GameFrame(ArelysController arelysController) {
+        this.arelysController = arelysController;
+        TitleScreen();// was initialized
 
     }
 
@@ -130,7 +130,7 @@ public class GameFrame extends JFrame {
 //        frame.setLayout(new BorderLayout());
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(1000,800);  // 850 500
+        frame.setSize(1000, 800);  // 850 500
         frame.getContentPane().setBackground(Color.BLACK);
         //frame.setLocationRelativeTo(null); // centers on screen
         frame.setVisible(true);
@@ -138,7 +138,7 @@ public class GameFrame extends JFrame {
 
 
         //ICON
-        ImageIcon icon = new ImageIcon("resources/eyes.jpeg"); // change icon in upper left
+        ImageIcon icon = new ImageIcon("images/MicrosoftTeams-image.png"); // change icon in upper left
         frame.setIconImage(icon.getImage()); // change icon in upper left
 
 
@@ -148,46 +148,40 @@ public class GameFrame extends JFrame {
         panelButtons = new JPanel(new FlowLayout());
         panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 5));
         panelButtons.setBackground(Color.BLACK);
-        panelButtons.setSize(1000, 50 );
+        panelButtons.setSize(1000, 50);
 
 
         // VISUAL panel
-        panelVisual = new JPanel();
-        panelVisual.setBackground(Color.BLACK);
-        panelVisual.setSize(50,300);
-        panelVisual.setBounds(5,50,670,500);
-        labelVisual = new JLabel();
+//        panelVisual = new JPanel();
+//        panelVisual.setBackground(Color.BLACK);
+//        panelVisual.setSize(50,300);
+//        panelVisual.setBounds(5,50,670,500);
+//        labelVisual = new JLabel();
+//        ImageIcon image = new ImageIcon(new ImageIcon("images/cabinedited.jpeg").getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
+//
+//
+//        labelVisual.setIcon(image);
+//        panelVisual.add(labelVisual, BorderLayout.PAGE_START);
+//        GameBackground *************************************************************************
 
-//        BufferedImage img = null;
-//        try {
-//            img = ImageIO.read(new File("resources/spookyVillage.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-        ImageIcon image = new ImageIcon(new ImageIcon("images/cabinedited.jpeg").getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
-
-
-        labelVisual.setIcon(image);
-        panelVisual.add(labelVisual, BorderLayout.PAGE_START);
 
         // MAP panel
         panelMap = new JPanel();
         panelMap.setBackground(Color.BLACK);
-        panelMap.setSize(50,300);
-        panelMap.setBounds(680,50,300,300);
+        panelMap.setSize(50, 300);
+        panelMap.setBounds(680, 50, 300, 300);
         JLabel labelMap = new JLabel("Map");
         labelMap.setForeground(Color.GREEN);
         labelMap.setFont(new Font("Chiller", Font.PLAIN, 24));
         panelMap.add(labelMap);
+        panelMap.add(MapImage.guiMap());
+
 
         // INVENTORY panel
         panelInventory = new JPanel(new BorderLayout());
         panelInventory.setBackground(Color.BLACK);
 //        panelInventory.setSize(50,300);
-        panelInventory.setBounds(680,355,300,195);
+        panelInventory.setBounds(680, 355, 300, 195);
 //        JLabel labelInventory = new JLabel("Inventory");
 //        panelInventory.add(labelInventory, BorderLayout.CENTER );
 
@@ -205,24 +199,24 @@ public class GameFrame extends JFrame {
         // this decides where in borderlayout they are positioned...
         panelInventory.add(labelInventoryTitle, BorderLayout.PAGE_START);
         panelInventory.add(labelInventoryItems, BorderLayout.WEST);
-        panelInventory.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
+        panelInventory.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
 
         //this.getContentPane().setBackground(new Color(0,0,10));
         // NAVIGATION panel (N,E,W,S)
-        panelNav = new JPanel();
-        panelNav.setBackground(Color.BLACK);
-        panelNav.setLayout(new BorderLayout());
-//        panelNav.setSize(50,100);
-//        panelNav.setBounds(680,555,300,200); // original where the box fits perfect
-        panelNav.setBounds(780,585,120,120);
-        JLabel labelNav = new JLabel("Navigation");
-        panelNav.add(labelNav);
+//        panelNav = new JPanel();
+//        panelNav.setBackground(Color.BLACK);
+//        panelNav.setLayout(new BorderLayout());
+////        panelNav.setSize(50,100);
+////        panelNav.setBounds(680,555,300,200); // original where the box fits perfect
+//        panelNav.setBounds(780, 585, 120, 120);
+//        JLabel labelNav = new JLabel("Navigation");
+//        panelNav.add(labelNav);
 
         // ROOM DESCRIPTION panel
         panelRoomDescription = new JPanel();
-        panelRoomDescription.setBackground(Color.BLACK );
+        panelRoomDescription.setBackground(Color.BLACK);
         panelRoomDescription.setLayout(new BorderLayout());
-        panelRoomDescription.setBounds(5,555,400,200);
+        panelRoomDescription.setBounds(5, 555, 400, 200);
 
         String roomTitleString = "Old Church";
         JLabel roomTitle = new JLabel(roomTitleString);
@@ -235,10 +229,20 @@ public class GameFrame extends JFrame {
         JLabel labelRoomDescription = new JLabel(roomDescription);
 //        labelRoomDescription.setFont();
         labelRoomDescription.setForeground(Color.GREEN);
+        gameText = new JTextArea("Game TEXT");
+        gameText.setBounds(5, 555, 400, 200);
+        gameText.setBackground(Color.black);
+        gameText.setForeground(Color.red);
+        gameText.setEditable(false);
+        gameText.setLineWrap(true);
+        gameText.setWrapStyleWord(true);
+        gameText.setFont(new Font("Chiller", Font.PLAIN, 30));
         // this decides where in borderlayout they are positioned...
+
         panelRoomDescription.add(roomTitle, BorderLayout.PAGE_START);
         panelRoomDescription.add(labelRoomDescription);
-        panelRoomDescription.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.GREEN));
+        panelRoomDescription.add(gameText);
+        panelRoomDescription.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GREEN));
 
 
         // Text Feedback on actions panel
@@ -246,10 +250,10 @@ public class GameFrame extends JFrame {
         panelTextFeedback.setLayout(new BorderLayout());
         panelTextFeedback.setBackground(Color.BLACK);
 //        panelNav.setSize(50,100);
-        panelTextFeedback.setBounds(410,555,265,200);
+        panelTextFeedback.setBounds(410, 555, 265, 200);
 
         // Title of Feedback
-        String feedbackTitleString = "The wind seems to mutter..." ;
+        String feedbackTitleString = "The wind seems to mutter...";
         //  "A voice in your head tells you....", "Something tells you that....", "A distance voice moans..."
         String textFeedbackTitleString = feedbackTitleString;
         JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
@@ -263,29 +267,32 @@ public class GameFrame extends JFrame {
         labelTextFeedback.setForeground(Color.gray);
         labelTextFeedback.setHorizontalAlignment(SwingConstants.CENTER);
 //        labelTextFeedback.add(labelRoomDescription);
-        panelTextFeedback.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.GRAY));
+        panelTextFeedback.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 
         panelTextFeedback.add(feedbackTitle, BorderLayout.PAGE_START);
         panelTextFeedback.add(labelTextFeedback);
 
 
-
         // BUTTONs instantiate
 
         JButton settingsButton = new JButton("Settings");
-        JButton helpButton = new JButton ("Help");
+        JButton helpButton = new JButton("Help");
         JButton quitButton = new JButton("Exit");
-        JButton NorthButton = new JButton("N");
-        JButton EastButton = new JButton("E");
-        JButton WestButton = new JButton("W");
-        JButton SouthButton = new JButton("S");
+
+//        panelNav = new JPanel();
+//        panelNav.setBackground(Color.BLACK);
+//        panelNav.setLayout(new BorderLayout());
+//        panelNav.setBounds(780,585,120,120);
+//        JLabel labelNav = new JLabel("Navigation");
+//        panelNav.add(labelNav);
+//        NorthButton = new JButton("N");
+//        EastButton = new JButton("E");
+//        WestButton = new JButton("W");
+//        SouthButton = new JButton("S");
+
 
 
         // POP UP BUTTON
-
-
-
-
         // SETTINGS Button
         //settingsButton.setBounds(0,10,150,50);  // button location and button size
         settingsButton.addActionListener(e -> System.out.println("foo"));
@@ -335,10 +342,317 @@ public class GameFrame extends JFrame {
         quitButton.setBorder(BorderFactory.createEtchedBorder());
 
 
-
         // Navigation Buttons
         // NORTH
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
+//        NorthButton.addActionListener(e -> System.out.println("North"));
+////        button.addActionListener(this);
+//        NorthButton.setFocusable(false); // gets rid of box around button
+//        NorthButton.setText("N");
+//        //button.setIcon(icon);// adds pic to button
+//        NorthButton.setHorizontalTextPosition(JButton.CENTER);
+//////        NorthButton.setHorizontalTextPosition(JButton.LEFT_ALIGNMENT= (2.0f));
+////        NorthButton.setAlignmentX(1.0F);
+//        NorthButton.setVerticalTextPosition(JButton.CENTER);
+//        NorthButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+//        NorthButton.setPreferredSize(new Dimension(40, 40));
+//        NorthButton.setSize(40, 40);
+////        NorthButton.setAlignmentX(1);
+////        settingsButton.setIconTextGap(5);
+//        NorthButton.setForeground(Color.red);  //(new Color(0x8A0303));
+//        NorthButton.setBackground(Color.DARK_GRAY);
+//        NorthButton.setBorder(BorderFactory.createEtchedBorder());
+//
+//        JPanel northPanel = new JPanel();
+//        northPanel.setPreferredSize(new Dimension(40, 40));
+//        northPanel.add(NorthButton);
+//        northPanel.setBackground(Color.BLACK);
+//
+//
+//        // EAST
+//        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
+//        EastButton.addActionListener(e -> System.out.println("East"));
+//        EastButton.setPreferredSize(new Dimension(40, 40));
+////        button.addActionListener(this);
+//        EastButton.setFocusable(false); // gets rid of box around button
+//        EastButton.setText("E");
+//        //button.setIcon(icon);// adds pic to button
+//        EastButton.setHorizontalTextPosition(JButton.CENTER);
+//        EastButton.setVerticalTextPosition(JButton.CENTER);
+//        EastButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+//        EastButton.setSize(40, 40);
+////        settingsButton.setIconTextGap(5);
+//        EastButton.setForeground(Color.red);  //(new Color(0x8A0303));
+//        EastButton.setBackground(Color.DARK_GRAY);
+//        EastButton.setBorder(BorderFactory.createEtchedBorder());
+//
+//
+//        JPanel eastPanel = new JPanel();
+//        eastPanel.setPreferredSize(new Dimension(40, 40));
+//        eastPanel.add(EastButton);
+//        eastPanel.setBackground(Color.BLACK);
+//
+//
+//        // WEST
+//        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
+//        WestButton.addActionListener(e -> System.out.println("West"));
+//        WestButton.setPreferredSize(new Dimension(40, 40));
+////        button.addActionListener(this);
+//        WestButton.setFocusable(false); // gets rid of box around button
+//        WestButton.setText("W");
+//        //button.setIcon(icon);// adds pic to button
+//        WestButton.setHorizontalTextPosition(JButton.RIGHT);
+//        WestButton.setVerticalTextPosition(JButton.CENTER);
+//        WestButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+////        settingsButton.setIconTextGap(5);
+//        WestButton.setForeground(Color.red);  //(new Color(0x8A0303));
+//        WestButton.setBackground(Color.DARK_GRAY);
+//        WestButton.setBorder(BorderFactory.createEtchedBorder());
+//
+//        JPanel westPanel = new JPanel();
+//        westPanel.setPreferredSize(new Dimension(40, 40));
+//        westPanel.add(WestButton);
+//        westPanel.setBackground(Color.BLACK);
+//
+//
+//        // South
+//        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
+//        SouthButton.addActionListener(e -> System.out.println("South"));
+//        SouthButton.setPreferredSize(new Dimension(40, 40));
+////        button.addActionListener(this);
+//        SouthButton.setFocusable(false); // gets rid of box around button
+//        SouthButton.setText("S");
+//        //button.setIcon(icon);// adds pic to button
+//        SouthButton.setHorizontalTextPosition(JButton.RIGHT);
+//        SouthButton.setVerticalTextPosition(JButton.CENTER);
+//        SouthButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+////        settingsButton.setIconTextGap(5);
+//        SouthButton.setForeground(Color.red);  //(new Color(0x8A0303));
+//        SouthButton.setBackground(Color.DARK_GRAY);
+//        SouthButton.setBorder(BorderFactory.createEtchedBorder());
+//
+//        JPanel southPanel = new JPanel();
+//        southPanel.setPreferredSize(new Dimension(40, 40));
+//        southPanel.add(SouthButton);
+//        southPanel.setBackground(Color.BLACK);
+//
+//
+//        // CENTER PANEL
+//        JPanel centerPanel = new JPanel();
+//        centerPanel.setPreferredSize(new Dimension(40, 40));
+////        eastPanel.add(EastButton);
+//        centerPanel.setBackground(Color.BLACK);
+
+        //https://www.javaswingdev.com/2022/02/gradient-dropdown-menu-using-java-swing.html
+//        GradientDropdownMenu menu = new GradientDropdownMenu();
+//        menu.addItem("Home");
+//        menu.addItem("Features", "Ticker New", "Featured Styles", "Content Blocks");
+//        menu.apply(frame);
+
+        // Add items to panelButtons
+        panelButtons.add(settingsButton);
+        panelButtons.add(helpButton);
+        panelButtons.add(quitButton);
+//        panelButtons.add(JDDM);
+
+//        panelNav.add(northPanel, BorderLayout.PAGE_START);
+//        panelNav.add(eastPanel, BorderLayout.EAST);
+//        panelNav.add(westPanel, BorderLayout.WEST);
+//        panelNav.add(southPanel, BorderLayout.PAGE_END);
+//        panelNav.add(centerPanel);
+
+        // Add items to frame
+        frame.add(panelButtons);
+//        frame.add(panelButtons, BorderLayout.PAGE_START);
+//       frame.add(panelVisual[]);
+        frame.add(panelMap);
+//        frame.add(panelMap, BorderLayout.EAST);
+//        frame.add(panelNav);
+        createDirectionButtons();
+        frame.add(panelInventory);
+        frame.add(panelRoomDescription);
+        frame.add(panelTextFeedback);
+
+    }
+
+    public void backgroundLayout(int visualNum, String backGroundImage) {
+
+        panelVisual[visualNum] = new JPanel();
+        panelVisual[visualNum].setBackground(Color.BLACK);
+        panelVisual[visualNum].setSize(50, 300);
+        panelVisual[visualNum].setBounds(5, 50, 670, 500);
+        labelVisual[visualNum] = new JLabel();
+        ImageIcon image = new ImageIcon(new ImageIcon(backGroundImage).getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
+
+
+        labelVisual[visualNum].setIcon(image);
+//        panelVisual[visualNum].add(labelVisual[visualNum], BorderLayout.PAGE_START);
+        frame.add(panelVisual[visualNum]);
+    }
+
+    public void createObject(int visualNum, String Choice1, String Choice2) {
+//        create dropdown menu
+        inspectKnife = new JPopupMenu();
+        inspectMatches = new JPopupMenu();
+        inspectCrucifix = new JPopupMenu();
+
+//        knifeObjLabel, matchesObjLabel, crucifixObjLabel;
+//        create the options in the dropdown
+        JMenuItem[] dropMenu = new JMenuItem[4];
+
+        dropMenu[1] = new JMenuItem(Choice1);
+        dropMenu[1].addActionListener(arelysController.objectsActions);
+        dropMenu[1].setActionCommand("TakeKnife");
+        inspectKnife.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+        dropMenu[2].addActionListener(arelysController.objectsActions);
+        dropMenu[2].setActionCommand("KnifeDesc");
+        inspectKnife.add(dropMenu[2]);
+
+        knifeObjLabel = new JLabel();
+        knifeObjLabel.setBounds(175, 350, 100, 100);
+
+        gameIcon = new ImageIcon("images/knife.jpg");
+        knifeObjLabel.setIcon(gameIcon);
+
+        knifeObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectKnife.show(knifeObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+        inspectMatches = new JPopupMenu();
+
+
+        dropMenu[1] = new JMenuItem(Choice1);
+        dropMenu[1].addActionListener(arelysController.objectsActions);
+        dropMenu[1].setActionCommand("takeMatches");
+        inspectMatches.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+        dropMenu[2].addActionListener(arelysController.objectsActions);
+        dropMenu[2].setActionCommand("matchesDesc");
+        inspectMatches.add(dropMenu[2]);
+
+        matchesObjLabel = new JLabel();
+        matchesObjLabel.setBounds(400,200,100,100);
+
+        gameIcon = new ImageIcon("images/matches.jpg");
+        matchesObjLabel.setIcon(gameIcon);
+
+        matchesObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectMatches.show(matchesObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+
+        dropMenu[1] = new JMenuItem(Choice1);
+        dropMenu[1].addActionListener(arelysController.objectsActions);
+        dropMenu[1].setActionCommand("takeCrucifix");
+        inspectCrucifix.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+        dropMenu[2].addActionListener(arelysController.objectsActions);
+        dropMenu[2].setActionCommand("crucifixDesc");
+        inspectCrucifix.add(dropMenu[2]);
+
+        crucifixObjLabel = new JLabel();
+        crucifixObjLabel.setBounds(50,150,100,100);
+
+        gameIcon = new ImageIcon("images/crucifix.jpg");
+        crucifixObjLabel.setIcon(gameIcon);
+
+        crucifixObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectCrucifix.show(crucifixObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+
+        labelVisual[1].add(knifeObjLabel);
+        labelVisual[1].add(matchesObjLabel);
+        labelVisual[1].add(crucifixObjLabel);
+//        panelVisual[visualNum].add(labelVisual[visualNum], BorderLayout.PAGE_START);
+
+
+    }
+
+    public void createDirectionButtons() {
+        panelNav = new JPanel();
+        panelNav.setBackground(Color.BLACK);
+        panelNav.setLayout(new BorderLayout());
+        panelNav.setBounds(780, 585, 120, 120);
+        JLabel labelNav = new JLabel("Navigation");
+        panelNav.add(labelNav);
+        NorthButton = new JButton("N");
+        EastButton = new JButton("E");
+        WestButton = new JButton("W");
+        SouthButton = new JButton("S");
+//        // Navigation Buttons
+//        // NORTH
+//        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
         NorthButton.addActionListener(e -> System.out.println("North"));
 //        button.addActionListener(this);
         NorthButton.setFocusable(false); // gets rid of box around button
@@ -350,18 +664,19 @@ public class GameFrame extends JFrame {
         NorthButton.setVerticalTextPosition(JButton.CENTER);
         NorthButton.setFont(new Font("Chiller", Font.ITALIC, 40));
         NorthButton.setPreferredSize(new Dimension(40, 40));
-        NorthButton.setSize(40,40);
+        NorthButton.setSize(40, 40);
 //        NorthButton.setAlignmentX(1);
 //        settingsButton.setIconTextGap(5);
         NorthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         NorthButton.setBackground(Color.DARK_GRAY);
+        NorthButton.addActionListener(arelysController.objectsActions);
+        NorthButton.setActionCommand("goNorth");
         NorthButton.setBorder(BorderFactory.createEtchedBorder());
 
-        JPanel northPanel = new JPanel();
+        northPanel = new JPanel();
         northPanel.setPreferredSize(new Dimension(40, 40));
         northPanel.add(NorthButton);
         northPanel.setBackground(Color.BLACK);
-
 
 
         // EAST
@@ -375,14 +690,16 @@ public class GameFrame extends JFrame {
         EastButton.setHorizontalTextPosition(JButton.CENTER);
         EastButton.setVerticalTextPosition(JButton.CENTER);
         EastButton.setFont(new Font("Chiller", Font.ITALIC, 40));
-        EastButton.setSize(40,40);
+        EastButton.setSize(40, 40);
 //        settingsButton.setIconTextGap(5);
         EastButton.setForeground(Color.red);  //(new Color(0x8A0303));
         EastButton.setBackground(Color.DARK_GRAY);
+        EastButton.addActionListener(arelysController.objectsActions);
+        EastButton.setActionCommand("goEast");
         EastButton.setBorder(BorderFactory.createEtchedBorder());
 
 
-        JPanel eastPanel = new JPanel();
+        eastPanel = new JPanel();
         eastPanel.setPreferredSize(new Dimension(40, 40));
         eastPanel.add(EastButton);
         eastPanel.setBackground(Color.BLACK);
@@ -402,9 +719,11 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         WestButton.setForeground(Color.red);  //(new Color(0x8A0303));
         WestButton.setBackground(Color.DARK_GRAY);
+        WestButton.addActionListener(arelysController.objectsActions);
+        WestButton.setActionCommand("goWest");
         WestButton.setBorder(BorderFactory.createEtchedBorder());
 
-        JPanel westPanel = new JPanel();
+        westPanel = new JPanel();
         westPanel.setPreferredSize(new Dimension(40, 40));
         westPanel.add(WestButton);
         westPanel.setBackground(Color.BLACK);
@@ -424,161 +743,56 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         SouthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         SouthButton.setBackground(Color.DARK_GRAY);
+        SouthButton.addActionListener(arelysController.objectsActions);
+        SouthButton.setActionCommand("goSouth");
+        SouthButton.setActionCommand("South");
         SouthButton.setBorder(BorderFactory.createEtchedBorder());
 
-        JPanel southPanel = new JPanel();
+        southPanel = new JPanel();
         southPanel.setPreferredSize(new Dimension(40, 40));
         southPanel.add(SouthButton);
         southPanel.setBackground(Color.BLACK);
 
 
         // CENTER PANEL
-        JPanel centerPanel = new JPanel();
+        centerPanel = new JPanel();
         centerPanel.setPreferredSize(new Dimension(40, 40));
 //        eastPanel.add(EastButton);
         centerPanel.setBackground(Color.BLACK);
-
-        //https://www.javaswingdev.com/2022/02/gradient-dropdown-menu-using-java-swing.html
-//        GradientDropdownMenu menu = new GradientDropdownMenu();
-//        menu.addItem("Home");
-//        menu.addItem("Features", "Ticker New", "Featured Styles", "Content Blocks");
-//        menu.apply(frame);
-
-        // Add items to panelButtons
-        panelButtons.add(settingsButton);
-        panelButtons.add(helpButton);
-        panelButtons.add(quitButton);
-//        panelButtons.add(JDDM);
-
         panelNav.add(northPanel, BorderLayout.PAGE_START);
         panelNav.add(eastPanel, BorderLayout.EAST);
         panelNav.add(westPanel, BorderLayout.WEST);
         panelNav.add(southPanel, BorderLayout.PAGE_END);
         panelNav.add(centerPanel);
-
-
-        // Add items to frame
-        frame.add(panelButtons);
-//        frame.add(panelButtons, BorderLayout.PAGE_START);
-        frame.add(panelVisual);
-        frame.add(panelMap);
-//        frame.add(panelMap, BorderLayout.EAST);
         frame.add(panelNav);
-        frame.add(panelInventory);
-        frame.add(panelRoomDescription);
-        frame.add(panelTextFeedback);
-
-
-
 
     }
-    public void createObject(String Choice1, String Choice2, String Choice3){
+    public void createScreen() {
+//        First Image Home
+        backgroundLayout(1, "images/cabinedited.jpg");
+        createObject(1, "get", "Talk");
+        panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
 
-        inspectSword = new JPopupMenu();
-        inspectMatches = new JPopupMenu();
+//        Second Image Center CourtYard
+        backgroundLayout(2, "images/spookyVillageedited.jpg");
+//        createObject(2, "get", "Talk");
+        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
 
+//        Third Image Northern Square
+        backgroundLayout(3, "images/northernSquare2.jpg");
+//        createObject(3, "get", "Talk");
+        panelVisual[3].add(labelVisual[3], BorderLayout.PAGE_START);
 
-        JMenuItem [] dropMenu = new JMenuItem[4];
+//        Fourth Image Southern Square
+        backgroundLayout(4, "images/southernSquare.jpg");
+//        createObject(3, "get", "Talk");
+        panelVisual[4].add(labelVisual[4], BorderLayout.PAGE_START);
 
-        dropMenu[1] = new JMenuItem(Choice1);
-        inspectSword.add(dropMenu[1]);
+        //        Fifth Image Farm Square
+        backgroundLayout(5, "images/farm.jpg");
+//        createObject(3, "get", "Talk");
+        panelVisual[5].add(labelVisual[5], BorderLayout.PAGE_START);
 
-
-        dropMenu[2] = new JMenuItem(Choice2);
-        inspectSword.add(dropMenu[2]);
-
-        dropMenu[3] = new JMenuItem(Choice3);
-        inspectSword.add(dropMenu[3]);
-
-
-        swordObject = new JLabel();
-        swordObject.setBounds(60,60,300,300);
-
-        ImageIcon swordIcon = new ImageIcon("images/sword3.jpg");
-        swordObject.setIcon(swordIcon);
-
-        swordObject.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                if(SwingUtilities.isRightMouseButton(event)){
-                    inspectSword.show(swordObject,event.getX(), event.getY());
-                }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-
-        });
-
-        matchesObject = new JLabel();
-        matchesObject.setBounds(40,40,300,300);
-
-        ImageIcon matchesIcon = new ImageIcon("images/matches.jpg");
-        matchesObject.setIcon(matchesIcon);
-
-        JMenuItem [] matchesMenu = new JMenuItem[4];
-        matchesMenu[1] = new JMenuItem(Choice1);
-
-        inspectMatches.add(matchesMenu[1]);
-
-        matchesMenu[2] = new JMenuItem(Choice2);
-        inspectMatches.add(matchesMenu[2]);
-        matchesMenu[3] = new JMenuItem(Choice3);
-        inspectMatches.add(matchesMenu[3]);
-
-        matchesObject.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                if (SwingUtilities.isRightMouseButton(event)) {
-                    inspectMatches.show(matchesObject, event.getX(), event.getY());
-                }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-
-
-        });
-                labelVisual.add(swordObject);
-                labelVisual.add(matchesObject);
-        }
-
-    public void createScreen(){
-        createObject("look", "get", "Talk");
 
     }
 
@@ -615,12 +829,20 @@ public class GameFrame extends JFrame {
         this.panelMap = panelMap;
     }
 
-    public JPanel getPanelVisual() {
+    public JPanel[] getPanelVisual() {
         return panelVisual;
     }
 
-    public void setPanelVisual(JPanel panelVisual) {
+    public void setPanelVisual(JPanel[] panelVisual) {
         this.panelVisual = panelVisual;
+    }
+
+    public JLabel[] getLabelVisual() {
+        return labelVisual;
+    }
+
+    public void setLabelVisual(JLabel[] labelVisual) {
+        this.labelVisual = labelVisual;
     }
 
     public JPanel getPanelRoomDescription() {

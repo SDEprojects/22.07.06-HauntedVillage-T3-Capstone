@@ -203,7 +203,7 @@ public class Player implements Serializable {
     }
 
     //returns location specific items
-    ArrayList<String> foundItems() {
+     ArrayList<String> foundItems() {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<String> itemsList = new ArrayList<>(0);
 
