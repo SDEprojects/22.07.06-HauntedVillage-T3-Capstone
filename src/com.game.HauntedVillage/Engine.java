@@ -21,6 +21,8 @@ public class Engine {
     static Player player = new Player();
     private boolean wellActivation = false;
     private boolean endGame = false;
+    private Splash splash = new Splash();
+    private Menu menu = new Menu();
 
     public Engine() {
     }
@@ -44,8 +46,9 @@ public class Engine {
 
     public void execute() throws IOException {
         Console.clear();
-        splashScreen();
-        Menu.startNewGame();
+        splash.splashScreen();
+        menu.startNewGame();
+        Sound.runMusic();
         Console.clear();
         presentInfo();
         Console.clear();
@@ -336,21 +339,21 @@ public class Engine {
         }
     }
 
-    private void splashScreen() {
-        try {
-            // instantiate mapper obect
-            ObjectMapper mapper = new ObjectMapper();
-
-            // convert array to list of items
-            List<Splash> splash = List.of(mapper.readValue(Paths.get("resources/splash.json").toFile(), Splash.class));
-
-            // print
-            System.out.println(splash.get(0).getTitle());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void splashScreen() {
+//        try {
+//            // instantiate mapper object
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            // convert array to list of items
+//            List<Splash> splash = List.of(mapper.readValue(Paths.get("resources/splash.json").toFile(), Splash.class));
+//
+//            // print
+//            System.out.println(splash.get(0).getTitle());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public ArrayList<String> getVerbNoun() {

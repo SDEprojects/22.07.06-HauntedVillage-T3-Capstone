@@ -1,6 +1,7 @@
 {
-  "location" : "Farm",
-  "inventory" : [ "matches", "werewolf" ],
-  "npcInventory" : [ "matches", "werewolf" ],
-  "healthLevel" : 10
+  "location" : "Church",
+  "inventory" : [ ],
+  "npcInventory" : [ ],
+  "healthLevel" : 10,
+  "endGame" : false
 }

@@ -8,13 +8,14 @@ class EventHandler {
     public static void eventHandler(String input, String location) {
         TextParser parser= new TextParser();
         ArrayList<String> result =  parser.textParser(input);
+        Menu menu = new Menu();
 
         if ("help".equals(result.get(0))){
             Console.clear();
-            Menu.help();
+            menu.help();
         }
         if ("quit".equals(result.get(0))){
-            Menu.quit();
+            menu.quit();
         }
         if ("look".equals(result.get(0))){
             Console.clear();
