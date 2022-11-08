@@ -1,4 +1,4 @@
-package com.game.HauntedVillage.com.game.HauntedVillage.app;
+package com.game.HauntedVillage.app;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import com.apps.util.Console;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.HauntedVillage.*;
-import com.game.HauntedVillage.com.game.HauntedVillage.app.Print;
+import com.game.HauntedVillage.app.Print;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
