@@ -17,100 +17,22 @@ public class Sound {
     static String answer = "";
     private static String musicOnOrOff;
     private static String sfxOnOrOff;
+    Clip clip = AudioSystem.getClip();
 
     private static File musicFile = new File("resources/music.wav");
     private static File soundFXFile = new File("resources/inventorySFX.wav");
 
-//    public static void musicPlayer(File file) {
-//        if(getMusicOn()){
-//            try {
-//                AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-//                Clip clip = AudioSystem.getClip();
-//                clip.open(audioStream);
-//                clip.start();
-//                FloatControl gainMusicControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//                gainMusicControl.setValue(20f * (float) Math.log10(getMusicLevel())); // set volume to 50% to start
-//
-//            } catch (UnsupportedAudioFileException e) {
-//                throw new RuntimeException(e);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            } catch (LineUnavailableException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-//
-//    public static void soundFXPlayer(File file) {
-//        if(getSFX_On()){
-//            try {
-//                AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-//                Clip clip = AudioSystem.getClip();
-//                clip.open(audioStream);
-//                clip.start();
-//                FloatControl gainMusicControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//                gainMusicControl.setValue(20f * (float) Math.log10(getSoundFXLevel())); // set volume to 50% to start
-//
-//            } catch (UnsupportedAudioFileException e) {
-//                throw new RuntimeException(e);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            } catch (LineUnavailableException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-//
-//    public static void musicMenu() {
-//        Scanner scanner = new Scanner(System.in);
-//
-//        while (!answer.equals("C")) {
-//            if (getSFX_On()) {
-//                System.out.println("Music Options: C = Continue with music, V = Change Volume, Q = Continue without music, S = Turn Off Sound Effects");
-//                System.out.println("Enter your choice:");
-//            } else {
-//                System.out.println("Music Options: C = Continue with music, V = Change Volume, Q = Continue without music, S = Turn On Sound Effects");
-//                System.out.println("Enter your choice:");
-//            }
-//            answer = scanner.nextLine();
-//            answer= answer.toUpperCase();
-//        }
-//        switch(answer){
-//            case ("C"):
-//                break;
-//            case ("V"):
-//                System.out.println("What would you like to set the music volume to? (0 to 100) ");
-//                Scanner volScanner = new Scanner(System.in);
-//                double volumeEntry = 0;
-//                double SFXEntry = 0;
-//                volumeEntry = Float.parseFloat(volScanner.next());
-//                if (volumeEntry <= 100 && volumeEntry >=0){
-//                    setMusicLevel(volumeEntry);
-//                } else {
-//                    System.out.println("Not valid entry. Please enter a value between 0 and 100.");
-//                }
-//                SFXEntry = Float.parseFloat(volScanner.next());
-//                System.out.println("What would you like to set the sound effects volume to? (0 to 100)");
-//                if (SFXEntry <= 100 && SFXEntry >=0){
-//                    setSoundFXLevel(SFXEntry);
-//                } else {
-//                    System.out.println("Not valid entry. Please enter a value between 0 and 100.");
-//                }
-//                break;
-//            case ("Q"):
-//                setMusicOn(false);
-//                answer = "C";
-//                break;
-//            case ("S"):
-//                setSFX_On(false);
-//                break;
-//            default:
-//                System.out.println("not a valid response");
-//        }
-//        System.out.println("left music menu...");
-//        Console.pause(1000);
-//
-//    }
+    public Sound() throws LineUnavailableException {
+    }
+
+    public void musifOff() {
+    musicOn = false;
+    if (getMusicOn().equals(musicOn)) {
+        clip.stop();
+        setMusicOn(false);
+    }
+}
+
 
     public static void runMusic(){
 

@@ -1,5 +1,6 @@
 package com.game.HauntedVillage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,19 @@ public class MapImage {
             Arrays.asList("                   ","==========================","                ")
     ));
 
+    public static JList guiMap(){
+
+        DefaultListModel gameMap = new DefaultListModel();
+        for (int i = 0; i < mainMap.size(); i++)
+        {
+            gameMap.addElement(mainMap.get(i));
+        }
+
+        JList list = new JList(gameMap);
+
+        return list;
+       
+    }
 
     public static void display(String location) {
 
