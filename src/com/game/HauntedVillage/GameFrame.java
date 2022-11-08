@@ -174,7 +174,7 @@ public class GameFrame extends JFrame {
         labelMap.setForeground(Color.GREEN);
         labelMap.setFont(new Font("Chiller", Font.PLAIN, 24));
         panelMap.add(labelMap);
-        panelMap.add(MapImage.guiMap());
+//        panelMap.add(com.game.HauntedVillage.MapImage.guiMap());
 
 
         // INVENTORY panel

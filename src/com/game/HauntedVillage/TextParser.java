@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,61 +34,61 @@ public class TextParser {
         ArrayList<String> synonyms = getSynonymList();
 
         //for (String word: words) {
-            try (JsonParser jParser = new JsonFactory()
-                    .createParser(new File("resources/textParse.json"))) {
+        try (JsonParser jParser = new JsonFactory()
+                .createParser(new File("resources/textParse.json"))) {
 
-                // loop until token equal to "}"
-                while (jParser.nextToken() != JsonToken.END_OBJECT) {
+            // loop until token equal to "}"
+            while (jParser.nextToken() != JsonToken.END_OBJECT) {
 
-                    String fieldName = jParser.getCurrentName();
+                String fieldName = jParser.getCurrentName();
 
-                    if ("verb".equals(fieldName)) {
+                if ("verb".equals(fieldName)) {
 
-                        if (jParser.nextToken() == JsonToken.START_ARRAY) {
-                            // messages is array, loop until token equal to "]"
-                            while (jParser.nextToken() != JsonToken.END_ARRAY) {
-                                String elementName = jParser.getText();
-                                for (String word: words) {
-                                    if (word.equals(elementName)) {
-                                        if (synonyms.contains(word)){
-                                            result.set(0, synonym(word));
-                                        }
-                                        else {
-                                            result.set(0, word);
-                                        }
+                    if (jParser.nextToken() == JsonToken.START_ARRAY) {
+                        // messages is array, loop until token equal to "]"
+                        while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                            String elementName = jParser.getText();
+                            for (String word: words) {
+                                if (word.equals(elementName)) {
+                                    if (synonyms.contains(word)){
+                                        result.set(0, synonym(word));
+                                    }
+                                    else {
+                                        result.set(0, word);
                                     }
                                 }
                             }
                         }
-                    }
-
-                    if ("noun".equals(fieldName)) {
-
-                        if (jParser.nextToken() == JsonToken.START_ARRAY) {
-                            // messages is array, loop until token equal to "]"
-                            while (jParser.nextToken() != JsonToken.END_ARRAY) {
-                                String elementName = jParser.getText();
-                                for (String word: words) {
-                                    if (word.equals(elementName)) {
-                                        if (synonyms.contains(word)){
-                                            result.set(1, synonym(word));
-                                        }
-                                        else {
-                                            result.set(1, word);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if(strSplit.length >= 2) {
-                        result.set(1, strSplit[1]);
                     }
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                if ("noun".equals(fieldName)) {
+
+                    if (jParser.nextToken() == JsonToken.START_ARRAY) {
+                        // messages is array, loop until token equal to "]"
+                        while (jParser.nextToken() != JsonToken.END_ARRAY) {
+                            String elementName = jParser.getText();
+                            for (String word: words) {
+                                if (word.equals(elementName)) {
+                                    if (synonyms.contains(word)){
+                                        result.set(1, synonym(word));
+                                    }
+                                    else {
+                                        result.set(1, word);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if(strSplit.length >= 2) {
+                    result.set(1, strSplit[1]);
+                }
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //}
         return result;
     }
@@ -138,7 +139,4 @@ public class TextParser {
     public void setSynonymList(ArrayList<String> synonymList) {
         this.synonymList = synonymList;
     }
-
-
-
 }

@@ -7,10 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class Map {
+class Map {
 
-
-    public static String moveFinder(String location, String directionInput) {
+    public String moveFinder(String location, String directionInput) {
 
         String result = "";
 
