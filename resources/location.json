@@ -42,7 +42,7 @@
         "east": "Church",
         "south": "Center Courtyard"
       },
-      "characters": []
+      "characters": ["children"]
     }
   },
 
@@ -130,7 +130,7 @@
         "north": "Woods",
         "south": "Northern Square"
       },
-      "characters": ["children"]
+      "characters": []
     }
   },
 
