@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 class Art {
 
-    public static ArrayList artGenerator(String artItem) {
+    public ArrayList artGenerator(String artItem) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         ArrayList<String> art = new ArrayList<>();
@@ -36,10 +36,12 @@ class Art {
         return result;
     }
 
-    public static void showArt(String artItem){
+    public String showArt(String artItem){
         ArrayList<ArrayList<String>> result;
-        result = Art.artGenerator(artItem);
+        result = artGenerator(artItem);
         String art = result.get(0).get(0);
-        System.out.println(art);
+
+        return art;
+//        System.out.println(art);
     }
 }
