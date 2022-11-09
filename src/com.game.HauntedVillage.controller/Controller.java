@@ -54,6 +54,7 @@ public class Controller {
     }
 
     private void userChoice() {
+        setStartCondition(false);
         while (!isStartCondition()) {
             System.out.println(" [Y]es | [N]o ");
             setPlayerChoice(scanner.nextLine().trim().toUpperCase());
