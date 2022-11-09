@@ -3,12 +3,10 @@ package com.game.HauntedVillage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
-public class MapImage {
+class MapImage {
 
-
-    private static List<List<String>> mainMap = new ArrayList<>(List.of(
+    private List<List<String>> mainMap = new ArrayList<>(List.of(
             Arrays.asList("                   ","==========================","                "),
             Arrays.asList("         N         ","==        Woods         ==","                "),
             Arrays.asList("         |         ","==========================","                "),
@@ -25,9 +23,10 @@ public class MapImage {
     ));
 
 
-    public static void display(String location) {
+    List<String> display(String location) {
 
         List<List<String>> localMap = getMap();
+        List<String> mapList = new ArrayList<>();
 
         if (location.equals("Home")){
             String spot = "==  *  Home        ";
@@ -71,7 +70,7 @@ public class MapImage {
         }
 
         for (List<String> list : localMap) {
-            System.out.println(list.toString()
+            mapList.add(list.toString()
                     .replace("[", "")
                     .replaceAll("]", "")
                     .replaceAll(",", ""));
@@ -88,24 +87,10 @@ public class MapImage {
         localMap.get(7).set(2, "    Tavern    ==");
         localMap.get(9).set(2, "    Town hall ==");
 
-
+        return mapList;
     }
 
-    public static void map(String location){
-        display(location);
-
-        System.out.println("\nEnter back to exit");
-        boolean condition = false;
-        while (!condition) {
-            Scanner scanner = new Scanner(System.in);
-            String playerChoice = scanner.nextLine().trim().toLowerCase();
-            if (playerChoice.equals("back")) {
-                condition = true;
-            }
-        }
-    }
-
-    public static List<List<String>> getMap() {
+    private List<List<String>> getMap() {
         return mainMap;
     }
 }

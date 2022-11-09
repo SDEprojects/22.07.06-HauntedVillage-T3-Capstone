@@ -32,7 +32,7 @@
     {
       "name": "werewolf",
       "location": "Farm",
-      "conversations": [],
+      "conversations": ["grrrrrrrrr"],
       "actions": []
     }
   },
@@ -42,7 +42,7 @@
     {
       "name": "farmer",
       "location": "Farm",
-      "conversations": [],
+      "conversations": ["OMG a werewolf!"],
       "actions": []
     }
   },
@@ -52,7 +52,7 @@
     {
       "name": "clerk",
       "location": "Town hall",
-      "conversations": [],
+      "conversations": ["Where did that cat come from? Have you seen it?", "The pastor sure has been actin' strange lately."],
       "actions": []
     }
   },
@@ -62,7 +62,7 @@
     {
       "name": "keep",
       "location": "Tavern",
-      "conversations": [],
+      "conversations": ["Pick your poison!", "Strange things be happenin' around here lately..."],
       "actions": []
     }
   },
@@ -72,7 +72,7 @@
     {
       "name": "pastor",
       "location": "Church",
-      "conversations": ["The pastor turns to you but he’s not who he seems. \n He’s covered in blood with two fangs sneaking from his grin. \n“I think you have too many sins,“ he cries! as has lunges at you."],
+      "conversations": ["The pastor turns to you but he’s not who he seems. \nHe’s covered in blood with two fangs sneaking from his grin. \n“I think you have too many sins,“ he cries, as he lunges at you!"],
       "actions": []
     }
   },
@@ -81,7 +81,7 @@
     "cat":
     {
       "name": "cat",
-      "location": "",
+      "location": "Woods",
       "conversations": ["meow"],
       "actions": []
     }
@@ -91,8 +91,8 @@
     "demon":
     {
       "name": "demon",
-      "location": "",
-      "conversations": [],
+      "location": "Woods",
+      "conversations": ["Time to feast!"],
       "actions": []
     }
   }

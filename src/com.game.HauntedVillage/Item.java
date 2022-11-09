@@ -2,17 +2,16 @@ package com.game.HauntedVillage;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 class Item {
 
-    private String description;
+    private List<String> itemList = new ArrayList<>();
 
-    public static void checkForItem(String item){
+    public List<String> checkForItem(String item){
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
@@ -26,28 +25,20 @@ class Item {
                         JsonNode descNode = nameNode.path("description");
 
                         if (descNode.equals(node)) {
-                            System.out.println("\n\n");
-                            System.out.println(descNode.asText());
+                            itemList.add("\n\n");
+                            itemList.add(descNode.asText());
                         }
                     }
-                }
-            }
-            System.out.println("Enter back to exit");
-            boolean condition = false;
-            while (!condition) {
-                Scanner scanner = new Scanner(System.in);
-                String playerChoice = scanner.nextLine().trim().toLowerCase();
-                if (playerChoice.equals("back")) {
-                    condition = true;
                 }
             }
         } catch (IOException e){
             e.printStackTrace();
         }
+        return itemList;
     }
 
     //returns stationary interactive items
-    public static ArrayList stationaryItems(String interactionItem) {
+    public ArrayList stationaryItems(String interactionItem) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         ArrayList<String> stationaryItemElements = new ArrayList<>();
@@ -74,7 +65,7 @@ class Item {
         return result;
     }
 
-    public static boolean checkStationaryItemLocation(String location, String interactionItem) {
+    public boolean checkStationaryItemLocation(String location, String interactionItem) {
         boolean result = false;
         ObjectMapper mapper = new ObjectMapper();
 
