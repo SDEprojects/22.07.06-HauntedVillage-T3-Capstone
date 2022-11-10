@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class MapImage {
+public class MapImage {
 
     private List<List<String>> mainMap = new ArrayList<>(List.of(
             Arrays.asList("                   ","==========================","                "),
@@ -23,7 +23,7 @@ class MapImage {
     ));
 
 
-    List<String> display(String location) {
+    public List<String> display(String location) {
 
         List<List<String>> localMap = getMap();
         List<String> mapList = new ArrayList<>();

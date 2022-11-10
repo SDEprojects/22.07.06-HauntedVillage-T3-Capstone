@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.Vector;
+
 import com.game.HauntedVillage.controller.Controller;
 
 public class GameFrame extends JFrame {
@@ -164,7 +166,12 @@ public class GameFrame extends JFrame {
         labelMap.setForeground(Color.GREEN);
         labelMap.setFont(new Font("Chiller", Font.PLAIN, 24));
         panelMap.add(labelMap);
-//        panelMap.add(MapImage.guiMap());
+//        JLabel mapContent = new JLabel();
+        JList mapContent = new JList(controller.gameMap().toArray());
+        mapContent.setForeground(Color.RED);
+        mapContent.setBackground(Color.black);
+        mapContent.setFont(new Font("Chiller", Font.PLAIN, 14));
+        panelMap.add(mapContent);
 
 
         // INVENTORY panel
@@ -177,19 +184,27 @@ public class GameFrame extends JFrame {
 
         String inventoryTitleString = "Inventory";
         JLabel labelInventoryTitle = new JLabel(inventoryTitleString);
-        labelInventoryTitle.setForeground(Color.GRAY);
+        labelInventoryTitle.setForeground(Color.GREEN);
         labelInventoryTitle.setFont(new Font("Chiller", Font.PLAIN, 24));
         labelInventoryTitle.setHorizontalAlignment(SwingConstants.CENTER);
 //        room.setForeground(Font);
 
-        String inventoryItems = "\n\nmatches \n crucifix";
-        JLabel labelInventoryItems = new JLabel(inventoryItems);
-//        labelRoomDescription.setFont();
-        labelInventoryItems.setForeground(Color.GRAY);
         // this decides where in borderlayout they are positioned...
-        panelInventory.add(labelInventoryTitle, BorderLayout.PAGE_START);
-        panelInventory.add(labelInventoryItems, BorderLayout.WEST);
+        String inventory = controller.gameInventory().toString();
+        JTextArea inventoryText = new JTextArea();
+        inventoryText.setFont(new Font("Chiller", Font.PLAIN, 20));
+        inventoryText.setForeground(Color.RED);
+        inventoryText.setBackground(Color.black);
+        inventoryText.setText(inventory.substring(1, inventory.length() - 1));
+//        inventoryText.setEditable(false);
+        inventoryText.setLineWrap(true);
+        inventoryText.setWrapStyleWord(true);
+        labelInventoryTitle.add(inventoryText);
+
         panelInventory.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+        panelInventory.add(labelInventoryTitle, BorderLayout.PAGE_START);
+        panelInventory.add(inventoryText);
+
 
         //this.getContentPane().setBackground(new Color(0,0,10));
         // NAVIGATION panel (N,E,W,S)
@@ -211,7 +226,7 @@ public class GameFrame extends JFrame {
         String roomTitleString = controller.playerLocation();
         JLabel roomTitle = new JLabel(roomTitleString);
         roomTitle.setForeground(Color.GREEN);
-        roomTitle.setFont(new Font("Chiller", Font.PLAIN, 24));
+        roomTitle.setFont(new Font("Chiller", Font.PLAIN, 20));
         roomTitle.setHorizontalAlignment(SwingConstants.CENTER);
 //        room.setForeground(Font);
 
@@ -220,14 +235,22 @@ public class GameFrame extends JFrame {
         JLabel labelRoomDescription = new JLabel(roomDescription);
 //        labelRoomDescription.setFont();
         labelRoomDescription.setForeground(Color.GREEN);
-        gameText = new JTextArea(controller.showAreaDescription());
+        gameText = new JTextArea();
+        if(controller.getPlayerUpdate().size() > 0) {
+            String convert = controller.getPlayerUpdate().toString();
+            gameText.setText(convert.substring(1, convert.length() - 1));
+        }
+        else {
+            gameText.setText(controller.showAreaDescription());
+        }
+//        gameText = new JTextArea(controller.showAreaDescription());
         gameText.setBounds(5, 555, 400, 200);
         gameText.setBackground(Color.black);
         gameText.setForeground(Color.red);
         gameText.setEditable(false);
         gameText.setLineWrap(true);
         gameText.setWrapStyleWord(true);
-        gameText.setFont(new Font("Chiller", Font.PLAIN, 30));
+        gameText.setFont(new Font("Chiller", Font.PLAIN, 24));
         // this decides where in borderlayout they are positioned...
 
         panelRoomDescription.add(roomTitle, BorderLayout.PAGE_START);
@@ -645,7 +668,14 @@ public class GameFrame extends JFrame {
 //        // Navigation Buttons
 //        // NORTH
 //        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
-        NorthButton.addActionListener(e -> System.out.println("North"));
+        NorthButton.addActionListener(e -> {
+            try {
+                controller.userPrompt("go north");
+                initialize();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 //        button.addActionListener(this);
         NorthButton.setFocusable(false); // gets rid of box around button
         NorthButton.setText("N");
@@ -662,7 +692,7 @@ public class GameFrame extends JFrame {
         NorthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         NorthButton.setBackground(Color.DARK_GRAY);
 //        NorthButton.addActionListener(arelysController.objectsActions);
-        NorthButton.setActionCommand("goNorth");
+//        NorthButton.setActionCommand("goNorth");
         NorthButton.setBorder(BorderFactory.createEtchedBorder());
 
         northPanel = new JPanel();
@@ -709,7 +739,14 @@ public class GameFrame extends JFrame {
 
         // WEST
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
-        WestButton.addActionListener(e -> System.out.println("West"));
+        WestButton.addActionListener(e -> {
+            try {
+                controller.userPrompt("go west");
+                initialize();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         WestButton.setPreferredSize(new Dimension(40, 40));
 //        button.addActionListener(this);
         WestButton.setFocusable(false); // gets rid of box around button
@@ -722,7 +759,7 @@ public class GameFrame extends JFrame {
         WestButton.setForeground(Color.red);  //(new Color(0x8A0303));
         WestButton.setBackground(Color.DARK_GRAY);
 //        WestButton.addActionListener(arelysController.objectsActions);
-        WestButton.setActionCommand("goWest");
+//        WestButton.setActionCommand("goWest");
         WestButton.setBorder(BorderFactory.createEtchedBorder());
 
         westPanel = new JPanel();
@@ -733,7 +770,14 @@ public class GameFrame extends JFrame {
 
         // South
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
-        SouthButton.addActionListener(e -> System.out.println("South"));
+        SouthButton.addActionListener(e -> {
+            try {
+                controller.userPrompt("go south");
+                initialize();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         SouthButton.setPreferredSize(new Dimension(40, 40));
 //        button.addActionListener(this);
         SouthButton.setFocusable(false); // gets rid of box around button
@@ -746,8 +790,8 @@ public class GameFrame extends JFrame {
         SouthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         SouthButton.setBackground(Color.DARK_GRAY);
 //        SouthButton.addActionListener(arelysController.objectsActions);
-        SouthButton.setActionCommand("goSouth");
-        SouthButton.setActionCommand("South");
+//        SouthButton.setActionCommand("goSouth");
+//        SouthButton.setActionCommand("South");
         SouthButton.setBorder(BorderFactory.createEtchedBorder());
 
         southPanel = new JPanel();
