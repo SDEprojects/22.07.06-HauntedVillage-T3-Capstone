@@ -108,6 +108,7 @@ public class Player implements Serializable {
                 if (!Objects.equals(newLocation, "")) {
                     setLocation(newLocation);
                     System.out.println(newLocation);
+                    getInventory().add("new Stuff");
                 }
             }
             else {
