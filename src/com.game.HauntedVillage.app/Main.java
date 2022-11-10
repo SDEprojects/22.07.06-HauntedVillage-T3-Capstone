@@ -2,8 +2,6 @@ package com.game.HauntedVillage.app;
 
 
 
-import com.game.HauntedVillage.GameFrame;
-
 import java.io.IOException;
 
 
@@ -12,9 +10,5 @@ class Main {
 
         GameFrame gameFrame = new GameFrame();
         gameFrame.TitleScreen();
-
-
-
-
     }
 }
