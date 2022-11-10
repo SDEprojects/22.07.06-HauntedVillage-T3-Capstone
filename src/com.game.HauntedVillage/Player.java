@@ -107,6 +107,7 @@ public class Player implements Serializable {
                 //if new location is not blank the location is updated
                 if (!Objects.equals(newLocation, "")) {
                     setLocation(newLocation);
+                    System.out.println(newLocation);
                 }
             }
             else {
@@ -254,7 +255,7 @@ public class Player implements Serializable {
         return printThis;
     }
 
-    public String prompt() {
+    public String areaDescription() {
         String printThis = "";
 
         if(!getOldLocation().equals(getLocation())) {

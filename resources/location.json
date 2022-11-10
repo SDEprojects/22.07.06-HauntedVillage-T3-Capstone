@@ -10,7 +10,8 @@
       "directions": {
         "east": "Center Courtyard"
       },
-      "characters": []
+      "characters": [],
+      "jpeg": ""
     }
   },
   {
@@ -26,7 +27,8 @@
         "south": "Southern Square",
         "west": "Home"
       },
-      "characters": ["villagers"]
+      "characters": ["villagers"],
+      "jpeg": ""
     }
   },
 
@@ -42,7 +44,8 @@
         "east": "Church",
         "south": "Center Courtyard"
       },
-      "characters": ["children"]
+      "characters": ["children"],
+      "jpeg": ""
     }
   },
 
@@ -58,7 +61,8 @@
         "east": "Town hall",
         "south": "Farm"
       },
-      "characters": []
+      "characters": [],
+      "jpeg": ""
     }
   },
 
@@ -72,7 +76,8 @@
       "directions": {
         "north": "Southern Square"
       },
-      "characters": ["werewolf", "farmer"]
+      "characters": ["werewolf", "farmer"],
+      "jpeg": ""
     }
   },
 
@@ -87,7 +92,8 @@
         "north": "Tavern",
         "west": "Southern Square"
       },
-      "characters": ["clerk"]
+      "characters": ["clerk"],
+      "jpeg": ""
     }
   },
 
@@ -101,7 +107,8 @@
       "directions": {
         "west": "Center Courtyard"
       },
-      "characters": ["keep"]
+      "characters": ["keep"],
+      "jpeg": ""
     }
   },
 
@@ -115,7 +122,8 @@
       "directions": {
         "west": "Northern Square"
       },
-      "characters": ["pastor"]
+      "characters": ["pastor"],
+      "jpeg": ""
     }
   },
 
@@ -130,7 +138,8 @@
         "north": "Woods",
         "south": "Northern Square"
       },
-      "characters": []
+      "characters": [],
+      "jpeg": ""
     }
   },
 
@@ -144,7 +153,8 @@
       "directions": {
         "south": "Well"
       },
-      "characters": ["cat", "demon"]
+      "characters": ["cat", "demon"],
+      "jpeg": ""
     }
   }
 ]

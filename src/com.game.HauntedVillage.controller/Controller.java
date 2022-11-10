@@ -21,6 +21,9 @@ public class Controller {
     private String playerChoice;
     private boolean startCondition;
     private String startOrQuit;
+//    public ObjectHandler objectsActions = new ObjectHandler();
+//    public GameFrame gameFrame = new GameFrame();
+
 
     public Controller() throws IOException {
     }
@@ -77,6 +80,15 @@ public class Controller {
         print3.printListToConsole();
     }
 
+    public String showAreaDescription() {
+        String areaDes = player.areaDescription();
+        return areaDes;
+    }
+
+    public String playerLocation() {
+        return player.getLocation();
+    }
+
     //game loop
     private void gameLoop() throws IOException {
 
@@ -90,13 +102,13 @@ public class Controller {
 
             //returns location description and player prompt
 //            if(!oldLocation.equals(player.getLocation())) {
-            Print print1 = new Print(player.prompt());
+            Print print1 = new Print(player.areaDescription());
             print1.printToConsole();
 //                oldLocation = player.getLocation();
 //            }
 
             //takes user input, specific to players location
-            userPromptInput(player.getLocation());
+//            userPromptInput(player.getLocation());
 
             Print print = new Print(player.updatePlayer(getVerbNoun()));
             print.printListToConsole();
@@ -151,10 +163,13 @@ public class Controller {
     }
 
     //user input processor, sets verbNoun attribute array
-    private void userPromptInput(String location) {
+//    private void userPromptInput(String location) {
+    public void userPrompt(String userInput) throws IOException {
+        String location = player.getLocation();
+        System.out.println(userInput);
         boolean validInput = false;
         while (!validInput) {
-            String userInput = scanner.nextLine().trim().toLowerCase();
+//            String userInput = scanner.nextLine().trim().toLowerCase();
             TextParser parser = new TextParser();
             //verb-noun pair array using text parser
             ArrayList<String> result = parser.textParser(userInput);
@@ -165,12 +180,13 @@ public class Controller {
             }
             //checks verbs and nouns for validity
             if (!"verb".equals(userVerb)) {
-                if(userVerb.equals("quit")) {
-                    quit();
-                }
-                else if (actionChecker(location, userVerb)) {
+//                if(userVerb.equals("quit")) {
+//                    quit();
+//                }
+                if (actionChecker(location, userVerb)) {
                     validInput = true;
                     setVerbNoun(result);
+                    player.updatePlayer(getVerbNoun());
                 }
                 else {
                     System.out.printf("Can not %s %s in %s.%n Provide valid input.%n", userVerb.toUpperCase(), userNoun.toUpperCase(), location.toUpperCase());

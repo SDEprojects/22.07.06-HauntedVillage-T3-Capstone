@@ -1,12 +1,13 @@
 package com.game.HauntedVillage;
 
-import com.game.HauntedVillage.app.ArelysController;
-
+import com.game.HauntedVillage.app.Print;
+import com.game.HauntedVillage.controller.ArelysController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.io.IOException;
+import com.game.HauntedVillage.controller.Controller;
 
 public class GameFrame extends JFrame {
 
@@ -31,11 +32,15 @@ public class GameFrame extends JFrame {
     JTextArea gameText;
     JPanel centerPanel, southPanel, westPanel, eastPanel, northPanel;
     JButton NorthButton, EastButton, WestButton, SouthButton;
+    Controller controller = new Controller();
 
 
-    public GameFrame(ArelysController arelysController) {
-        this.arelysController = arelysController;
-        TitleScreen();// was initialized
+//    public GameFrame(ArelysController arelysController) throws IOException {
+//        this.arelysController = arelysController;
+//        TitleScreen();// was initialized
+//
+//    }
+    public GameFrame() throws IOException {
 
     }
 
@@ -218,7 +223,7 @@ public class GameFrame extends JFrame {
         panelRoomDescription.setLayout(new BorderLayout());
         panelRoomDescription.setBounds(5, 555, 400, 200);
 
-        String roomTitleString = "Old Church";
+        String roomTitleString = controller.playerLocation();
         JLabel roomTitle = new JLabel(roomTitleString);
         roomTitle.setForeground(Color.GREEN);
         roomTitle.setFont(new Font("Chiller", Font.PLAIN, 24));
@@ -226,10 +231,11 @@ public class GameFrame extends JFrame {
 //        room.setForeground(Font);
 
         String roomDescription = "This room is empty and dark";
+//        String roomDescription = controller.showAreaDescription();
         JLabel labelRoomDescription = new JLabel(roomDescription);
 //        labelRoomDescription.setFont();
         labelRoomDescription.setForeground(Color.GREEN);
-        gameText = new JTextArea("Game TEXT");
+        gameText = new JTextArea(controller.showAreaDescription());
         gameText.setBounds(5, 555, 400, 200);
         gameText.setBackground(Color.black);
         gameText.setForeground(Color.red);
@@ -501,13 +507,13 @@ public class GameFrame extends JFrame {
         JMenuItem[] dropMenu = new JMenuItem[4];
 
         dropMenu[1] = new JMenuItem(Choice1);
-        dropMenu[1].addActionListener(arelysController.objectsActions);
+//        dropMenu[1].addActionListener(arelysController.objectsActions);
         dropMenu[1].setActionCommand("TakeKnife");
         inspectKnife.add(dropMenu[1]);
 
 
         dropMenu[2] = new JMenuItem(Choice2);
-        dropMenu[2].addActionListener(arelysController.objectsActions);
+//        dropMenu[2].addActionListener(arelysController.objectsActions);
         dropMenu[2].setActionCommand("KnifeDesc");
         inspectKnife.add(dropMenu[2]);
 
@@ -546,13 +552,13 @@ public class GameFrame extends JFrame {
 
 
         dropMenu[1] = new JMenuItem(Choice1);
-        dropMenu[1].addActionListener(arelysController.objectsActions);
+//        dropMenu[1].addActionListener(arelysController.objectsActions);
         dropMenu[1].setActionCommand("takeMatches");
         inspectMatches.add(dropMenu[1]);
 
 
         dropMenu[2] = new JMenuItem(Choice2);
-        dropMenu[2].addActionListener(arelysController.objectsActions);
+//        dropMenu[2].addActionListener(arelysController.objectsActions);
         dropMenu[2].setActionCommand("matchesDesc");
         inspectMatches.add(dropMenu[2]);
 
@@ -589,13 +595,13 @@ public class GameFrame extends JFrame {
         });
 
         dropMenu[1] = new JMenuItem(Choice1);
-        dropMenu[1].addActionListener(arelysController.objectsActions);
+//        dropMenu[1].addActionListener(arelysController.objectsActions);
         dropMenu[1].setActionCommand("takeCrucifix");
         inspectCrucifix.add(dropMenu[1]);
 
 
         dropMenu[2] = new JMenuItem(Choice2);
-        dropMenu[2].addActionListener(arelysController.objectsActions);
+//        dropMenu[2].addActionListener(arelysController.objectsActions);
         dropMenu[2].setActionCommand("crucifixDesc");
         inspectCrucifix.add(dropMenu[2]);
 
@@ -669,7 +675,7 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         NorthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         NorthButton.setBackground(Color.DARK_GRAY);
-        NorthButton.addActionListener(arelysController.objectsActions);
+//        NorthButton.addActionListener(arelysController.objectsActions);
         NorthButton.setActionCommand("goNorth");
         NorthButton.setBorder(BorderFactory.createEtchedBorder());
 
@@ -681,7 +687,15 @@ public class GameFrame extends JFrame {
 
         // EAST
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
-        EastButton.addActionListener(e -> System.out.println("East"));
+//        EastButton.addActionListener(e -> System.out.println("East"));
+        EastButton.addActionListener(e -> {
+            try {
+                controller.userPrompt("go east");
+                initialize();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         EastButton.setPreferredSize(new Dimension(40, 40));
 //        button.addActionListener(this);
         EastButton.setFocusable(false); // gets rid of box around button
@@ -694,8 +708,9 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         EastButton.setForeground(Color.red);  //(new Color(0x8A0303));
         EastButton.setBackground(Color.DARK_GRAY);
-        EastButton.addActionListener(arelysController.objectsActions);
-        EastButton.setActionCommand("goEast");
+//        EastButton.addActionListener(arelysController.objectsActions);
+//        EastButton.addActionListener(controller.userPrompt("go east"));
+//        EastButton.setActionCommand("goEast");
         EastButton.setBorder(BorderFactory.createEtchedBorder());
 
 
@@ -719,7 +734,7 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         WestButton.setForeground(Color.red);  //(new Color(0x8A0303));
         WestButton.setBackground(Color.DARK_GRAY);
-        WestButton.addActionListener(arelysController.objectsActions);
+//        WestButton.addActionListener(arelysController.objectsActions);
         WestButton.setActionCommand("goWest");
         WestButton.setBorder(BorderFactory.createEtchedBorder());
 
@@ -743,7 +758,7 @@ public class GameFrame extends JFrame {
 //        settingsButton.setIconTextGap(5);
         SouthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         SouthButton.setBackground(Color.DARK_GRAY);
-        SouthButton.addActionListener(arelysController.objectsActions);
+//        SouthButton.addActionListener(arelysController.objectsActions);
         SouthButton.setActionCommand("goSouth");
         SouthButton.setActionCommand("South");
         SouthButton.setBorder(BorderFactory.createEtchedBorder());

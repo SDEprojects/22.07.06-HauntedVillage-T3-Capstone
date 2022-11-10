@@ -1,13 +1,17 @@
 package com.game.HauntedVillage.app;
 
-//import com.game.HauntedVillage.Controller;
-import com.game.HauntedVillage.controller.Controller;
+import com.game.HauntedVillage.GameFrame;
+import com.game.HauntedVillage.controller.ArelysController;
 import java.io.IOException;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
-        Controller app = new Controller();
-        app.execute();
+        GameFrame gameFrame = new GameFrame();
+        gameFrame.TitleScreen();
+//        new ArelysController();
+//        Controller app = new Controller();
+//        app.execute();
+//        app.run();
     }
 }
