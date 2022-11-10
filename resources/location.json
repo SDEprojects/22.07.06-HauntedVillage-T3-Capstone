@@ -9,9 +9,10 @@
       "items": ["matches", "crucifix", "knife"],
       "directions": {
         "east": "Center Courtyard"
+
       },
       "characters": [],
-      "jpeg": ""
+      "jpeg": "images/cabinedited.jpg"
     }
   },
   {
@@ -28,7 +29,7 @@
         "west": "Home"
       },
       "characters": ["villagers"],
-      "jpeg": ""
+      "jpeg": "images/spookyVillageedited.jpg"
     }
   },
 
@@ -45,7 +46,7 @@
         "south": "Center Courtyard"
       },
       "characters": ["children"],
-      "jpeg": ""
+      "jpeg": "images/northernSquare2.jpg"
     }
   },
 
@@ -62,7 +63,7 @@
         "south": "Farm"
       },
       "characters": [],
-      "jpeg": ""
+      "jpeg": "images/southernSquare.jpg"
     }
   },
 
@@ -77,7 +78,7 @@
         "north": "Southern Square"
       },
       "characters": ["werewolf", "farmer"],
-      "jpeg": ""
+      "jpeg": "images/farm.jpg"
     }
   },
 
@@ -93,7 +94,7 @@
         "west": "Southern Square"
       },
       "characters": ["clerk"],
-      "jpeg": ""
+      "jpeg": "images/townHall.jpg"
     }
   },
 
@@ -108,7 +109,7 @@
         "west": "Center Courtyard"
       },
       "characters": ["keep"],
-      "jpeg": ""
+      "jpeg": "images/tavern.jpg"
     }
   },
 
@@ -123,7 +124,7 @@
         "west": "Northern Square"
       },
       "characters": ["pastor"],
-      "jpeg": ""
+      "jpeg": "images/church.jpg"
     }
   },
 
@@ -139,7 +140,7 @@
         "south": "Northern Square"
       },
       "characters": [],
-      "jpeg": ""
+      "jpeg": "images/well.jpg"
     }
   },
 
@@ -154,7 +155,7 @@
         "south": "Well"
       },
       "characters": ["cat", "demon"],
-      "jpeg": ""
+      "jpeg": "images/woods.jpg"
     }
   }
 ]

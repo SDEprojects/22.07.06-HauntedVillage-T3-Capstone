@@ -11,14 +11,14 @@ class SavePlayer {
 
     void savePlayer(String location, ArrayList inventory, int healthLevel, ArrayList<String> deadNPCs) throws IOException {
 
-        Player player = new Player(location, inventory, healthLevel, deadNPCs);
+//        Player player = new Player(location, inventory, healthLevel, deadNPCs);
 
         try {
             FileOutputStream fos = new FileOutputStream(this.filename);
             ObjectMapper mapper = new ObjectMapper();
 
-            String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(player);
-            fos.write(jsonStr.getBytes());
+//            String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(player);
+//            fos.write(jsonStr.getBytes());
             fos.close();
             System.out.println("Game saved...\n");
         }

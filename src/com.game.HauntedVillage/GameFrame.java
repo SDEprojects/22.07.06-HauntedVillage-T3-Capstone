@@ -13,7 +13,6 @@ import com.game.HauntedVillage.controller.Controller;
 
 public class GameFrame extends JFrame {
 
-    ArelysController arelysController;
     private JFrame frame;
     private JPanel panelButtons;
     private JPanel panelInventory;
@@ -156,20 +155,6 @@ public class GameFrame extends JFrame {
         panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 5));
         panelButtons.setBackground(Color.BLACK);
         panelButtons.setSize(1000, 50);
-
-
-        // VISUAL panel
-//        panelVisual = new JPanel();
-//        panelVisual.setBackground(Color.BLACK);
-//        panelVisual.setSize(50,300);
-//        panelVisual.setBounds(5,50,670,500);
-//        labelVisual = new JLabel();
-//        ImageIcon image = new ImageIcon(new ImageIcon("images/cabinedited.jpeg").getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
-//
-//
-//        labelVisual.setIcon(image);
-//        panelVisual.add(labelVisual, BorderLayout.PAGE_START);
-//        GameBackground *************************************************************************
 
 
         // MAP panel
@@ -504,19 +489,20 @@ public class GameFrame extends JFrame {
 
     }
 
-    public void backgroundLayout(int visualNum, String backGroundImage) {
+    public void backgroundLayout(int visualNum, String bgImage) {
 
         panelVisual[visualNum] = new JPanel();
         panelVisual[visualNum].setBackground(Color.BLACK);
         panelVisual[visualNum].setSize(50, 300);
         panelVisual[visualNum].setBounds(5, 50, 670, 500);
         labelVisual[visualNum] = new JLabel();
-        ImageIcon image = new ImageIcon(new ImageIcon(backGroundImage).getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
+        System.out.println(controller.backgroundJpeg());
+        ImageIcon image = new ImageIcon(new ImageIcon(bgImage).getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
 
 
         labelVisual[visualNum].setIcon(image);
 //        panelVisual[visualNum].add(labelVisual[visualNum], BorderLayout.PAGE_START);
-        frame.add(panelVisual[visualNum]);
+//        frame.add(panelVisual[visualNum]);
     }
 
     public void createObject(int visualNum, String Choice1, String Choice2) {
@@ -722,6 +708,7 @@ public class GameFrame extends JFrame {
             try {
                 controller.userPrompt("go east");
                 initialize();
+                createScreen();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -828,29 +815,30 @@ public class GameFrame extends JFrame {
     }
     public void createScreen() {
 //        First Image Home
-        backgroundLayout(1, "images/cabinedited.jpg");
+        backgroundLayout(1, controller.backgroundJpeg());
         createObject(1, "get", "Talk");
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
+        frame.add(panelVisual[1]);
 
 //        Second Image Center CourtYard
-        backgroundLayout(2, "images/spookyVillageedited.jpg");
-//        createObject(2, "get", "Talk");
-        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
-
-//        Third Image Northern Square
-        backgroundLayout(3, "images/northernSquare2.jpg");
-//        createObject(3, "get", "Talk");
-        panelVisual[3].add(labelVisual[3], BorderLayout.PAGE_START);
-
-//        Fourth Image Southern Square
-        backgroundLayout(4, "images/southernSquare.jpg");
-//        createObject(3, "get", "Talk");
-        panelVisual[4].add(labelVisual[4], BorderLayout.PAGE_START);
-
-        //        Fifth Image Farm Square
-        backgroundLayout(5, "images/farm.jpg");
-//        createObject(3, "get", "Talk");
-        panelVisual[5].add(labelVisual[5], BorderLayout.PAGE_START);
+//        backgroundLayout(2);
+////        createObject(2, "get", "Talk");
+//        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
+//
+////        Third Image Northern Square
+//        backgroundLayout(3);
+////        createObject(3, "get", "Talk");
+//        panelVisual[3].add(labelVisual[3], BorderLayout.PAGE_START);
+//
+////        Fourth Image Southern Square
+//        backgroundLayout(4);
+////        createObject(3, "get", "Talk");
+//        panelVisual[4].add(labelVisual[4], BorderLayout.PAGE_START);
+//
+//        //        Fifth Image Farm Square
+//        backgroundLayout(5);
+////        createObject(3, "get", "Talk");
+//        panelVisual[5].add(labelVisual[5], BorderLayout.PAGE_START);
 
 
     }

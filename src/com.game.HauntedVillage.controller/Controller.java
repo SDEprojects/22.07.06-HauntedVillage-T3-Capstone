@@ -83,6 +83,23 @@ public class Controller {
 //        print3.printListToConsole();
 //    }
 
+//    private void userChoice() {
+//        setStartCondition(false);
+//        while (!isStartCondition()) {
+//            System.out.println(" [Y]es | [N]o ");
+//            setPlayerChoice(scanner.nextLine().trim().toUpperCase());
+//
+//            if(getPlayerChoice().matches("Y|N")) {
+//                if((getStartOrQuit().equals("s") && "Y".equals(getPlayerChoice())) || (getStartOrQuit().equals("q") && "N".equals(getPlayerChoice()))) {
+//                    setStartCondition(true);
+//                }
+//                else {
+//                    System.out.println("Thank you for playing");
+//                    System.exit(0);
+//                }
+//            }
+//        }
+//    }
 
     //game loop
 //    private void gameLoop() throws IOException {
@@ -129,10 +146,22 @@ public class Controller {
     public List<String> gameMap() {
         return mapImage.display(playerLocation());
     }
+    public String backgroundJpeg(){
+        return player.getCurrentLocationJpeg();
+    }
 
     public List<String> gameInventory() {
         return player.getInventory();
     }
+
+    //game loop
+//    private void gameLoop() throws IOException {
+//
+////        String oldLocation = "";
+//        //game continues if player is alive
+//        while (!player.isEndGame()) {
+
+
 
     //checks if action is allowed for given location
     private boolean actionChecker(String location, String inputAction) {
