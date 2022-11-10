@@ -1,6 +1,7 @@
-package com.game.HauntedVillage;
+package com.game.hauntedvillage.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class RestorePlayer {
         ArrayList<ArrayList<String>> playerInfoList = new ArrayList<>();
         ArrayList<String> playerLocation = new ArrayList<>();
         ArrayList<String> playerHealthLevel = new ArrayList<>();
-        Player player = new Player();
+        com.game.hauntedvillage.model.Player player = new com.game.hauntedvillage.model.Player();
         String filename = "savePlayer.json";
 
         try {

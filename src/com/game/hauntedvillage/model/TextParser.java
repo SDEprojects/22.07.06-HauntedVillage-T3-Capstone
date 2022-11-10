@@ -1,4 +1,4 @@
-package com.game.HauntedVillage;
+package com.game.hauntedvillage.model;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

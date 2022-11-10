@@ -1,4 +1,4 @@
-package com.game.HauntedVillage;
+package com.game.hauntedvillage.model;
 
 import com.apps.util.Console;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,12 +25,12 @@ public class Player implements Serializable {
     private Sound sound = new Sound();
     private boolean wellActivation = false;
     private boolean endGame;
-    private NPC npc = new NPC();
+    private com.game.hauntedvillage.model.NPC npc = new com.game.hauntedvillage.model.NPC();
     private HelpMenu helpMenu = new HelpMenu();
-    private Item item = new Item();
+    private com.game.hauntedvillage.model.Item item = new com.game.hauntedvillage.model.Item();
     private SavePlayer saveGame = new SavePlayer();
     private RestorePlayer restorePlayer = new RestorePlayer();
-    private com.game.HauntedVillage.Map map = new com.game.HauntedVillage.Map();
+    private Map map = new Map();
     private MapImage mapImage = new MapImage();
     private Art art = new Art();
     public String backgroundImages = "images/cabinedited.jpg";

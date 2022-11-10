@@ -1,22 +1,22 @@
-package com.game.HauntedVillage.controller;
+package com.game.hauntedvillage.controller;
 
 //import com.apps.util.Console;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.game.HauntedVillage.*;
+import com.game.hauntedvillage.model.MapImage;
+import com.game.hauntedvillage.model.Player;
 //import com.game.HauntedVillage.app.Print;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Controller {
 
     // initialize scanner. takes system input
 //    Scanner scanner = new Scanner(System.in);
     private ArrayList<String> verbNoun = new ArrayList<>(List.of("verb", "noun"));
-    private Player player = new Player();
+    private com.game.hauntedvillage.model.Player player = new Player();
     private List<String> playerUpdate = new ArrayList<>();
     private MapImage mapImage = new MapImage();
 //    private Splash splash = new Splash();
@@ -209,7 +209,7 @@ public class Controller {
         List<String> userFeedback = getPlayerUpdate();
         System.out.println(userInput);
 //            String userInput = scanner.nextLine().trim().toLowerCase();
-        TextParser parser = new TextParser();
+        com.game.hauntedvillage.model.TextParser parser = new com.game.hauntedvillage.model.TextParser();
         //verb-noun pair array using text parser
         ArrayList<String> result = parser.textParser(userInput);
         String userVerb = result.get(0);
