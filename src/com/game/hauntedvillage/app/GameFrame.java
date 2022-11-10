@@ -1,11 +1,11 @@
-package com.game.HauntedVillage.app;
+package com.game.hauntedvillage.app;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import com.game.HauntedVillage.controller.Controller;
+import com.game.hauntedvillage.controller.Controller;
 
 public class GameFrame extends JFrame {
 
@@ -36,11 +36,15 @@ public class GameFrame extends JFrame {
 
     }
 
-    public void TitleScreen() {
+    public void titleScreen() {
 
         frame = new JFrame();
         label = new JLabel();  // create label
-        ImageIcon image = new ImageIcon(new ImageIcon("images/spookyVillageedited.jpg").getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+//        ImageIcon image = new ImageIcon(new ImageIcon("images/spookyVillageedited.jpg").getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+        ClassLoader classLoader = getClass().getClassLoader();
+        //noinspection ConstantConditions
+        ImageIcon image = new ImageIcon(new ImageIcon(classLoader.getResource("images/spookyVillageedited.jpg")).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+
 
         // JFrame
         frame.setTitle("Haunted Village"); //sets title of frame

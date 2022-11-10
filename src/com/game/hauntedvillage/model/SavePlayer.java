@@ -1,4 +1,4 @@
-package com.game.HauntedVillage;
+package com.game.hauntedvillage.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileOutputStream;
