@@ -32,7 +32,7 @@ public class Player implements Serializable {
     private com.game.HauntedVillage.Map map = new com.game.HauntedVillage.Map();
     private MapImage mapImage = new MapImage();
     private Art art = new Art();
-    private String oldLocation = "";
+//    private String oldLocation = "";
     public String backgroundImages = "images/cabinedited.jpg";
 
     public Player() throws IOException {
@@ -261,29 +261,27 @@ public class Player implements Serializable {
     public String areaDescription() {
         String printThis = "";
 
-        if(!getOldLocation().equals(getLocation())) {
-            for (JsonNode root : getLocationRootArray()) {
-                // Get Name
-                JsonNode nameNode = root.path(getLocation());
+        for (JsonNode root : getLocationRootArray()) {
+            // Get Name
+            JsonNode nameNode = root.path(getLocation());
 
-                if (!nameNode.isMissingNode()) {  // if "name" node is not missing
+            if (!nameNode.isMissingNode()) {  // if "name" node is not missing
 
-                    for (JsonNode node : nameNode) {
-                        // Get Description
-                        JsonNode descriptionNode = nameNode.path("description");
-                        JsonNode description2Node = nameNode.path("description2");
+                for (JsonNode node : nameNode) {
+                    // Get Description
+                    JsonNode descriptionNode = nameNode.path("description");
+                    JsonNode description2Node = nameNode.path("description2");
 
-                        if (descriptionNode.equals(node)) {
-                            if(!"Woods".equals(getLocation()) || ("Woods".equals(getLocation()) && getInventory().contains("stone"))) {
-                                printThis = node.asText();
-                                setOldLocation(getLocation());
-                            }
+                    if (descriptionNode.equals(node)) {
+                        if(!"Woods".equals(getLocation()) || ("Woods".equals(getLocation()) && getInventory().contains("stone"))) {
+                            printThis = node.asText();
+//                            setOldLocation(getLocation());
                         }
-                        else if(description2Node.equals(node)) {
-                            if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
-                                setOldLocation(getLocation());
-                                printThis = node.asText();
-                            }
+                    }
+                    else if(description2Node.equals(node)) {
+                        if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
+//                            setOldLocation(getLocation());
+                            printThis = node.asText();
                         }
                     }
                 }
@@ -564,11 +562,11 @@ public class Player implements Serializable {
         this.endGame = endGame;
     }
 
-    private String getOldLocation() {
-        return oldLocation;
-    }
-
-    private void setOldLocation(String oldLocation) {
-        this.oldLocation = oldLocation;
-    }
+//    private String getOldLocation() {
+//        return oldLocation;
+//    }
+//
+//    private void setOldLocation(String oldLocation) {
+//        this.oldLocation = oldLocation;
+//    }
 }
