@@ -313,7 +313,7 @@ public class GameFrame extends JFrame {
         helpButton.setBorder(BorderFactory.createEtchedBorder());
 
         //Quit/Exit
-        quitButton.addActionListener(e -> System.out.println("quit"));
+        quitButton.addActionListener(e ->quitGame());
         quitButton.setPreferredSize(new Dimension(273, 40));
 //        button.addActionListener(this);
         quitButton.setFocusable(false); // gets rid of box around button
@@ -339,6 +339,22 @@ public class GameFrame extends JFrame {
         frame.add(panelInventory);
         frame.add(panelRoomDescription);
         frame.add(panelTextFeedback);
+    }
+    public void quitGame() {
+        panelVisual[1].setVisible(false);
+        panelNav.setVisible(false);
+        panelMap.setVisible(false);
+        panelInventory.setVisible(false);
+        panelRoomDescription.setVisible(false);
+        panelTextFeedback.setVisible(false);
+        panelButtons.setVisible(false);
+        panelVisual[2].setVisible(true);
+
+//        frame.wait();
+//        createScreen();
+
+//        System.exit(0);
+
     }
 
     public void backgroundLayout(int visualNum, String bgImage) {
@@ -669,9 +685,9 @@ public class GameFrame extends JFrame {
         frame.add(panelVisual[1]);
 
 //        Second Image Center CourtYard
-//        backgroundLayout(2);
-////        createObject(2, "get", "Talk");
-//        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
+        backgroundLayout(2, "images/theend.jpg");
+        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
+        frame.add(panelVisual[2]);
 //
 ////        Third Image Northern Square
 //        backgroundLayout(3);
