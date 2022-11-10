@@ -42,6 +42,7 @@ public class Controller {
         String screen = splash.splashScreen();
         Print print4 = new Print(screen);
         print4.printToConsole();
+
     }
 
     private void startNewGame() {
@@ -87,6 +88,10 @@ public class Controller {
 
     public String playerLocation() {
         return player.getLocation();
+    }
+
+    public String backgroundJpeg(){
+        return player.getCurrentLocationJpeg();
     }
 
     //game loop

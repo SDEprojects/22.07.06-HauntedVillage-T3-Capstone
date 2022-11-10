@@ -33,15 +33,17 @@ public class Player implements Serializable {
     private MapImage mapImage = new MapImage();
     private Art art = new Art();
     private String oldLocation = "";
+    public String backgroundImages = "images/cabinedited.jpg";
 
     public Player() throws IOException {
     }
 
-    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> characters) throws IOException {
+    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> characters, String backgroundImages) throws IOException {
         this.location = location;
         this.inventory = inventory;
         this.healthLevel = healthLevel;
         this.npcInventory = characters;
+        this.backgroundImages = backgroundImages;
     }
 
 //    private void healthModifier(String item) {
@@ -306,6 +308,22 @@ public class Player implements Serializable {
         return endCondition;
     }
 
+
+    public String getCurrentLocationJpeg() {
+        for (JsonNode root : getLocationRootArray()) {
+
+            String location = getLocation();
+            // Get Name
+            JsonNode nameNode = root.path(location);
+
+            if (!nameNode.isMissingNode()) {
+                return nameNode.path("jpeg").asText();
+            }
+        }
+        return null;
+    }
+
+
     public List<String> playerCurrentInfo() {
         List<String> stats = new ArrayList<>();
 
@@ -483,6 +501,14 @@ public class Player implements Serializable {
 
     private void setWellActivation(boolean wellActivation) {
         this.wellActivation = wellActivation;
+    }
+
+    public String getBackgroundImages() {
+        return backgroundImages;
+    }
+
+    public void setBackgroundImages(String backgroundImages) {
+        this.backgroundImages = backgroundImages;
     }
 
     public int getHealthLevel() {
