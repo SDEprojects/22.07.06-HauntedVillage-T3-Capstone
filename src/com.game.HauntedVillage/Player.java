@@ -32,7 +32,6 @@ public class Player implements Serializable {
     private com.game.HauntedVillage.Map map = new com.game.HauntedVillage.Map();
     private MapImage mapImage = new MapImage();
     private Art art = new Art();
-//    private String oldLocation = "";
     public String backgroundImages = "images/cabinedited.jpg";
 
     public Player() throws IOException {
@@ -114,7 +113,7 @@ public class Player implements Serializable {
                 }
             }
             else {
-                printThis.add(String.format("Can not %s %s in %s.%n Provide valid input.%n", verbNoun.get(0).toUpperCase(), verbNoun.get(1).toUpperCase(), getLocation().toUpperCase()));
+                printThis.add(String.format("Can not %s %s in %s.%n", verbNoun.get(0).toUpperCase(), verbNoun.get(1).toUpperCase(), getLocation().toUpperCase()));
             }
         }
         //found items retrieves locations item list
@@ -561,12 +560,4 @@ public class Player implements Serializable {
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
-
-//    private String getOldLocation() {
-//        return oldLocation;
-//    }
-//
-//    private void setOldLocation(String oldLocation) {
-//        this.oldLocation = oldLocation;
-//    }
 }

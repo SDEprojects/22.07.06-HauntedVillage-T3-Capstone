@@ -1,14 +1,10 @@
-package com.game.HauntedVillage;
+package com.game.HauntedVillage.app;
 
-import com.game.HauntedVillage.app.Print;
-import com.game.HauntedVillage.controller.ArelysController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.util.Vector;
-
 import com.game.HauntedVillage.controller.Controller;
 
 public class GameFrame extends JFrame {
@@ -115,7 +111,7 @@ public class GameFrame extends JFrame {
         frame.add(boardGame);
         frame.add(label);
         frame.pack();
-        oldLocation = controller.showAreaDescription();
+        setOldLocation(controller.showAreaDescription());
     }
 
     public void initialize() {
@@ -224,11 +220,11 @@ public class GameFrame extends JFrame {
             feedbackTitleString = "The wind seems to mutter...";
             String convert = controller.getPlayerUpdate().toString();
             feedbackWrap.setText(convert.substring(1, convert.length() - 1));
-            gameText.setText(oldLocation);
+            gameText.setText(getOldLocation());
         }
         else {
-            oldLocation = controller.showAreaDescription();
-            gameText.setText(oldLocation);
+            setOldLocation(controller.showAreaDescription());
+            gameText.setText(getOldLocation());
         }
 //        gameText = new JTextArea(controller.showAreaDescription());
         gameText.setBounds(5, 555, 400, 200);
@@ -754,5 +750,13 @@ public class GameFrame extends JFrame {
 
     public void setPanelTextFeedback(JPanel panelTextFeedback) {
         this.panelTextFeedback = panelTextFeedback;
+    }
+
+    public String getOldLocation() {
+        return oldLocation;
+    }
+
+    public void setOldLocation(String oldLocation) {
+        this.oldLocation = oldLocation;
     }
 }
