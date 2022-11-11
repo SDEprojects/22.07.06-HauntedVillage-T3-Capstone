@@ -2,6 +2,7 @@ package com.game.hauntedvillage.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class RestorePlayer {
     public RestorePlayer() throws IOException {
     }
 
-    public ArrayList restorePlayer() throws IOException {
+    public ArrayList restorePlayer() throws IOException, UnsupportedAudioFileException {
         ArrayList<ArrayList<String>> playerInfoList = new ArrayList<>();
         ArrayList<String> playerLocation = new ArrayList<>();
         ArrayList<String> playerHealthLevel = new ArrayList<>();
