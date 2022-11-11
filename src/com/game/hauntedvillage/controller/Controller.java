@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Controller {
 
@@ -152,6 +153,10 @@ public class Controller {
 
     public List<String> gameInventory() {
         return player.getInventory();
+    }
+
+    public Map<String, String> areaItems() {
+        return player.foundItems();
     }
 
     //game loop

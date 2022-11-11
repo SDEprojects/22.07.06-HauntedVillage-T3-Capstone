@@ -6,11 +6,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import static java.lang.Integer.parseInt;
 
 public class Player implements Serializable {
@@ -30,7 +33,7 @@ public class Player implements Serializable {
     private com.game.hauntedvillage.model.Item item = new com.game.hauntedvillage.model.Item();
     private SavePlayer saveGame = new SavePlayer();
     private RestorePlayer restorePlayer = new RestorePlayer();
-    private Map map = new Map();
+    private com.game.hauntedvillage.model.Map map = new com.game.hauntedvillage.model.Map();
     private MapImage mapImage = new MapImage();
     private Art art = new Art();
     public String backgroundImages = "images/cabinedited.jpg";
@@ -109,8 +112,6 @@ public class Player implements Serializable {
                 //if new location is not blank the location is updated
                 if (!Objects.equals(newLocation, "")) {
                     setLocation(newLocation);
-                    System.out.println(newLocation);
-                    getInventory().add("new Stuff");
                 }
             }
             else {
@@ -119,20 +120,29 @@ public class Player implements Serializable {
         }
         //found items retrieves locations item list
         if("take".equals(verbNoun.get(0))) {
-            ArrayList<String> items = foundItems();
+            Map<String, String> items = foundItems();
             String noun = verbNoun.get(1);
-            if (items.contains(noun)) {
-                //take command, player adds item to inventory
-                for (String item : items) {
-                    if (item.equals(noun)) {
-                        sound.runFX();
-                        addInventory(noun);
-                    }
+            for(String item : items.values()) {
+                if(item.equals(noun)) {
+                    sound.runFX();
+                    addInventory(noun);
                 }
+//                else {
+//                    printThis.add(String.format("There is no %s here to take.%n Try again.%n", noun));
+//                }
             }
-            else {
-                printThis.add(String.format("There is no %s here to take.%n Try again.%n", noun));
-            }
+//            if (items.contains(noun)) {
+//                //take command, player adds item to inventory
+//                for (String item : items) {
+//                    if (item.equals(noun)) {
+//                        sound.runFX();
+//                        addInventory(noun);
+//                    }
+//                }
+//            }
+//            else {
+//                printThis.add(String.format("There is no %s here to take.%n Try again.%n", noun));
+//            }
         }
         if ("search".equals(verbNoun.get(0))) {
 
@@ -408,8 +418,12 @@ public class Player implements Serializable {
     }
 
     //returns location specific items
-    private ArrayList<String> foundItems() {
-        ArrayList<String> itemsList = new ArrayList<>(0);
+//    public ArrayList<String> foundItems() {
+    public Map<String, String> foundItems() {
+        Map<String, String> items = new ConcurrentHashMap<>();
+
+        List<String> mapEntry = new ArrayList<>();
+//        ArrayList<String> itemsList = new ArrayList<>(0);
         for (JsonNode root : getLocationRootArray()) {
             // Get Name
             JsonNode nameNode = root.path(getLocation());
@@ -419,15 +433,30 @@ public class Player implements Serializable {
                     // Get node names
                     JsonNode itemsNode = nameNode.path("items");
                     if (itemsNode.equals(node)) {
-                        for (JsonNode item : itemsNode) {
-                            itemsList.add(item.asText());
+//                        for (JsonNode item : itemsNode) {
+                        for (int i = 0; i < itemsNode.size(); i++) {
+//                            itemsList.add(item.asText());
+                            items.put(String.format("%s",i), itemsNode.get(i).asText());
                         }
                     }
                 }
             }
         }
-        itemsList.removeIf(getInventory()::contains);
-        return itemsList;
+        for(String item : items.values()) {
+            if(getInventory().contains(item)) {
+                mapEntry.add(item);
+//                items.remove(item);
+            }
+        }
+        for(Map.Entry<String, String> entry : items.entrySet()) {
+//            if(entry.getValue().equals(mapEntry)) {
+            if(mapEntry.contains(entry.getValue())) {
+                items.remove(entry.getKey());
+            }
+        }
+        return items;
+//        itemsList.removeIf(getInventory()::contains);
+//        return itemsList;
     }
 
     //remove an item from player's inventory

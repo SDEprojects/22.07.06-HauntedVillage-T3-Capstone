@@ -6,7 +6,7 @@
       "description": "You are at home in your familiar log cabin. You look around and see some items that may be of use. \n\nYou can search the house for some useful items, rest to heal, or go east outside.",
       "description2": "",
       "actions": ["search", "rest", "go", "take", "speak"],
-      "items": ["matches", "crucifix", "knife"],
+      "items": ["images/matches.jpg", "images/crucifix.jpg", "images/knife.jpg"],
       "directions": {
         "east": "Center Courtyard"
 
@@ -29,7 +29,7 @@
         "west": "Home"
       },
       "characters": ["villagers"],
-      "jpeg": "images/spookyVillageedited.jpg"
+      "jpeg": "resources/images/spookyVillageedited.jpg"
     }
   },
 
@@ -90,7 +90,6 @@
       "actions": ["take", "search", "go", "speak"],
       "items": [],
       "directions": {
-        "north": "Tavern",
         "west": "Southern Square"
       },
       "characters": ["clerk"],
@@ -104,7 +103,7 @@
       "description": "There are broken chairs on the floor and the tavern is empty except for the bar keep. \nSorry but we have no Ale or food. Nothing left here but some animal feed.  \n\n",
       "description2": "",
       "actions": ["take", "go", "search", "speak"],
-      "items": ["feed"],
+      "items": [],
       "directions": {
         "west": "Center Courtyard"
       },
@@ -119,7 +118,7 @@
       "description": "You hear a cat >>MEOW<< from behind a pew, but don’t get startled. \nIt is a bit dark for an early afternoon visit, but you remember seeing clouds up above, possibly signaling some rain later that evening. \n\nHere you can speak to the pastor, say a prayer, light a candle, or go west to leave.",
       "description2": "",
       "actions": ["speak", "say", "light", "go", "search", "fight"],
-      "items": ["corn", "note"],
+      "items": [],
       "directions": {
         "west": "Northern Square"
       },

@@ -9,11 +9,11 @@ import java.util.List;
 
 class Item {
 
-    private List<String> itemList = new ArrayList<>();
+
 
     public List<String> checkForItem(String item){
         ObjectMapper objectMapper = new ObjectMapper();
-
+        List<String> itemList = new ArrayList<>();
         try {
             JsonNode rootArray = objectMapper.readTree(new File("resources/items.json"));
 
@@ -25,7 +25,7 @@ class Item {
                         JsonNode descNode = nameNode.path("description");
 
                         if (descNode.equals(node)) {
-                            itemList.add("\n\n");
+//                            itemList.add("\n\n");
                             itemList.add(descNode.asText());
                         }
                     }
