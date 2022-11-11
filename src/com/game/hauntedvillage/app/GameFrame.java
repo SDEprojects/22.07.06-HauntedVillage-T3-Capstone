@@ -416,9 +416,9 @@ public class GameFrame extends JFrame {
         inspectKnife.add(dropMenu[2]);
 
         knifeObjLabel = new JLabel();
-        knifeObjLabel.setBounds(175, 350, 100, 100);
+        knifeObjLabel.setBounds(175, 350, 200, 200);
 
-        gameIcon = new ImageIcon("images/knife.jpg");
+        gameIcon = new ImageIcon("images/angryFarmerBack.png");
         knifeObjLabel.setIcon(gameIcon);
 
         knifeObjLabel.addMouseListener(new MouseListener() {
@@ -461,9 +461,9 @@ public class GameFrame extends JFrame {
         inspectMatches.add(dropMenu[2]);
 
         matchesObjLabel = new JLabel();
-        matchesObjLabel.setBounds(400,200,100,100);
+        matchesObjLabel.setBounds(400,200,150,100);
 
-        gameIcon = new ImageIcon("images/matches.jpg");
+        gameIcon = new ImageIcon("images/blueStoneBack (Custom).png");
         matchesObjLabel.setIcon(gameIcon);
 
         matchesObjLabel.addMouseListener(new MouseListener() {
@@ -506,7 +506,7 @@ public class GameFrame extends JFrame {
         crucifixObjLabel = new JLabel();
         crucifixObjLabel.setBounds(50,150,100,100);
 
-        gameIcon = new ImageIcon("images/crucifix.jpg");
+        gameIcon = new ImageIcon("images/amuletBackg.png");
         crucifixObjLabel.setIcon(gameIcon);
 
         crucifixObjLabel.addMouseListener(new MouseListener() {

@@ -52,7 +52,7 @@
     {
       "name": "clerk",
       "location": "Town hall",
-      "conversations": ["Where did that cat come from? Have you seen it?", "The pastor sure has been actin' strange lately."],
+      "conversations": ["Where did that cat come from? Have you seen it?", "The pastor sure has been acting strange lately."],
       "actions": []
     }
   },
@@ -62,7 +62,7 @@
     {
       "name": "keep",
       "location": "Tavern",
-      "conversations": ["Pick your poison!", "Strange things be happenin' around here lately..."],
+      "conversations": ["Pick your poison!", "Strange things be happening' around here lately..."],
       "actions": []
     }
   },
