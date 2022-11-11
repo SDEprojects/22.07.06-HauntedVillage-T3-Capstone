@@ -1,5 +1,7 @@
 package com.game.hauntedvillage.app;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,11 +43,13 @@ public class GameFrame extends JFrame {
     Controller controller = new Controller();
     private String oldLocation = "";
 
-    private Sound sound = new Sound();
-
-    public GameFrame() throws IOException {
-
+    public GameFrame() throws IOException, UnsupportedAudioFileException {
     }
+
+
+//    private Sound sound = new Sound();
+
+
 
     public void titleScreen() {
 
@@ -418,6 +422,18 @@ public class GameFrame extends JFrame {
 //                    public void actionPerformed(ActionEvent e) {
 ////                System.out.println("hi");
 //                        // The Frame
+                bSFXOn.addActionListener(bSFXOnE -> {
+                    try {
+                        controller.SFXAccessOn();
+                    } catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    } catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
 
 
 
@@ -439,6 +455,17 @@ public class GameFrame extends JFrame {
                 bSFXOff.setBorder(BorderFactory.createEtchedBorder());
                 bSFXOff.addActionListener(SFXOff -> System.out.println("SFX off"));
 //                bSFXOff.addActionListener(SFXOff -> Sound.runMusic());
+                bSFXOff.addActionListener(bSFXOffE -> {
+                    try {
+                        controller.SFXAccessOff();
+                    } catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    } catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
 
 
 
@@ -460,9 +487,19 @@ public class GameFrame extends JFrame {
                 bMusicOn.setBackground(Color.DARK_GRAY);
                 bMusicOn.setBorder(BorderFactory.createEtchedBorder());
 
-                bMusicOn.addActionListener(musicOn -> System.out.println("Music on"));
+                bMusicOn.addActionListener(musicOnE -> System.out.println("Music on"));
 //                bMusicOn.addActionListener(musicOn -> sound.runMusic("C"));
-                bMusicOn.addActionListener(musicOn -> sound.setMusicOn(true));
+                bMusicOn.addActionListener(musicOnE -> {
+                    try {
+                        controller.musicAccessOn();
+                    } catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    } catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
 
                 // Music Button OFF
                 JLabel labelMusicOff = new JLabel("   Music Off");
@@ -480,8 +517,18 @@ public class GameFrame extends JFrame {
                 bMusicOff.setBackground(Color.DARK_GRAY);
                 bMusicOff.setBorder(BorderFactory.createEtchedBorder());
 
-                bMusicOff.addActionListener(musicOff -> System.out.println("Music off"));
-//                bMusicOff.addActionListener(musicOff -> sound.runMusic("Q"));
+                bMusicOff.addActionListener(musicOffE -> System.out.println("Music off"));
+                bMusicOff.addActionListener(musicOffE -> {
+                    try {
+                        controller.musicAccessOff();
+                    } catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    } catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
 
 
                 frame.add(labelSFXON);
@@ -628,7 +675,7 @@ public class GameFrame extends JFrame {
                         item1.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -638,7 +685,7 @@ public class GameFrame extends JFrame {
                     try {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("0")));
                         initialize();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -683,7 +730,7 @@ public class GameFrame extends JFrame {
                         item2.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -693,7 +740,7 @@ public class GameFrame extends JFrame {
                     try {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("1")));
                         initialize();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -738,7 +785,7 @@ public class GameFrame extends JFrame {
                         item3.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -748,7 +795,7 @@ public class GameFrame extends JFrame {
                     try {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("2")));
                         initialize();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -940,7 +987,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go north");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -966,7 +1013,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go east");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -994,7 +1041,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go west");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -1022,7 +1069,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go south");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });

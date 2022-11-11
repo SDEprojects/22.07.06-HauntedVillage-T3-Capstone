@@ -18,6 +18,10 @@ public class Sound {
     private Art art = new Art();
     private File musicFile = new File("resources/music.wav");
     private File soundFXFile = new File("resources/inventorySFX.wav");
+    private AudioInputStream audioStream;
+    private Clip clip;
+    private Clip sfxClip;
+
 
 //    public static void musicPlayer(File file) {
 //        if(getMusicOn()){
@@ -111,8 +115,47 @@ public class Sound {
 //    }
 
 
-    public Sound() {
+    public Sound() throws UnsupportedAudioFileException, IOException {
     }
+
+    public void musicOn() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        audioStream = AudioSystem.getAudioInputStream(getMusicFile());
+        clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
+        clip.loop(10);
+        FloatControl gainMusicControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainMusicControl.setValue(20f * (float) Math.log10(getMusicLevel())); // set volume to 50% to start
+
+    }
+
+    public void musicOff() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        //audioStream = AudioSystem.getAudioInputStream(getMusicFile());
+//        clip = AudioSystem.getClip();
+//        clip.open(audioStream);
+        clip.stop();
+//        clip.loop(10);
+//        FloatControl gainMusicControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//        gainMusicControl.setValue(20f * (float) Math.log10(getMusicLevel())); // set volume to 50% to start
+
+    }
+
+    //sfx ON
+    public void SFXOn() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream sfxStream = AudioSystem.getAudioInputStream(getSoundFXFile());
+        Clip sfxClip = AudioSystem.getClip();
+        sfxClip.open(sfxStream);
+        FloatControl gainSfxControl = (FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainSfxControl.setValue(20f * (float) Math.log10(getSoundFXLevel())); // set volume to 50% to start
+    }
+
+
+
+    //sfx OFF
+    public void SFXOff() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
+        sfxClip.stop();
+    }
+
 
     public void runMusic(){
 
@@ -274,7 +317,7 @@ public class Sound {
         return soundFXLevel;
     }
 
-    public Boolean getMusicOn() {
+    private Boolean getMusicOn() {
         return musicOn;
     }
 
