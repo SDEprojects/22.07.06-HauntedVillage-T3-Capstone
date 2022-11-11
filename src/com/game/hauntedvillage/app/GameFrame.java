@@ -596,6 +596,10 @@ public class GameFrame extends JFrame {
                 labelVisual[1].add(item3Label);
             }
         }
+        JPopupMenu inspectKnife = new JPopupMenu();
+        JPopupMenu inspectMatches = new JPopupMenu();
+        JPopupMenu inspectCrucifix = new JPopupMenu();
+
         dropMenu[1] = new JMenuItem(Choice1);
         dropMenu[1].setActionCommand("TakeKnife");
         inspectKnife.add(dropMenu[1]);
@@ -636,8 +640,6 @@ public class GameFrame extends JFrame {
             public void mouseExited(MouseEvent event) {
             }
         });
-        inspectMatches = new JPopupMenu();
-
 
         dropMenu[1] = new JMenuItem(Choice1);
 //        dropMenu[1].addActionListener(arelysController.objectsActions);
