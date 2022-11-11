@@ -20,7 +20,7 @@ public class GameFrame extends JFrame {
     private JPanel panelMap;
     private JPanel panelRoomDescription;
     private JPanel panelTextFeedback;
-    private JLabel label, gameObjLabel;
+    private JLabel label, gameObjLabel, quitLabel;
     private ImageIcon icon, gameIcon;
     private JPanel boardGame;
     private JButton playButton, quitButton, exitButton;
@@ -96,21 +96,36 @@ public class GameFrame extends JFrame {
 
         playButton.setFocusPainted(false);
 
-        quitButton = new JButton("Quit");
-        quitButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        quitButton.setForeground(Color.red);
-        quitButton.setOpaque(false);
-        quitButton.setContentAreaFilled(false);
-        quitButton.setBorderPainted(false);
-        quitButton.addActionListener(e -> {
-            System.exit(0);
+        JButton endButton = new JButton("Quit");
+        endButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
+        endButton.setForeground(Color.red);
+        endButton.setOpaque(false);
+        endButton.setContentAreaFilled(false);
+        endButton.setBorderPainted(false);
+        endButton.addActionListener(e -> {
+            quitMainScreen();
         });
-        boardGame.add(quitButton);
+        boardGame.add(endButton);
 
         frame.add(boardGame);
         frame.add(label);
         frame.pack();
         setOldLocation(controller.showAreaDescription());
+    }
+    public void quitMainScreen(){
+
+        frame.getContentPane().removeAll();
+        frame.repaint();
+
+        quitLabel = new JLabel();
+        ClassLoader classLoader = getClass().getClassLoader();
+        //noinspection ConstantConditions
+        ImageIcon image = new ImageIcon(new ImageIcon(classLoader.getResource("images/thankyouforplaying.jpg")).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+        quitLabel.setBackground(Color.black); // set background color
+        quitLabel.setIcon(image);
+
+        frame.add(quitLabel);
+        frame.setVisible(true);
     }
 
     public void initialize() {
@@ -317,7 +332,7 @@ public class GameFrame extends JFrame {
 
         JButton settingsButton = new JButton("Settings");
         JButton helpButton = new JButton("Help");
-        exitButton = new JButton("Exit");
+        JButton quitButton = new JButton("Exit");
 
         // POP UP BUTTON
         // SETTINGS Button
@@ -353,24 +368,29 @@ public class GameFrame extends JFrame {
         helpButton.setBorder(BorderFactory.createEtchedBorder());
 
         //Quit/Exit
-        exitButton.addActionListener(e ->quitGame());
-        exitButton.setPreferredSize(new Dimension(273, 40));
+        quitButton.addActionListener(e -> {
+
+                quitGame();
+
+
+        });
+        quitButton.setPreferredSize(new Dimension(273, 40));
 //        button.addActionListener(this);
-        exitButton.setFocusable(false); // gets rid of box around button
-        exitButton.setText("Exit");
+        quitButton.setFocusable(false); // gets rid of box around button
+        quitButton.setText("Exit");
         //button.setIcon(icon);// adds pic to button
-        exitButton.setHorizontalTextPosition(JButton.RIGHT);
-        exitButton.setVerticalTextPosition(JButton.CENTER);
-        exitButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        quitButton.setHorizontalTextPosition(JButton.RIGHT);
+        quitButton.setVerticalTextPosition(JButton.CENTER);
+        quitButton.setFont(new Font("Chiller", Font.ITALIC, 40));
 //        settingsButton.setIconTextGap(5);
-        exitButton.setForeground(Color.red);  //(new Color(0x8A0303));
-        exitButton.setBackground(Color.DARK_GRAY);
-        exitButton.setBorder(BorderFactory.createEtchedBorder());
+        quitButton.setForeground(Color.red);  //(new Color(0x8A0303));
+        quitButton.setBackground(Color.DARK_GRAY);
+        quitButton.setBorder(BorderFactory.createEtchedBorder());
 
         // Add items to panelButtons
         panelButtons.add(settingsButton);
         panelButtons.add(helpButton);
-        panelButtons.add(exitButton);
+        panelButtons.add(quitButton);
 
         // Add items to frame
         frame.add(panelButtons);
@@ -381,19 +401,15 @@ public class GameFrame extends JFrame {
         frame.add(panelTextFeedback);
     }
     public void quitGame() {
-//        panelVisual[1].setVisible(false);
-//        panelNav.setVisible(false);
-//        panelMap.setVisible(false);
-//        panelInventory.setVisible(false);
-//        panelRoomDescription.setVisible(false);
-//        panelTextFeedback.setVisible(false);
-//        panelButtons.setVisible(false);
-//        panelVisual[2].setVisible(true);
-//
-//        frame.wait();
-//        createScreen();
-        System.exit(0);
+        panelVisual[1].setVisible(false);
+
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        //frame.add(panelVisual[1]);
+        createQuitScreen();
     }
+
+
 
     public void backgroundLayout(int visualNum, String bgImage) {
 
@@ -402,7 +418,6 @@ public class GameFrame extends JFrame {
         panelVisual[visualNum].setSize(50, 300);
         panelVisual[visualNum].setBounds(5, 50, 670, 500);
         labelVisual[visualNum] = new JLabel();
-        System.out.println(controller.backgroundJpeg());
         ImageIcon image = new ImageIcon(new ImageIcon(bgImage).getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
 
         labelVisual[visualNum].setIcon(image);
@@ -581,6 +596,138 @@ public class GameFrame extends JFrame {
                 labelVisual[1].add(item3Label);
             }
         }
+        dropMenu[1] = new JMenuItem(Choice1);
+        dropMenu[1].setActionCommand("TakeKnife");
+        inspectKnife.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+        dropMenu[2].setActionCommand("KnifeDesc");
+        inspectKnife.add(dropMenu[2]);
+
+        knifeObjLabel = new JLabel();
+        knifeObjLabel.setBounds(175, 350, 200, 200);
+
+        gameIcon = new ImageIcon("images/angryFarmerBack.png");
+        knifeObjLabel.setIcon(gameIcon);
+
+        knifeObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectKnife.show(knifeObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+        inspectMatches = new JPopupMenu();
+
+
+        dropMenu[1] = new JMenuItem(Choice1);
+//        dropMenu[1].addActionListener(arelysController.objectsActions);
+        dropMenu[1].setActionCommand("takeMatches");
+        inspectMatches.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+//        dropMenu[2].addActionListener(arelysController.objectsActions);
+        dropMenu[2].setActionCommand("matchesDesc");
+        inspectMatches.add(dropMenu[2]);
+
+        matchesObjLabel = new JLabel();
+        matchesObjLabel.setBounds(400,200,150,100);
+
+        gameIcon = new ImageIcon("images/blueStoneBack (Custom).png");
+        matchesObjLabel.setIcon(gameIcon);
+
+        matchesObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectMatches.show(matchesObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+
+        dropMenu[1] = new JMenuItem(Choice1);
+//        dropMenu[1].addActionListener(arelysController.objectsActions);
+        dropMenu[1].setActionCommand("takeCrucifix");
+        inspectCrucifix.add(dropMenu[1]);
+
+
+        dropMenu[2] = new JMenuItem(Choice2);
+//        dropMenu[2].addActionListener(arelysController.objectsActions);
+        dropMenu[2].setActionCommand("crucifixDesc");
+        inspectCrucifix.add(dropMenu[2]);
+
+        crucifixObjLabel = new JLabel();
+        crucifixObjLabel.setBounds(50,150,100,100);
+
+        gameIcon = new ImageIcon("images/amuletBackg.png");
+        crucifixObjLabel.setIcon(gameIcon);
+
+        crucifixObjLabel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent event) {
+                if (SwingUtilities.isRightMouseButton(event)) {
+                    inspectCrucifix.show(crucifixObjLabel, event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent event) {
+            }
+        });
+
+        labelVisual[1].add(knifeObjLabel);
+        labelVisual[1].add(matchesObjLabel);
+        labelVisual[1].add(crucifixObjLabel);
     }
 
     public void createDirectionButtons() {
@@ -724,76 +871,81 @@ public class GameFrame extends JFrame {
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
         frame.add(panelVisual[1]);
 
-//        Second Image Center CourtYard
-//        backgroundLayout(2, "images/theend.jpg");
-//        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
-//        frame.add(panelVisual[2]);
-//
     }
-//
-//    public JPanel getPanelButtons() {
-//        return panelButtons;
-//    }
-//
-//    public void setPanelButtons(JPanel panelButtons) {
-//        this.panelButtons = panelButtons;
-//    }
-//
-//    public JPanel getPanelInventory() {
-//        return panelInventory;
-//    }
-//
-//    public void setPanelInventory(JPanel panelInventory) {
-//        this.panelInventory = panelInventory;
-//    }
-//
-//    public JPanel getPanelNav() {
-//        return panelNav;
-//    }
-//
-//    public void setPanelNav(JPanel panelNav) {
-//        this.panelNav = panelNav;
-//    }
-//
-//    public JPanel getPanelMap() {
-//        return panelMap;
-//    }
-//
-//    public void setPanelMap(JPanel panelMap) {
-//        this.panelMap = panelMap;
-//    }
-//
-//    public JPanel[] getPanelVisual() {
-//        return panelVisual;
-//    }
-//
-//    public void setPanelVisual(JPanel[] panelVisual) {
-//        this.panelVisual = panelVisual;
-//    }
-//
-//    public JLabel[] getLabelVisual() {
-//        return labelVisual;
-//    }
-//
-//    public void setLabelVisual(JLabel[] labelVisual) {
-//        this.labelVisual = labelVisual;
-//    }
-//
-//    public JPanel getPanelRoomDescription() {
-//        return panelRoomDescription;
-//    }
-//
-//    public void setPanelRoomDescription(JPanel panelRoomDescription) {
-//        this.panelRoomDescription = panelRoomDescription;
-//    }
-//
-//    public JPanel getPanelTextFeedback() {
-//        return panelTextFeedback;
-//    }
-//
-//    public void setPanelTextFeedback(JPanel panelTextFeedback) {
-//        this.panelTextFeedback = panelTextFeedback;
-//    }
+
+    public void createQuitScreen() {
+//      First Image Home
+        backgroundLayout(1, "./images/theend.jpg");
+        //createObject(1, "get", "Talk");
+        panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
+        frame.add(panelVisual[1]);
+        panelVisual[1].setVisible(true);
+    }
+
+
+    public JPanel getPanelButtons() {
+        return panelButtons;
+    }
+
+    public void setPanelButtons(JPanel panelButtons) {
+        this.panelButtons = panelButtons;
+    }
+
+    public JPanel getPanelInventory() {
+        return panelInventory;
+    }
+
+    public void setPanelInventory(JPanel panelInventory) {
+        this.panelInventory = panelInventory;
+    }
+
+    public JPanel getPanelNav() {
+        return panelNav;
+    }
+
+    public void setPanelNav(JPanel panelNav) {
+        this.panelNav = panelNav;
+    }
+
+    public JPanel getPanelMap() {
+        return panelMap;
+    }
+
+    public void setPanelMap(JPanel panelMap) {
+        this.panelMap = panelMap;
+    }
+
+    public JPanel[] getPanelVisual() {
+        return panelVisual;
+    }
+
+    public void setPanelVisual(JPanel[] panelVisual) {
+        this.panelVisual = panelVisual;
+    }
+
+    public JLabel[] getLabelVisual() {
+        return labelVisual;
+    }
+
+    public void setLabelVisual(JLabel[] labelVisual) {
+        this.labelVisual = labelVisual;
+    }
+
+    public JPanel getPanelRoomDescription() {
+        return panelRoomDescription;
+    }
+
+    public void setPanelRoomDescription(JPanel panelRoomDescription) {
+        this.panelRoomDescription = panelRoomDescription;
+    }
+
+    public JPanel getPanelTextFeedback() {
+        return panelTextFeedback;
+    }
+
+    public void setPanelTextFeedback(JPanel panelTextFeedback) {
+        this.panelTextFeedback = panelTextFeedback;
+    }
 
     public String getOldLocation() {
         return oldLocation;
