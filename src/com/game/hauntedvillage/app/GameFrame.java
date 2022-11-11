@@ -56,7 +56,7 @@ public class GameFrame extends JFrame {
 
 
         //ICON
-        icon = new ImageIcon("resources/eyes.jpeg"); // change icon in upper left
+        icon = new ImageIcon("images/eyes.png"); // change icon in upper left
         frame.setIconImage(icon.getImage()); // change icon in upper left
         //this.getContentPane().setBackground(new Color(0,0,10));
 
@@ -137,7 +137,7 @@ public class GameFrame extends JFrame {
 
 
         //ICON
-        ImageIcon icon = new ImageIcon("images/MicrosoftTeams-image.png"); // change icon in upper left
+        ImageIcon icon = new ImageIcon("images/eyes.png"); // change icon in upper left
         frame.setIconImage(icon.getImage()); // change icon in upper left
 
 
@@ -211,7 +211,10 @@ public class GameFrame extends JFrame {
 //        labelRoomDescription.setFont();
         labelRoomDescription.setForeground(Color.GREEN);
         gameText = new JTextArea();
-        // Title of Feedback
+
+
+
+        // Section: Title of Feedback
         String feedbackTitleString = "";
 //        JLabel labelTextFeedback = new JLabel();
         JTextArea feedbackWrap = new JTextArea();
@@ -221,7 +224,19 @@ public class GameFrame extends JFrame {
         feedbackWrap.setLineWrap(true);
         feedbackWrap.setWrapStyleWord(true);
         if(controller.getPlayerUpdate().size() > 0) {
-            feedbackTitleString = "The wind seems to mutter...";
+            if (Math.random() < .2) {
+                feedbackTitleString = "The wind seems to mutter...";
+            } else if (Math.random() < .4) {
+                feedbackTitleString = "A distant, aching moan groans...";
+            } else if (Math.random() <.6){
+                    feedbackTitleString = "A strange deep voice in your head says...";
+                } else if (Math.random() <.8) {
+                feedbackTitleString = "Behind you, a faint whisper says...";
+            } else {
+                feedbackTitleString = "Something is wrong...";
+            }
+
+
             String convert = controller.getPlayerUpdate().toString();
             feedbackWrap.setText(convert.substring(1, convert.length() - 1));
             gameText.setText(getOldLocation());
