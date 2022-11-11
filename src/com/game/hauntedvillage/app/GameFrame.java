@@ -16,7 +16,7 @@ public class GameFrame extends JFrame {
     private JPanel panelMap;
     private JPanel panelRoomDescription;
     private JPanel panelTextFeedback;
-    private JLabel label, gameObjLabel;
+    private JLabel label, gameObjLabel, quitLabel;
     private ImageIcon icon, gameIcon;
     private JPanel boardGame;
     private JButton playButton, quitButton;
@@ -101,21 +101,36 @@ public class GameFrame extends JFrame {
 
         playButton.setFocusPainted(false);
 
-        quitButton = new JButton("Quit");
-        quitButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        quitButton.setForeground(Color.red);
-        quitButton.setOpaque(false);
-        quitButton.setContentAreaFilled(false);
-        quitButton.setBorderPainted(false);
-        quitButton.addActionListener(e -> {
-            System.exit(0);
+        JButton endButton = new JButton("Quit");
+        endButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
+        endButton.setForeground(Color.red);
+        endButton.setOpaque(false);
+        endButton.setContentAreaFilled(false);
+        endButton.setBorderPainted(false);
+        endButton.addActionListener(e -> {
+            quitMainScreen();
         });
-        boardGame.add(quitButton);
+        boardGame.add(endButton);
 
         frame.add(boardGame);
         frame.add(label);
         frame.pack();
         setOldLocation(controller.showAreaDescription());
+    }
+    public void quitMainScreen(){
+
+        frame.getContentPane().removeAll();
+        frame.repaint();
+
+        quitLabel = new JLabel();
+        ClassLoader classLoader = getClass().getClassLoader();
+        //noinspection ConstantConditions
+        ImageIcon image = new ImageIcon(new ImageIcon(classLoader.getResource("images/thankyouforplaying.jpg")).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+        quitLabel.setBackground(Color.black); // set background color
+        quitLabel.setIcon(image);
+
+        frame.add(quitLabel);
+        frame.setVisible(true);
     }
 
     public void initialize() {
@@ -328,7 +343,12 @@ public class GameFrame extends JFrame {
         helpButton.setBorder(BorderFactory.createEtchedBorder());
 
         //Quit/Exit
-        quitButton.addActionListener(e ->quitGame());
+        quitButton.addActionListener(e -> {
+
+                quitGame();
+
+
+        });
         quitButton.setPreferredSize(new Dimension(273, 40));
 //        button.addActionListener(this);
         quitButton.setFocusable(false); // gets rid of box around button
@@ -357,20 +377,14 @@ public class GameFrame extends JFrame {
     }
     public void quitGame() {
         panelVisual[1].setVisible(false);
-        panelNav.setVisible(false);
-        panelMap.setVisible(false);
-        panelInventory.setVisible(false);
-        panelRoomDescription.setVisible(false);
-        panelTextFeedback.setVisible(false);
-        panelButtons.setVisible(false);
-        panelVisual[2].setVisible(true);
 
-//        frame.wait();
-//        createScreen();
-
-//        System.exit(0);
-
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        //frame.add(panelVisual[1]);
+        createQuitScreen();
     }
+
+
 
     public void backgroundLayout(int visualNum, String bgImage) {
 
@@ -379,7 +393,6 @@ public class GameFrame extends JFrame {
         panelVisual[visualNum].setSize(50, 300);
         panelVisual[visualNum].setBounds(5, 50, 670, 500);
         labelVisual[visualNum] = new JLabel();
-        System.out.println(controller.backgroundJpeg());
         ImageIcon image = new ImageIcon(new ImageIcon(bgImage).getImage().getScaledInstance(670, 500, Image.SCALE_SMOOTH)); // sets frame to size of image
 
         labelVisual[visualNum].setIcon(image);
@@ -699,27 +712,15 @@ public class GameFrame extends JFrame {
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
         frame.add(panelVisual[1]);
 
-//        Second Image Center CourtYard
-        backgroundLayout(2, "images/theend.jpg");
-        panelVisual[2].add(labelVisual[2], BorderLayout.PAGE_START);
-        frame.add(panelVisual[2]);
-//
-////        Third Image Northern Square
-//        backgroundLayout(3);
-////        createObject(3, "get", "Talk");
-//        panelVisual[3].add(labelVisual[3], BorderLayout.PAGE_START);
-//
-////        Fourth Image Southern Square
-//        backgroundLayout(4);
-////        createObject(3, "get", "Talk");
-//        panelVisual[4].add(labelVisual[4], BorderLayout.PAGE_START);
-//
-//        //        Fifth Image Farm Square
-//        backgroundLayout(5);
-////        createObject(3, "get", "Talk");
-//        panelVisual[5].add(labelVisual[5], BorderLayout.PAGE_START);
+    }
 
-
+    public void createQuitScreen() {
+//      First Image Home
+        backgroundLayout(1, "./images/theend.jpg");
+        //createObject(1, "get", "Talk");
+        panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
+        frame.add(panelVisual[1]);
+        panelVisual[1].setVisible(true);
     }
 
 
