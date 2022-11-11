@@ -136,8 +136,9 @@ public class Sound {
             sfxClip.open(sfxStream);
             FloatControl gainSfxControl = (FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN);
             gainSfxControl.setValue(20f * (float) Math.log10(getSoundFXLevel())); // set volume to 50% to start
-
+//
             String response = "";
+//            String response = respond;
 
             while (!response.equals("C")) {
                 System.out.println(art.showArt("music_note"));
@@ -146,9 +147,10 @@ public class Sound {
                 System.out.println("The current SFX volume is " + (float) (Math.pow(10f, gainSfxControl.getValue()/20f))*50 +"/100" );
                 System.out.println("Enter your choice:");
 
-
+//
                 response = scanner.next();
                 response = response.toUpperCase();
+
 
                 switch(response){
                     case ("C"):
@@ -272,7 +274,7 @@ public class Sound {
         return soundFXLevel;
     }
 
-    private Boolean getMusicOn() {
+    public Boolean getMusicOn() {
         return musicOn;
     }
 
@@ -300,7 +302,7 @@ public class Sound {
         this.SFX_On = SFX_On;
     }
 
-    private void setMusicOn(Boolean musicOn) {
+    public void setMusicOn(Boolean musicOn) {
         this.musicOn = musicOn;
     }
 

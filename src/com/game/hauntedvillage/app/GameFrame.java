@@ -2,6 +2,8 @@ package com.game.hauntedvillage.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -10,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.game.hauntedvillage.controller.Controller;
+import com.game.hauntedvillage.model.Player;
+import com.game.hauntedvillage.model.Sound;
+
 
 public class GameFrame extends JFrame {
 
@@ -35,6 +40,8 @@ public class GameFrame extends JFrame {
     JButton NorthButton, EastButton, WestButton, SouthButton;
     Controller controller = new Controller();
     private String oldLocation = "";
+
+    private Sound sound = new Sound();
 
     public GameFrame() throws IOException {
 
@@ -75,20 +82,21 @@ public class GameFrame extends JFrame {
         boardGame.setLayout(new GridLayout(1, 2));
         boardGame.setBackground(Color.black);
 //        boardGame.setOpaque(false);
-        boardGame.setBounds(300, 600, 300, 45);
+        boardGame.setBounds(350, 650, 300, 45);
         setFont(new Font("Chiller", Font.ITALIC, 40));
 
         // BOARD START BUTTON
 
         playButton = new JButton("START GAME");
-
         boardGame.add(playButton);
 //        playButton.setBackground(Color.BLACK);
-        playButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        playButton.setForeground(Color.red);
-        playButton.setOpaque(false);
-        playButton.setContentAreaFilled(false);
-        playButton.setBorderPainted(false);
+        playButton.setFont(new Font("Chiller", Font.ITALIC, 20));
+        playButton.setForeground(Color.BLACK);
+        playButton.setOpaque(true);
+//        playButton.setContentAreaFilled(false);
+//        playButton.setBorderPainted(false);
+        playButton.setBackground(Color.DARK_GRAY);
+        playButton.setBorder(BorderFactory.createEtchedBorder());
         playButton.addActionListener(e -> {
             initialize();
             createScreen();
@@ -97,11 +105,13 @@ public class GameFrame extends JFrame {
         playButton.setFocusPainted(false);
 
         JButton endButton = new JButton("Quit");
-        endButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        endButton.setForeground(Color.red);
-        endButton.setOpaque(false);
-        endButton.setContentAreaFilled(false);
-        endButton.setBorderPainted(false);
+        endButton.setFont(new Font("Chiller", Font.ITALIC, 30));
+        endButton.setForeground(Color.BLACK);
+        endButton.setOpaque(true);
+        endButton.setBackground(Color.DARK_GRAY);
+        endButton.setBorder(BorderFactory.createEtchedBorder());
+//        endButton.setContentAreaFilled(false);
+//        endButton.setBorderPainted(false);
         endButton.addActionListener(e -> {
             quitMainScreen();
         });
@@ -351,6 +361,142 @@ public class GameFrame extends JFrame {
         settingsButton.setBackground(Color.DARK_GRAY);
         settingsButton.setBorder(BorderFactory.createEtchedBorder());
 
+
+        // Section: POP UP for Settings, button click
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                System.out.println("hi");
+                // The Frame
+                JFrame frame = new JFrame("Settings");
+                frame.setLayout(new GridLayout(4,2,2,2));
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setBounds(300,300,300,300);
+
+                //frame.setFont(new Font("Chiller", Font.PLAIN, 24));
+                frame.setVisible(true);
+//                frame.setBackground(Color.BLACK);
+                frame.getContentPane().setBackground(Color.BLACK);
+                frame.setForeground(Color.GREEN);
+                frame.setFont(new Font("Chiller", Font.PLAIN, 18));
+                //ICON
+                frame.setIconImage(icon.getImage()); // change icon in upper left
+
+                // Section: The Panel
+//                JPanel panelPopUpSettings = new JPanel();
+//                panelPopUpSettings.setLayout(new GridLayout(3,3, 5, 5));
+//                panelPopUpSettings.setBackground(Color.BLACK);
+//                panelPopUpSettings.setForeground(Color.GREEN);
+//                panelPopUpSettings.setFont(new Font("Chiller", Font.PLAIN, 18));
+//                frame.add(panelPopUpSettings);
+
+
+                //popUpSettings.setLayout(null);
+
+                // create buttons and JLabels
+                // SFX ON: label and button
+                JLabel labelSFXON = new JLabel("   SFX On");
+                labelSFXON.setForeground(Color.GREEN);
+                labelSFXON.setBackground(Color.BLACK);
+                labelSFXON.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bSFXOn = new JButton();
+                bSFXOn.setText("ON");
+                bSFXOn.setFocusable(false); // gets rid of box around button
+                //button.setIcon(icon);// adds pic to button
+                bSFXOn.setHorizontalTextPosition(JButton.RIGHT);
+                bSFXOn.setVerticalTextPosition(JButton.CENTER);
+                bSFXOn.setPreferredSize(new Dimension(73, 40));
+                bSFXOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOn.setForeground(Color.red);  //(new Color(0x8A0303));
+                bSFXOn.setBackground(Color.DARK_GRAY);
+                bSFXOn.setBorder(BorderFactory.createEtchedBorder());
+
+                bSFXOn.addActionListener(SFXOn -> System.out.println("SFX on"));
+//                bSFXOn.addActionListener(musicOn -> Sound.runMusic());
+//                bSFXOn.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+////                System.out.println("hi");
+//                        // The Frame
+
+
+
+                // SFX OFF: Label and Button
+                JLabel labelSFXOFF = new JLabel("   SFX Off");
+                labelSFXOFF.setForeground(Color.GREEN);
+                labelSFXOFF.setBackground(Color.BLACK);
+                labelSFXOFF.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bSFXOff = new JButton();
+                bSFXOff.setText("OFF");
+                bSFXOff.setFocusable(false); // gets rid of box around button
+                //button.setIcon(icon);// adds pic to button
+                bSFXOff.setHorizontalTextPosition(JButton.RIGHT);
+                bSFXOff.setVerticalTextPosition(JButton.CENTER);
+                bSFXOff.setPreferredSize(new Dimension(73, 40));
+                bSFXOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOff.setForeground(Color.red);  //(new Color(0x8A0303));
+                bSFXOff.setBackground(Color.DARK_GRAY);
+                bSFXOff.setBorder(BorderFactory.createEtchedBorder());
+                bSFXOff.addActionListener(SFXOff -> System.out.println("SFX off"));
+//                bSFXOff.addActionListener(SFXOff -> Sound.runMusic());
+
+
+
+
+
+                // Music Button ON
+                JLabel labelMusicOn = new JLabel("   Music On");
+                labelMusicOn.setForeground(Color.GREEN);
+                labelMusicOn.setBackground(Color.BLACK);
+                labelMusicOn.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bMusicOn = new JButton();
+                bMusicOn.setText("ON");
+                bMusicOn.setHorizontalTextPosition(JButton.RIGHT);
+                bMusicOn.setVerticalTextPosition(JButton.CENTER);
+                bMusicOn.setPreferredSize(new Dimension(73, 40));
+                bMusicOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOn.setFocusable(false); // gets rid of box around button
+                bMusicOn.setForeground(Color.red);  //(new Color(0x8A0303));
+                bMusicOn.setBackground(Color.DARK_GRAY);
+                bMusicOn.setBorder(BorderFactory.createEtchedBorder());
+
+                bMusicOn.addActionListener(musicOn -> System.out.println("Music on"));
+//                bMusicOn.addActionListener(musicOn -> sound.runMusic("C"));
+                bMusicOn.addActionListener(musicOn -> sound.setMusicOn(true));
+
+                // Music Button OFF
+                JLabel labelMusicOff = new JLabel("   Music Off");
+                labelMusicOff.setForeground(Color.GREEN);
+                labelMusicOff.setBackground(Color.BLACK);
+                labelMusicOff.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bMusicOff = new JButton();
+                bMusicOff.setText("OFF");
+                bMusicOff.setHorizontalTextPosition(JButton.RIGHT);
+                bMusicOff.setVerticalTextPosition(JButton.CENTER);
+                bMusicOff.setPreferredSize(new Dimension(73, 40));
+                bMusicOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOff.setFocusable(false); // gets rid of box around button
+                bMusicOff.setForeground(Color.red);  //(new Color(0x8A0303));
+                bMusicOff.setBackground(Color.DARK_GRAY);
+                bMusicOff.setBorder(BorderFactory.createEtchedBorder());
+
+                bMusicOff.addActionListener(musicOff -> System.out.println("Music off"));
+//                bMusicOff.addActionListener(musicOff -> sound.runMusic("Q"));
+
+
+                frame.add(labelSFXON);
+                frame.add(bSFXOn);
+                frame.add(labelSFXOFF);
+                frame.add(bSFXOff);
+                frame.add(labelMusicOn);
+                frame.add(bMusicOn);
+                frame.add(labelMusicOff);
+                frame.add(bMusicOff);
+
+            }
+        });
+
+
         // HELP Button
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
         helpButton.addActionListener(e -> System.out.println("help"));
@@ -366,6 +512,50 @@ public class GameFrame extends JFrame {
         helpButton.setForeground(Color.red);  //(new Color(0x8A0303));
         helpButton.setBackground(Color.DARK_GRAY);
         helpButton.setBorder(BorderFactory.createEtchedBorder());
+
+        // Section: POP UP for HELP, button click
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                System.out.println("hi");
+                // The Frame
+                JFrame frame = new JFrame("Help");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setBounds(300,300,400,250);
+                //frame.setFont(new Font("Chiller", Font.PLAIN, 24));
+                frame.setVisible(true);
+                //ICON
+                frame.setIconImage(icon.getImage()); // change icon in upper left
+
+                // Section: The Panel
+                JPanel panelPopUpSettings = new JPanel();
+                panelPopUpSettings.setBackground(Color.BLACK);
+                panelPopUpSettings.setForeground(Color.GREEN);
+                panelPopUpSettings.setFont(new Font("Chiller", Font.PLAIN, 18));
+
+                // ADD text
+                String helpTitle = "                   Help with Point and Click";
+                String helpMove = "\n\n\nMovement: Click on an arrow.";
+                String helpItems = "\n\nItems: Right click to look or take or interact.";
+                String helpPeople = "\n\nPeople: Right click to look or talk or interact.";
+//                String roomDesc = helpMenu.help();
+//
+//                HelpMenu helpMenu = new HelpMenu();
+
+                JTextArea gameText = new JTextArea(helpTitle+ helpMove + helpItems + helpPeople, 1, 20);
+                gameText.setBounds(5, 555, 350, 350);
+                gameText.setBackground(Color.black);
+                gameText.setForeground(Color.green);
+                gameText.setEditable(false);
+                gameText.setLineWrap(true);
+                gameText.setWrapStyleWord(true);
+                gameText.setFont(new Font("SANS_SERIF", Font.PLAIN, 16));
+                frame.add(panelPopUpSettings);
+                panelPopUpSettings.add(gameText);
+
+//                popUpSettings.add(textArea);
+            }
+        });
 
         //Quit/Exit
         quitButton.addActionListener(e -> {
