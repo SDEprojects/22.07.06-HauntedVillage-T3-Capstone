@@ -1,6 +1,6 @@
 [
   {
-  "matches": {
+  "images/matches.jpg": {
     "name": "matches",
     "location": "home",
     "description": "some matches",
@@ -8,7 +8,7 @@
     "health_reduction": "0",
     "boss_kill": "False"
   },
-  "crucifix": {
+    "images/crucifix.jpg": {
     "name": "crucifix",
     "location": "home",
     "description": "a crucifix",
@@ -16,7 +16,7 @@
     "health_reduction": "-1",
     "boss_kill": "False"
   },
-  "knife": {
+    "images/knife.jpg": {
     "name": "knife",
     "location": "home",
     "description": "a knife",

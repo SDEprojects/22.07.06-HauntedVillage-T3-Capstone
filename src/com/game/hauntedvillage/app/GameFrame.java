@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.game.hauntedvillage.controller.Controller;
 
 public class GameFrame extends JFrame {
@@ -19,7 +23,7 @@ public class GameFrame extends JFrame {
     private JLabel label, gameObjLabel, quitLabel;
     private ImageIcon icon, gameIcon;
     private JPanel boardGame;
-    private JButton playButton, quitButton;
+    private JButton playButton, quitButton, exitButton;
     private JPopupMenu inspectKnife, inspectMatches, inspectCrucifix;
     public JLabel knifeObjLabel, matchesObjLabel, crucifixObjLabel;
     private JPopupMenu createMenu;
@@ -40,28 +44,20 @@ public class GameFrame extends JFrame {
 
         frame = new JFrame();
         label = new JLabel();  // create label
-//        ImageIcon image = new ImageIcon(new ImageIcon("images/spookyVillageedited.jpg").getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
         ClassLoader classLoader = getClass().getClassLoader();
         //noinspection ConstantConditions
         ImageIcon image = new ImageIcon(new ImageIcon(classLoader.getResource("images/spookyVillageedited.jpg")).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
-
 
         // JFrame
         frame.setTitle("Haunted Village"); //sets title of frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //exit from application
         frame.setSize(1000, 800); //sets the x-dimension, and y-dimension of frame
-//        this.setResizable(false); // prevent from being resized
         frame.setLocationRelativeTo(null);
         frame.setVisible(true); //make frame visible
-
 
         //ICON
         icon = new ImageIcon("images/eyes.png"); // change icon in upper left
         frame.setIconImage(icon.getImage()); // change icon in upper left
-        //this.getContentPane().setBackground(new Color(0,0,10));
-
-
-// TODO works to here
 
         label.setText("Haunted Village");
         label.setForeground(new Color(0x8A0303));  // text color
@@ -74,7 +70,6 @@ public class GameFrame extends JFrame {
         label.setVerticalTextPosition(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
         label.setHorizontalAlignment(JLabel.CENTER);
-        //label.setBounds(0,0, 2000,1600); // set x,y position w/in frame as well as dimensions
 
         boardGame = new JPanel();
         boardGame.setLayout(new GridLayout(1, 2));
@@ -143,27 +138,22 @@ public class GameFrame extends JFrame {
 
         // Define the frame
         frame.setLayout(null);
-
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 800);  // 850 500
         frame.getContentPane().setBackground(Color.BLACK);
         frame.setVisible(true);
         frame.setResizable(false); // prevent from being resized
 
-
         //ICON
         ImageIcon icon = new ImageIcon("images/eyes.png"); // change icon in upper left
         frame.setIconImage(icon.getImage()); // change icon in upper left
 
-
         // Create panels *************************************************************************
-
         // Buttons panel: Settings, Help Quit
         panelButtons = new JPanel(new FlowLayout());
         panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 5));
         panelButtons.setBackground(Color.BLACK);
         panelButtons.setSize(1000, 50);
-
 
         // MAP panel
         panelMap = new JPanel();
@@ -180,7 +170,6 @@ public class GameFrame extends JFrame {
         mapContent.setFont(new Font("Chiller", Font.PLAIN, 14));
         panelMap.add(mapContent);
 
-
         // INVENTORY panel
         panelInventory = new JPanel(new BorderLayout());
         panelInventory.setBackground(Color.BLACK);
@@ -193,19 +182,65 @@ public class GameFrame extends JFrame {
         labelInventoryTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         // this decides where in borderlayout they are positioned...
-        String inventory = controller.gameInventory().toString();
-        JTextArea inventoryText = new JTextArea();
-        inventoryText.setFont(new Font("Chiller", Font.PLAIN, 20));
-        inventoryText.setForeground(Color.RED);
-        inventoryText.setBackground(Color.black);
-        inventoryText.setText(inventory.substring(1, inventory.length() - 1));
-        inventoryText.setLineWrap(true);
-        inventoryText.setWrapStyleWord(true);
-        labelInventoryTitle.add(inventoryText);
+//        String inventory = controller.gameInventory().toString();
+//        JTextArea inventoryText = new JTextArea();
+//        inventoryText.setFont(new Font("Chiller", Font.PLAIN, 20));
+//        inventoryText.setForeground(Color.RED);
+//        inventoryText.setBackground(Color.black);
+//        inventoryText.setText(inventory.substring(1, inventory.length() - 1));
+//        inventoryText.setLineWrap(true);
+//        inventoryText.setWrapStyleWord(true);
+//        labelInventoryTitle.add(inventoryText);
+
+        if(controller.gameInventory().size() > 0 && controller.gameInventory().get(0) != null) {
+            ImageIcon inventoryItem1 = new ImageIcon(controller.gameInventory().get(0));
+            JLabel item1Label = new JLabel(inventoryItem1);
+            item1Label.setBounds(10, 30, 60, 60);
+
+            panelInventory.add(item1Label);
+        }
+        if(controller.gameInventory().size() > 1 && controller.gameInventory().get(1) != null) {
+            ImageIcon inventoryItem2 = new ImageIcon(controller.gameInventory().get(1));
+            JLabel item2Label = new JLabel(inventoryItem2);
+            item2Label.setBounds(70, 30, 60, 60);
+
+            panelInventory.add(item2Label);
+        }
+        if(controller.gameInventory().size() > 2 && controller.gameInventory().get(2) != null) {
+            ImageIcon inventoryItem3 = new ImageIcon(controller.gameInventory().get(2));
+            JLabel item3Label = new JLabel(inventoryItem3);
+            item3Label.setBounds(130, 30, 60, 60);
+
+            panelInventory.add(item3Label);
+        }
+        if(controller.gameInventory().size() > 3 && controller.gameInventory().get(3) != null) {
+            ImageIcon inventoryItem4 = new ImageIcon(controller.gameInventory().get(3));
+            JLabel item4Label = new JLabel(inventoryItem4);
+
+            panelInventory.add(item4Label);
+        }
+        if(controller.gameInventory().size() > 4 && controller.gameInventory().get(4) != null) {
+            ImageIcon inventoryItem5 = new ImageIcon(controller.gameInventory().get(4));
+            JLabel item5Label = new JLabel(inventoryItem5);
+
+            panelInventory.add(item5Label);
+        }
+        if(controller.gameInventory().size() > 5 && controller.gameInventory().get(5) != null) {
+            ImageIcon inventoryItem6 = new ImageIcon(controller.gameInventory().get(5));
+            JLabel item6Label = new JLabel(inventoryItem6);
+
+            panelInventory.add(item6Label);
+        }
+        if(controller.gameInventory().size() > 6 && controller.gameInventory().get(6) != null) {
+            ImageIcon inventoryItem7 = new ImageIcon(controller.gameInventory().get(6));
+            JLabel item7Label = new JLabel(inventoryItem7);
+
+            panelInventory.add(item7Label);
+        }
 
         panelInventory.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
         panelInventory.add(labelInventoryTitle, BorderLayout.PAGE_START);
-        panelInventory.add(inventoryText);
+//        panelInventory.add(inventoryText);
 
         // ROOM DESCRIPTION panel
         panelRoomDescription = new JPanel();
@@ -218,16 +253,12 @@ public class GameFrame extends JFrame {
         roomTitle.setForeground(Color.GREEN);
         roomTitle.setFont(new Font("Chiller", Font.PLAIN, 20));
         roomTitle.setHorizontalAlignment(SwingConstants.CENTER);
-//        room.setForeground(Font);
 
         String roomDescription = "This room is empty and dark";
-//        String roomDescription = controller.showAreaDescription();
         JLabel labelRoomDescription = new JLabel(roomDescription);
 //        labelRoomDescription.setFont();
         labelRoomDescription.setForeground(Color.GREEN);
         gameText = new JTextArea();
-
-
 
         // Section: Title of Feedback
         String feedbackTitleString = "";
@@ -241,16 +272,19 @@ public class GameFrame extends JFrame {
         if(controller.getPlayerUpdate().size() > 0) {
             if (Math.random() < .2) {
                 feedbackTitleString = "The wind seems to mutter...";
-            } else if (Math.random() < .4) {
+            }
+            else if (Math.random() < .4) {
                 feedbackTitleString = "A distant, aching moan groans...";
-            } else if (Math.random() <.6){
+            }
+            else if (Math.random() <.6){
                     feedbackTitleString = "A strange deep voice in your head says...";
-                } else if (Math.random() <.8) {
+            }
+            else if (Math.random() <.8) {
                 feedbackTitleString = "Behind you, a faint whisper says...";
-            } else {
+            }
+            else {
                 feedbackTitleString = "Something is wrong...";
             }
-
 
             String convert = controller.getPlayerUpdate().toString();
             feedbackWrap.setText(convert.substring(1, convert.length() - 1));
@@ -268,8 +302,8 @@ public class GameFrame extends JFrame {
         gameText.setLineWrap(true);
         gameText.setWrapStyleWord(true);
         gameText.setFont(new Font("Chiller", Font.PLAIN, 24));
-        // this decides where in borderlayout they are positioned...
 
+        // this decides where in borderlayout they are positioned...
         panelRoomDescription.add(roomTitle, BorderLayout.PAGE_START);
         panelRoomDescription.add(labelRoomDescription);
         panelRoomDescription.add(gameText);
@@ -280,25 +314,17 @@ public class GameFrame extends JFrame {
         panelTextFeedback = new JPanel();
         panelTextFeedback.setLayout(new BorderLayout());
         panelTextFeedback.setBackground(Color.BLACK);
-//        panelNav.setSize(50,100);
         panelTextFeedback.setBounds(410, 555, 265, 200);
 
-        //  "A voice in your head tells you....", "Something tells you that....", "A distance voice moans..."
         String textFeedbackTitleString = feedbackTitleString;
         JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
         feedbackTitle.setForeground(Color.GRAY);
         feedbackTitle.setFont(new Font("Chiller", Font.ITALIC, 24));
         feedbackTitle.setHorizontalAlignment(SwingConstants.CENTER);
-//        room.setForeground(Font);
 
         // FEEDBACK
-
-//        labelTextFeedback.setForeground(Color.red);
-//        labelTextFeedback.setHorizontalAlignment(SwingConstants.CENTER);
-//        labelTextFeedback.add(labelRoomDescription);
         feedbackTitle.add(feedbackWrap);
         panelTextFeedback.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
-
         panelTextFeedback.add(feedbackTitle, BorderLayout.PAGE_START);
         panelTextFeedback.add(feedbackWrap);
 
@@ -324,7 +350,6 @@ public class GameFrame extends JFrame {
         settingsButton.setForeground(Color.red);  //(new Color(0x8A0303));
         settingsButton.setBackground(Color.DARK_GRAY);
         settingsButton.setBorder(BorderFactory.createEtchedBorder());
-
 
         // HELP Button
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
@@ -399,13 +424,178 @@ public class GameFrame extends JFrame {
     }
 
     public void createObject(int visualNum, String Choice1, String Choice2) {
-//        create dropdown menu
-        inspectKnife = new JPopupMenu();
-        inspectMatches = new JPopupMenu();
-        inspectCrucifix = new JPopupMenu();
-
+        Map<String, String> showItems;
+        showItems = controller.areaItems();
         JMenuItem[] dropMenu = new JMenuItem[4];
 
+        if(showItems.size() > 0) {
+            if(showItems.get("0") != null ) {
+                JPopupMenu item1 = new JPopupMenu();
+                dropMenu[1] = new JMenuItem(Choice1);
+                dropMenu[1].addActionListener(e-> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice1, showItems.get("0")));
+                        item1.setVisible(false);
+                        initialize();
+                        createScreen();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item1.add(dropMenu[1]);
+                dropMenu[2] = new JMenuItem(Choice2);
+                dropMenu[2].addActionListener(e-> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice2, showItems.get("0")));
+                        initialize();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item1.add(dropMenu[2]);
+                ImageIcon item1Icon = new ImageIcon(showItems.get("0"));
+                JLabel item1Label = new JLabel();
+                item1Label.setBounds(400,200,100,100);
+                item1Label.setIcon(item1Icon);
+                item1Label.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent event) {
+                        if (SwingUtilities.isRightMouseButton(event)) {
+                            item1.show(item1Label, event.getX(), event.getY());
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent event) {
+                    }
+                });
+                labelVisual[1].add(item1Label);
+            }
+            if(showItems.get("1") != null ) {
+                JPopupMenu item2 = new JPopupMenu();
+                dropMenu[1] = new JMenuItem(Choice1);
+                dropMenu[1].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice1, showItems.get("1")));
+                        item2.setVisible(false);
+                        initialize();
+                        createScreen();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item2.add(dropMenu[1]);
+                dropMenu[2] = new JMenuItem(Choice2);
+                dropMenu[2].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice2, showItems.get("1")));
+                        initialize();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item2.add(dropMenu[2]);
+                ImageIcon item2Icon = new ImageIcon(showItems.get("1"));
+                JLabel item2Label = new JLabel();
+                item2Label.setBounds(50,150,100,100);
+                item2Label.setIcon(item2Icon);
+                item2Label.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent event) {
+                        if (SwingUtilities.isRightMouseButton(event)) {
+                            item2.show(item2Label, event.getX(), event.getY());
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent event) {
+                    }
+                });
+                labelVisual[1].add(item2Label);
+            }
+            if(showItems.get("2") != null ) {
+                JPopupMenu item3 = new JPopupMenu();
+                dropMenu[1] = new JMenuItem(Choice1);
+                dropMenu[1].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice1, showItems.get("2")));
+                        item3.setVisible(false);
+                        initialize();
+                        createScreen();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item3.add(dropMenu[1]);
+                dropMenu[2] = new JMenuItem(Choice2);
+                dropMenu[2].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", Choice2, showItems.get("2")));
+                        initialize();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                item3.add(dropMenu[2]);
+                ImageIcon item3Icon = new ImageIcon(showItems.get("2"));
+                JLabel item3Label = new JLabel();
+//            knifeObjLabel.setBounds(175, 350, 100, 100);
+                item3Label.setBounds(175, 350, 100, 100);
+                item3Label.setIcon(item3Icon);
+                item3Label.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent event) {
+                        if (SwingUtilities.isRightMouseButton(event)) {
+                            item3.show(item3Label, event.getX(), event.getY());
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent event) {
+                    }
+                });
+                labelVisual[1].add(item3Label);
+            }
+        }
         dropMenu[1] = new JMenuItem(Choice1);
         dropMenu[1].setActionCommand("TakeKnife");
         inspectKnife.add(dropMenu[1]);
@@ -538,9 +728,6 @@ public class GameFrame extends JFrame {
         labelVisual[1].add(knifeObjLabel);
         labelVisual[1].add(matchesObjLabel);
         labelVisual[1].add(crucifixObjLabel);
-//        panelVisual[visualNum].add(labelVisual[visualNum], BorderLayout.PAGE_START);
-
-
     }
 
     public void createDirectionButtons() {
@@ -556,7 +743,6 @@ public class GameFrame extends JFrame {
         SouthButton = new JButton("S");
 //        // Navigation Buttons
 //        // NORTH
-//        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
         NorthButton.addActionListener(e -> {
             try {
                 controller.userPrompt("go north");
@@ -566,23 +752,15 @@ public class GameFrame extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-//        button.addActionListener(this);
         NorthButton.setFocusable(false); // gets rid of box around button
         NorthButton.setText("N");
-        //button.setIcon(icon);// adds pic to button
         NorthButton.setHorizontalTextPosition(JButton.CENTER);
-////        NorthButton.setHorizontalTextPosition(JButton.LEFT_ALIGNMENT= (2.0f));
-//        NorthButton.setAlignmentX(1.0F);
         NorthButton.setVerticalTextPosition(JButton.CENTER);
         NorthButton.setFont(new Font("Chiller", Font.ITALIC, 40));
         NorthButton.setPreferredSize(new Dimension(40, 40));
         NorthButton.setSize(40, 40);
-//        NorthButton.setAlignmentX(1);
-//        settingsButton.setIconTextGap(5);
         NorthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         NorthButton.setBackground(Color.DARK_GRAY);
-//        NorthButton.addActionListener(arelysController.objectsActions);
-//        NorthButton.setActionCommand("goNorth");
         NorthButton.setBorder(BorderFactory.createEtchedBorder());
 
         northPanel = new JPanel();
@@ -590,10 +768,7 @@ public class GameFrame extends JFrame {
         northPanel.add(NorthButton);
         northPanel.setBackground(Color.BLACK);
 
-
         // EAST
-        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
-//        EastButton.addActionListener(e -> System.out.println("East"));
         EastButton.addActionListener(e -> {
             try {
                 controller.userPrompt("go east");
@@ -604,7 +779,6 @@ public class GameFrame extends JFrame {
             }
         });
         EastButton.setPreferredSize(new Dimension(40, 40));
-//        button.addActionListener(this);
         EastButton.setFocusable(false); // gets rid of box around button
         EastButton.setText("E");
         //button.setIcon(icon);// adds pic to button
@@ -612,14 +786,9 @@ public class GameFrame extends JFrame {
         EastButton.setVerticalTextPosition(JButton.CENTER);
         EastButton.setFont(new Font("Chiller", Font.ITALIC, 40));
         EastButton.setSize(40, 40);
-//        settingsButton.setIconTextGap(5);
         EastButton.setForeground(Color.red);  //(new Color(0x8A0303));
         EastButton.setBackground(Color.DARK_GRAY);
-//        EastButton.addActionListener(arelysController.objectsActions);
-//        EastButton.addActionListener(controller.userPrompt("go east"));
-//        EastButton.setActionCommand("goEast");
         EastButton.setBorder(BorderFactory.createEtchedBorder());
-
 
         eastPanel = new JPanel();
         eastPanel.setPreferredSize(new Dimension(40, 40));
@@ -628,7 +797,6 @@ public class GameFrame extends JFrame {
 
 
         // WEST
-        //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
         WestButton.addActionListener(e -> {
             try {
                 controller.userPrompt("go west");
@@ -639,18 +807,14 @@ public class GameFrame extends JFrame {
             }
         });
         WestButton.setPreferredSize(new Dimension(40, 40));
-//        button.addActionListener(this);
         WestButton.setFocusable(false); // gets rid of box around button
         WestButton.setText("W");
         //button.setIcon(icon);// adds pic to button
         WestButton.setHorizontalTextPosition(JButton.RIGHT);
         WestButton.setVerticalTextPosition(JButton.CENTER);
         WestButton.setFont(new Font("Chiller", Font.ITALIC, 40));
-//        settingsButton.setIconTextGap(5);
         WestButton.setForeground(Color.red);  //(new Color(0x8A0303));
         WestButton.setBackground(Color.DARK_GRAY);
-//        WestButton.addActionListener(arelysController.objectsActions);
-//        WestButton.setActionCommand("goWest");
         WestButton.setBorder(BorderFactory.createEtchedBorder());
 
         westPanel = new JPanel();
@@ -671,19 +835,14 @@ public class GameFrame extends JFrame {
             }
         });
         SouthButton.setPreferredSize(new Dimension(40, 40));
-//        button.addActionListener(this);
         SouthButton.setFocusable(false); // gets rid of box around button
         SouthButton.setText("S");
         //button.setIcon(icon);// adds pic to button
         SouthButton.setHorizontalTextPosition(JButton.RIGHT);
         SouthButton.setVerticalTextPosition(JButton.CENTER);
         SouthButton.setFont(new Font("Chiller", Font.ITALIC, 40));
-//        settingsButton.setIconTextGap(5);
         SouthButton.setForeground(Color.red);  //(new Color(0x8A0303));
         SouthButton.setBackground(Color.DARK_GRAY);
-//        SouthButton.addActionListener(arelysController.objectsActions);
-//        SouthButton.setActionCommand("goSouth");
-//        SouthButton.setActionCommand("South");
         SouthButton.setBorder(BorderFactory.createEtchedBorder());
 
         southPanel = new JPanel();
@@ -708,7 +867,7 @@ public class GameFrame extends JFrame {
     public void createScreen() {
 //        First Image Home
         backgroundLayout(1, controller.backgroundJpeg());
-        createObject(1, "get", "Talk");
+        createObject(1, "take", "look");
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
         frame.add(panelVisual[1]);
 
