@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.hauntedvillage.model.MapImage;
 import com.game.hauntedvillage.model.Player;
+import com.game.hauntedvillage.model.Sound;
 //import com.game.HauntedVillage.app.Print;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,8 +23,27 @@ public class Controller {
     private com.game.hauntedvillage.model.Player player = new Player();
     private List<String> playerUpdate = new ArrayList<>();
     private MapImage mapImage = new MapImage();
+    private Sound sound = new Sound();
 
-    public Controller() throws IOException {
+    public void musicAccessOn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        sound.musicOn();
+    }
+
+    public void musicAccessOff() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        sound.musicOff();
+    }
+
+    public void SFXAccessOn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        sound.SFXOn();
+    }
+
+    public void SFXAccessOff() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        sound.SFXOff();
+    }
+
+
+
+    public Controller() throws IOException, UnsupportedAudioFileException {
     }
 
     public String showAreaDescription() {
@@ -92,7 +114,7 @@ public class Controller {
 
     //user input processor, sets verbNoun attribute array
 //    private void userPromptInput(String location) {
-    public void userPrompt(String userInput) throws IOException {
+    public void userPrompt(String userInput) throws IOException, UnsupportedAudioFileException {
         String location = player.getLocation();
         List<String> userFeedback = new ArrayList<>();
         System.out.println(userInput);

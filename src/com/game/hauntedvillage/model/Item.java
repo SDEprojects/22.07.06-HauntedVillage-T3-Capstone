@@ -27,6 +27,7 @@ class Item {
                         if (descNode.equals(node)) {
 //                            itemList.add("\n\n");
                             itemList.add(descNode.asText());
+                            System.out.println(itemList);
                         }
                     }
                 }
@@ -35,6 +36,7 @@ class Item {
             e.printStackTrace();
         }
         return itemList;
+
     }
 
     //returns stationary interactive items
@@ -97,4 +99,6 @@ class Item {
         }
         return result;
     }
+
+
 }

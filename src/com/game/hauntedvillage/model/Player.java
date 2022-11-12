@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.util.Map;
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class Player implements Serializable {
     private ObjectMapper mapper = new ObjectMapper();
     private JsonNode locationRootArray = mapper.readTree(new File(locationFile));
     private String infoFile = "resources/info.json";
-    private Sound sound = new Sound();
+    public  Sound sound = new Sound();
     private boolean wellActivation = false;
     private boolean endGame;
     private com.game.hauntedvillage.model.NPC npc = new com.game.hauntedvillage.model.NPC();
@@ -38,10 +40,10 @@ public class Player implements Serializable {
     private Art art = new Art();
     public String backgroundImages = "images/cabinedited.jpg";
 
-    public Player() throws IOException {
+    public Player() throws IOException, UnsupportedAudioFileException {
     }
 
-    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> characters, String backgroundImages) throws IOException {
+    public Player(String location, ArrayList<String> inventory, int healthLevel, ArrayList<String> characters, String backgroundImages) throws IOException, UnsupportedAudioFileException {
         this.location = location;
         this.inventory = inventory;
         this.healthLevel = healthLevel;
@@ -102,7 +104,7 @@ public class Player implements Serializable {
         return introList;
     }
 
-    public List<String> updatePlayer(ArrayList<String> verbNoun) throws IOException {
+    public List<String> updatePlayer(ArrayList<String> verbNoun) throws IOException, UnsupportedAudioFileException {
         List<String> printThis = new ArrayList<>();
         //go command, player moves to given direction
         if ("go".equals(verbNoun.get(0))) {
@@ -507,7 +509,7 @@ public class Player implements Serializable {
         return condition;
     }
 
-    private void restoreGame() throws IOException {
+    private void restoreGame() throws IOException, UnsupportedAudioFileException {
         ArrayList<ArrayList<String>> playerInfoList = new ArrayList<>();
         playerInfoList = restorePlayer.restorePlayer();
         String location = playerInfoList.get(0).get(0);

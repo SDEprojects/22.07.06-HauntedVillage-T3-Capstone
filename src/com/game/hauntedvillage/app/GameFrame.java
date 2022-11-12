@@ -1,13 +1,20 @@
 package com.game.hauntedvillage.app;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Map;
 
 import com.game.hauntedvillage.controller.Controller;
+import com.game.hauntedvillage.model.Player;
+import com.game.hauntedvillage.model.Sound;
+
 
 public class GameFrame extends JFrame {
 
@@ -35,8 +42,7 @@ public class GameFrame extends JFrame {
     private String oldLocation = "";
     private boolean unlit = true;
 
-    public GameFrame() throws IOException {
-
+    public GameFrame() throws IOException, UnsupportedAudioFileException {
     }
 
     public void titleScreen() {
@@ -73,21 +79,17 @@ public class GameFrame extends JFrame {
         boardGame = new JPanel();
         boardGame.setLayout(new GridLayout(1, 2));
         boardGame.setBackground(Color.black);
-//        boardGame.setOpaque(false);
-        boardGame.setBounds(300, 600, 300, 45);
+        boardGame.setBounds(350, 650, 300, 45);
         setFont(new Font("Chiller", Font.ITALIC, 40));
 
         // BOARD START BUTTON
-
         playButton = new JButton("START GAME");
-
         boardGame.add(playButton);
-//        playButton.setBackground(Color.BLACK);
-        playButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        playButton.setForeground(Color.red);
-        playButton.setOpaque(false);
-        playButton.setContentAreaFilled(false);
-        playButton.setBorderPainted(false);
+        playButton.setFont(new Font("Chiller", Font.ITALIC, 20));
+        playButton.setForeground(Color.BLACK);
+        playButton.setOpaque(true);
+        playButton.setBackground(Color.DARK_GRAY);
+        playButton.setBorder(BorderFactory.createEtchedBorder());
         playButton.addActionListener(e -> {
             initialize();
             createScreen();
@@ -96,11 +98,11 @@ public class GameFrame extends JFrame {
         playButton.setFocusPainted(false);
 
         JButton endButton = new JButton("Quit");
-        endButton.setFont(new Font("Chiller Bold", Font.ITALIC, 15));
-        endButton.setForeground(Color.red);
-        endButton.setOpaque(false);
-        endButton.setContentAreaFilled(false);
-        endButton.setBorderPainted(false);
+        endButton.setFont(new Font("Chiller", Font.ITALIC, 30));
+        endButton.setForeground(Color.BLACK);
+        endButton.setOpaque(true);
+        endButton.setBackground(Color.DARK_GRAY);
+        endButton.setBorder(BorderFactory.createEtchedBorder());
         endButton.addActionListener(e -> {
             quitMainScreen();
         });
@@ -112,13 +114,11 @@ public class GameFrame extends JFrame {
         setOldLocation(controller.showAreaDescription());
     }
     public void quitMainScreen(){
-
         frame.getContentPane().removeAll();
         frame.repaint();
 
         quitLabel = new JLabel();
         ClassLoader classLoader = getClass().getClassLoader();
-        //noinspection ConstantConditions
         ImageIcon image = new ImageIcon(new ImageIcon(classLoader.getResource("images/thankyouforplaying.jpg")).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
         quitLabel.setBackground(Color.black); // set background color
         quitLabel.setIcon(image);
@@ -132,7 +132,6 @@ public class GameFrame extends JFrame {
         boardGame.setVisible(false);
         label.setVisible(false);
 
-//        frame = new JFrame();
         frame.setTitle("Haunted Village");
 
         // Define the frame
@@ -227,10 +226,8 @@ public class GameFrame extends JFrame {
 
             panelInventory.add(item7Label);
         }
-
         panelInventory.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
         panelInventory.add(labelInventoryTitle, BorderLayout.PAGE_START);
-//        panelInventory.add(inventoryText);
 
         // ROOM DESCRIPTION panel
         panelRoomDescription = new JPanel();
@@ -305,7 +302,6 @@ public class GameFrame extends JFrame {
         panelRoomDescription.add(gameText);
         panelRoomDescription.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GREEN));
 
-
         // Text Feedback on actions panel
         panelTextFeedback = new JPanel();
         panelTextFeedback.setLayout(new BorderLayout());
@@ -325,27 +321,182 @@ public class GameFrame extends JFrame {
         panelTextFeedback.add(feedbackWrap);
 
         // BUTTONs instantiate
-
         JButton settingsButton = new JButton("Settings");
         JButton helpButton = new JButton("Help");
         JButton quitButton = new JButton("Exit");
 
         // POP UP BUTTON
         // SETTINGS Button
-        //settingsButton.setBounds(0,10,150,50);  // button location and button size
         settingsButton.addActionListener(e -> System.out.println("foo"));
         settingsButton.setPreferredSize(new Dimension(273, 40));
-//        button.addActionListener(this);
         settingsButton.setFocusable(false); // gets rid of box around button
         settingsButton.setText("Settings");
-        //button.setIcon(icon);// adds pic to button
         settingsButton.setHorizontalTextPosition(JButton.RIGHT);
         settingsButton.setVerticalTextPosition(JButton.CENTER);
         settingsButton.setFont(new Font("Chiller", Font.ITALIC, 40));
-//        settingsButton.setIconTextGap(5);
         settingsButton.setForeground(Color.red);  //(new Color(0x8A0303));
         settingsButton.setBackground(Color.DARK_GRAY);
         settingsButton.setBorder(BorderFactory.createEtchedBorder());
+
+
+        // Section: POP UP for Settings, button click
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // The Frame
+                JFrame frame = new JFrame("Settings");
+                frame.setLayout(new GridLayout(4,2,2,2));
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setBounds(300,300,300,300);
+                frame.setVisible(true);
+                frame.getContentPane().setBackground(Color.BLACK);
+                frame.setForeground(Color.GREEN);
+                frame.setFont(new Font("Chiller", Font.PLAIN, 18));
+                //ICON
+                frame.setIconImage(icon.getImage()); // change icon in upper left
+                // Section: The Panel
+
+                // create buttons and JLabels
+                // SFX ON: label and button
+                JLabel labelSFXON = new JLabel("   SFX On");
+                labelSFXON.setForeground(Color.GREEN);
+                labelSFXON.setBackground(Color.BLACK);
+                labelSFXON.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bSFXOn = new JButton();
+                bSFXOn.setText("ON");
+                bSFXOn.setFocusable(false); // gets rid of box around button
+                bSFXOn.setHorizontalTextPosition(JButton.RIGHT);
+                bSFXOn.setVerticalTextPosition(JButton.CENTER);
+                bSFXOn.setPreferredSize(new Dimension(73, 40));
+                bSFXOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOn.setForeground(Color.red);  //(new Color(0x8A0303));
+                bSFXOn.setBackground(Color.DARK_GRAY);
+                bSFXOn.setBorder(BorderFactory.createEtchedBorder());
+                bSFXOn.addActionListener(SFXOn -> System.out.println("SFX on"));
+                bSFXOn.addActionListener(bSFXOnE -> {
+                    try {
+                        controller.SFXAccessOn();
+                    }
+                    catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                // SFX OFF: Label and Button
+                JLabel labelSFXOFF = new JLabel("   SFX Off");
+                labelSFXOFF.setForeground(Color.GREEN);
+                labelSFXOFF.setBackground(Color.BLACK);
+                labelSFXOFF.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bSFXOff = new JButton();
+                bSFXOff.setText("OFF");
+                bSFXOff.setFocusable(false); // gets rid of box around button
+                bSFXOff.setHorizontalTextPosition(JButton.RIGHT);
+                bSFXOff.setVerticalTextPosition(JButton.CENTER);
+                bSFXOff.setPreferredSize(new Dimension(73, 40));
+                bSFXOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOff.setForeground(Color.red);  //(new Color(0x8A0303));
+                bSFXOff.setBackground(Color.DARK_GRAY);
+                bSFXOff.setBorder(BorderFactory.createEtchedBorder());
+                bSFXOff.addActionListener(SFXOff -> System.out.println("SFX off"));
+                bSFXOff.addActionListener(bSFXOffE -> {
+                    try {
+                        controller.SFXAccessOff();
+                    }
+                    catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                // Music Button ON
+                JLabel labelMusicOn = new JLabel("   Music On");
+                labelMusicOn.setForeground(Color.GREEN);
+                labelMusicOn.setBackground(Color.BLACK);
+                labelMusicOn.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bMusicOn = new JButton();
+                bMusicOn.setText("ON");
+                bMusicOn.setHorizontalTextPosition(JButton.RIGHT);
+                bMusicOn.setVerticalTextPosition(JButton.CENTER);
+                bMusicOn.setPreferredSize(new Dimension(73, 40));
+                bMusicOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOn.setFocusable(false); // gets rid of box around button
+                bMusicOn.setForeground(Color.red);  //(new Color(0x8A0303));
+                bMusicOn.setBackground(Color.DARK_GRAY);
+                bMusicOn.setBorder(BorderFactory.createEtchedBorder());
+
+                bMusicOn.addActionListener(musicOnE -> System.out.println("Music on"));
+//                bMusicOn.addActionListener(musicOn -> sound.runMusic("C"));
+                bMusicOn.addActionListener(musicOnE -> {
+                    try {
+                        controller.musicAccessOn();
+                    }
+                    catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                // Music Button OFF
+                JLabel labelMusicOff = new JLabel("   Music Off");
+                labelMusicOff.setForeground(Color.GREEN);
+                labelMusicOff.setBackground(Color.BLACK);
+                labelMusicOff.setFont(new Font("SANS_SERIF", Font.PLAIN, 14));
+                JButton bMusicOff = new JButton();
+                bMusicOff.setText("OFF");
+                bMusicOff.setHorizontalTextPosition(JButton.RIGHT);
+                bMusicOff.setVerticalTextPosition(JButton.CENTER);
+                bMusicOff.setPreferredSize(new Dimension(73, 40));
+                bMusicOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOff.setFocusable(false); // gets rid of box around button
+                bMusicOff.setForeground(Color.red);  //(new Color(0x8A0303));
+                bMusicOff.setBackground(Color.DARK_GRAY);
+                bMusicOff.setBorder(BorderFactory.createEtchedBorder());
+
+                bMusicOff.addActionListener(musicOffE -> System.out.println("Music off"));
+                bMusicOff.addActionListener(musicOffE -> {
+                    try {
+                        controller.musicAccessOff();
+                    }
+                    catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    }
+                    catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+
+                frame.add(labelSFXON);
+                frame.add(bSFXOn);
+                frame.add(labelSFXOFF);
+                frame.add(bSFXOff);
+                frame.add(labelMusicOn);
+                frame.add(bMusicOn);
+                frame.add(labelMusicOff);
+                frame.add(bMusicOff);
+
+            }
+        });
+
 
         // HELP Button
         //settingsButton.setBounds(0,10,150,50);  // button locatoin and button size
@@ -362,6 +513,50 @@ public class GameFrame extends JFrame {
         helpButton.setForeground(Color.red);  //(new Color(0x8A0303));
         helpButton.setBackground(Color.DARK_GRAY);
         helpButton.setBorder(BorderFactory.createEtchedBorder());
+
+        // Section: POP UP for HELP, button click
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                System.out.println("hi");
+                // The Frame
+                JFrame frame = new JFrame("Help");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setBounds(300,300,400,250);
+                //frame.setFont(new Font("Chiller", Font.PLAIN, 24));
+                frame.setVisible(true);
+                //ICON
+                frame.setIconImage(icon.getImage()); // change icon in upper left
+
+                // Section: The Panel
+                JPanel panelPopUpSettings = new JPanel();
+                panelPopUpSettings.setBackground(Color.BLACK);
+                panelPopUpSettings.setForeground(Color.GREEN);
+                panelPopUpSettings.setFont(new Font("Chiller", Font.PLAIN, 18));
+
+                // ADD text
+                String helpTitle = "                   Help with Point and Click";
+                String helpMove = "\n\n\nMovement: Click on an arrow.";
+                String helpItems = "\n\nItems: Right click to look or take or interact.";
+                String helpPeople = "\n\nPeople: Right click to look or talk or interact.";
+//                String roomDesc = helpMenu.help();
+//
+//                HelpMenu helpMenu = new HelpMenu();
+
+                JTextArea gameText = new JTextArea(helpTitle+ helpMove + helpItems + helpPeople, 1, 20);
+                gameText.setBounds(5, 555, 350, 350);
+                gameText.setBackground(Color.black);
+                gameText.setForeground(Color.green);
+                gameText.setEditable(false);
+                gameText.setLineWrap(true);
+                gameText.setWrapStyleWord(true);
+                gameText.setFont(new Font("SANS_SERIF", Font.PLAIN, 16));
+                frame.add(panelPopUpSettings);
+                panelPopUpSettings.add(gameText);
+
+//                popUpSettings.add(textArea);
+            }
+        });
 
         //Quit/Exit
         quitButton.addActionListener(e -> {
@@ -429,7 +624,8 @@ public class GameFrame extends JFrame {
                         npc1.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    }
+                    catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -441,7 +637,7 @@ public class GameFrame extends JFrame {
                         initialize();
                         createScreen();
                     }
-                    catch (IOException ex) {
+                    catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -504,7 +700,7 @@ public class GameFrame extends JFrame {
                         npc2.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -515,7 +711,7 @@ public class GameFrame extends JFrame {
                         controller.userPrompt(String.format("%s %s", fight, showNPCs.get("1")));
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -579,7 +775,7 @@ public class GameFrame extends JFrame {
                             item1.setVisible(false);
                             initialize();
                             createScreen();
-                        } catch (IOException ex) {
+                        } catch (IOException | UnsupportedAudioFileException ex) {
                             throw new RuntimeException(ex);
                         }
                     });
@@ -588,7 +784,7 @@ public class GameFrame extends JFrame {
                             controller.userPrompt(String.format("%s %s", Choice2, showItems.get("0")));
                             initialize();
                             createScreen();
-                        } catch (IOException ex) {
+                        } catch (IOException | UnsupportedAudioFileException ex) {
                             throw new RuntimeException(ex);
                         }
                     });
@@ -606,7 +802,7 @@ public class GameFrame extends JFrame {
                                 item1.setVisible(false);
                                 initialize();
                                 createScreen();
-                            } catch (IOException ex) {
+                            } catch (IOException | UnsupportedAudioFileException ex) {
                                 throw new RuntimeException(ex);
                             }
                         });
@@ -627,7 +823,7 @@ public class GameFrame extends JFrame {
                             item1.setVisible(false);
                             initialize();
                             createScreen();
-                        } catch (IOException ex) {
+                        } catch (IOException | UnsupportedAudioFileException ex) {
                             throw new RuntimeException(ex);
                         }
                     });
@@ -639,7 +835,7 @@ public class GameFrame extends JFrame {
                             controller.userPrompt(String.format("%s %s", "use", "well"));
                             initialize();
                             createScreen();
-                        } catch (IOException ex) {
+                        } catch (IOException | UnsupportedAudioFileException ex) {
                             throw new RuntimeException(ex);
                         }
                     });
@@ -686,7 +882,7 @@ public class GameFrame extends JFrame {
                         item2.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -697,7 +893,7 @@ public class GameFrame extends JFrame {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("1")));
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -744,7 +940,7 @@ public class GameFrame extends JFrame {
                         item3.setVisible(false);
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -755,7 +951,7 @@ public class GameFrame extends JFrame {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("2")));
                         initialize();
                         createScreen();
-                    } catch (IOException ex) {
+                    } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
@@ -812,7 +1008,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go north");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -838,7 +1034,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go east");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -866,7 +1062,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go west");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -894,7 +1090,7 @@ public class GameFrame extends JFrame {
                 controller.userPrompt("go south");
                 initialize();
                 createScreen();
-            } catch (IOException ex) {
+            } catch (IOException | UnsupportedAudioFileException ex) {
                 throw new RuntimeException(ex);
             }
         });
