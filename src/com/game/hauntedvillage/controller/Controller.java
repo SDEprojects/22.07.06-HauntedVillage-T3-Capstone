@@ -24,12 +24,6 @@ public class Controller {
     private List<String> playerUpdate = new ArrayList<>();
     private MapImage mapImage = new MapImage();
     private Sound sound = new Sound();
-//    private Splash splash = new Splash();
-//    private String playerChoice;
-//    private boolean startCondition;
-//    private String startOrQuit;
-//    public ObjectHandler objectsActions = new ObjectHandler();
-//    public GameFrame gameFrame = new GameFrame();
 
     public void musicAccessOn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         sound.musicOn();
@@ -51,111 +45,6 @@ public class Controller {
 
     public Controller() throws IOException, UnsupportedAudioFileException {
     }
-
-    public void execute() throws IOException {
-//        Console.clear();
-//        showSplash();
-//        startNewGame();
-//        Console.clear();
-//        gameIntro();
-//        Console.clear();
-//        gameLoop();
-//        gameFrame.TitleScreen();
-    }
-
-//    private void showSplash() {
-//        String screen = splash.splashScreen();
-//        Print print4 = new Print(screen);
-//        print4.printToConsole();
-//    }
-//
-//    private void startNewGame() {
-//        setStartOrQuit("s");
-//        System.out.println("Would you like to start a new game?");
-//        userChoice();
-//    }
-//
-//    private void quit() {
-//        setStartOrQuit("q");
-//        System.out.println("Are you sure you want to 'quit'?");
-//        userChoice();
-//    }
-
-//    private void userChoice() {
-//        setStartCondition(false);
-//        while (!isStartCondition()) {
-//            System.out.println(" [Y]es | [N]o ");
-//            setPlayerChoice(scanner.nextLine().trim().toUpperCase());
-//
-//            if(getPlayerChoice().matches("Y|N")) {
-//                if((getStartOrQuit().equals("s") && "Y".equals(getPlayerChoice())) || (getStartOrQuit().equals("q") && "N".equals(getPlayerChoice()))) {
-//                    setStartCondition(true);
-//                }
-//                else {
-//                    System.out.println("Thank you for playing");
-//                    System.exit(0);
-//                }
-//            }
-//        }
-//    }
-
-//    private void gameIntro() {
-//        List<String> intro = player.showGameIntro();
-//        Print print3 = new Print(intro);
-//        print3.printListToConsole();
-//    }
-
-//    private void userChoice() {
-//        setStartCondition(false);
-//        while (!isStartCondition()) {
-//            System.out.println(" [Y]es | [N]o ");
-//            setPlayerChoice(scanner.nextLine().trim().toUpperCase());
-//
-//            if(getPlayerChoice().matches("Y|N")) {
-//                if((getStartOrQuit().equals("s") && "Y".equals(getPlayerChoice())) || (getStartOrQuit().equals("q") && "N".equals(getPlayerChoice()))) {
-//                    setStartCondition(true);
-//                }
-//                else {
-//                    System.out.println("Thank you for playing");
-//                    System.exit(0);
-//                }
-//            }
-//        }
-//    }
-
-    //game loop
-//    private void gameLoop() throws IOException {
-//
-////        String oldLocation = "";
-//        //game continues if player is alive
-//        while (!player.isEndGame()) {
-//
-//            //returns player information at top of screen
-//            Print print2 = new Print(player.playerCurrentInfo());
-//            print2.printListToConsole();
-//
-//            //returns location description and player prompt
-////            if(!oldLocation.equals(player.getLocation())) {
-//            Print print1 = new Print(player.areaDescription());
-//            print1.printToConsole();
-////                oldLocation = player.getLocation();
-////            }
-//
-//            //takes user input, specific to players location
-////            userPromptInput(player.getLocation());
-//
-//            Print print = new Print(player.updatePlayer(getVerbNoun()));
-//            print.printListToConsole();
-//
-//            //clears console before update
-//            Console.clear();
-//
-//            //if player is dead, end game
-//            if (player.end() == true) {
-//                player.setEndGame(true);
-//            }
-//        }
-//    }
 
     public String showAreaDescription() {
         return player.areaDescription();
@@ -180,14 +69,9 @@ public class Controller {
         return player.foundItems();
     }
 
-    //game loop
-//    private void gameLoop() throws IOException {
-//
-////        String oldLocation = "";
-//        //game continues if player is alive
-//        while (!player.isEndGame()) {
-
-
+    public Map<String, String> areaNPCs() {
+        return player.seenNPCs();
+    }
 
     //checks if action is allowed for given location
     private boolean actionChecker(String location, String inputAction) {
@@ -232,7 +116,7 @@ public class Controller {
 //    private void userPromptInput(String location) {
     public void userPrompt(String userInput) throws IOException, UnsupportedAudioFileException {
         String location = player.getLocation();
-        List<String> userFeedback = getPlayerUpdate();
+        List<String> userFeedback = new ArrayList<>();
         System.out.println(userInput);
 //            String userInput = scanner.nextLine().trim().toLowerCase();
         com.game.hauntedvillage.model.TextParser parser = new com.game.hauntedvillage.model.TextParser();
@@ -245,15 +129,16 @@ public class Controller {
         }
         //checks verbs and nouns for validity
         if (!"verb".equals(userVerb)) {
-//                if(userVerb.equals("quit")) {
-//                    quit();
-//                }
             if (actionChecker(location, userVerb)) {
                 setVerbNoun(result);
                 setPlayerUpdate(player.updatePlayer(getVerbNoun()));
+                if(userVerb.equals("light")) {
+
+                }
             }
             else {
-                userFeedback.add(String.format("Can not %s %s in %s.%n Provide valid input.%n", userVerb.toUpperCase(), userNoun.toUpperCase(), location.toUpperCase()));
+//                userFeedback.add(String.format("Can not %s %s.%n", userVerb.toUpperCase(), userNoun.toUpperCase()));
+                userFeedback.add("You can't do that...");
                 setPlayerUpdate(userFeedback);
             }
         }

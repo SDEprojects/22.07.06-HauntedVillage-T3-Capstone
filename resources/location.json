@@ -28,7 +28,7 @@
         "south": "Southern Square",
         "west": "Home"
       },
-      "characters": ["villagers"],
+      "characters": ["images/villagersBack.png"],
       "jpeg": "resources/images/spookyVillageedited.jpg"
     }
   },
@@ -45,7 +45,7 @@
         "east": "Church",
         "south": "Center Courtyard"
       },
-      "characters": ["children"],
+      "characters": ["images/children.png"],
       "jpeg": "images/northernSquare2.jpg"
     }
   },
@@ -77,7 +77,7 @@
       "directions": {
         "north": "Southern Square"
       },
-      "characters": ["werewolf", "farmer"],
+      "characters": ["images/werewolfBack.png", "images/angryFarmerBack.png"],
       "jpeg": "images/farm.jpg"
     }
   },
@@ -92,7 +92,7 @@
       "directions": {
         "west": "Southern Square"
       },
-      "characters": ["clerk"],
+      "characters": ["images/clerkBack.png"],
       "jpeg": "images/townHall.jpg"
     }
   },
@@ -118,11 +118,11 @@
       "description": "You hear a cat >>MEOW<< from behind a pew, but don’t get startled. \nIt is a bit dark for an early afternoon visit, but you remember seeing clouds up above, possibly signaling some rain later that evening. \n\nHere you can speak to the pastor, say a prayer, light a candle, or go west to leave.",
       "description2": "",
       "actions": ["speak", "say", "light", "go", "search", "fight"],
-      "items": [],
+      "items": ["images/candleBackUnlit.png", "images/candleBack.png"],
       "directions": {
         "west": "Northern Square"
       },
-      "characters": ["pastor"],
+      "characters": ["images/priestBack.png"],
       "jpeg": "images/The-Black-Church.jpg"
     }
   },
@@ -133,7 +133,7 @@
       "description": "The air is remarkably colder here. You’ve been avoiding this area due to the shrieks at night.  \nIt is a rough stone circle with a seemingly bottomless pit in the center. The sky seems to have become dim. \nTo the North the tall trees block out the light and there is only the sound of creaking wood and the rustle of leaves. \nA discarded bucket and rope lay in the yellow grass. \n\nSearch the area, use the well, or go back south to your troubled village.",
       "description2": "",
       "actions": ["search", "use", "go", "speak"],
-      "items": [],
+      "items": ["images/wellBack.png"],
       "directions": {
         "north": "Woods",
         "south": "Northern Square"
@@ -153,7 +153,7 @@
       "directions": {
         "south": "Well"
       },
-      "characters": ["cat", "demon"],
+      "characters": ["images/catBack.png", "images/catDemon.jpg"],
       "jpeg": "images/woods.jpg"
     }
   }

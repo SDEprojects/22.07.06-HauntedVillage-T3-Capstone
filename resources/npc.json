@@ -1,7 +1,7 @@
 
 [
   {
-  "children":
+  "images/children.png":
   {
     "name": "children",
     "location": "Northern Square",
@@ -14,7 +14,7 @@
   }
 },
   {
-    "villagers":
+    "images/villagersBack.png":
     {
       "name": "villagers",
       "location": "Center Courtyard",
@@ -28,7 +28,7 @@
   },
 
   {
-    "werewolf":
+    "images/werewolfBack.png":
     {
       "name": "werewolf",
       "location": "Farm",
@@ -38,7 +38,7 @@
   },
 
   {
-    "farmer":
+    "images/angryFarmerBack.png":
     {
       "name": "farmer",
       "location": "Farm",
@@ -48,7 +48,7 @@
   },
 
   {
-    "clerk":
+    "images/clerkBack.png":
     {
       "name": "clerk",
       "location": "Town hall",
@@ -68,17 +68,17 @@
   },
 
   {
-    "pastor":
+    "images/priestBack.png":
     {
       "name": "pastor",
       "location": "Church",
-      "conversations": ["The pastor turns to you but he’s not who he seems. \nHe’s covered in blood with two fangs sneaking from his grin. \n“I think you have too many sins,“ he cries, as he lunges at you!"],
+      "conversations": ["Only those chosen by God can hope to light this candle and reveal the blessing... #MatchBox20"],
       "actions": []
     }
   },
 
   {
-    "cat":
+    "images/catBack.png":
     {
       "name": "cat",
       "location": "Woods",
@@ -88,7 +88,7 @@
   },
 
   {
-    "demon":
+    "images/catDemon.jpg":
     {
       "name": "demon",
       "location": "Woods",

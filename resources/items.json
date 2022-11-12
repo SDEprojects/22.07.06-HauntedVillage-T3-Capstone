@@ -56,7 +56,7 @@
     "health_reduction": "0",
     "boss_kill": "False"
   },
-  "amulet": {
+    "images/amuletBackg.png": {
     "name": "triangular amulet",
     "location": "church",
     "description" : "an amulet",
