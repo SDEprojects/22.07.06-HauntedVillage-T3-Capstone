@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.game.hauntedvillage.controller.Controller;
@@ -25,16 +23,17 @@ public class GameFrame extends JFrame {
     private JPanel boardGame;
     private JButton playButton, quitButton, exitButton;
     private JPopupMenu inspectKnife, inspectMatches, inspectCrucifix;
-    public JLabel knifeObjLabel, matchesObjLabel, crucifixObjLabel;
+    private JLabel knifeObjLabel, matchesObjLabel, crucifixObjLabel;
     private JPopupMenu createMenu;
     private JMenuItem[] menuOptions;
     private JLabel[] labelVisual = new JLabel[10];
-    public JPanel[] panelVisual = new JPanel[10];
-    JTextArea gameText;
-    JPanel centerPanel, southPanel, westPanel, eastPanel, northPanel;
-    JButton NorthButton, EastButton, WestButton, SouthButton;
-    Controller controller = new Controller();
+    private JPanel[] panelVisual = new JPanel[10];
+    private JTextArea gameText;
+    private JPanel centerPanel, southPanel, westPanel, eastPanel, northPanel;
+    private JButton NorthButton, EastButton, WestButton, SouthButton;
+    private Controller controller = new Controller();
     private String oldLocation = "";
+    private boolean unlit = true;
 
     public GameFrame() throws IOException {
 
@@ -181,47 +180,38 @@ public class GameFrame extends JFrame {
         labelInventoryTitle.setFont(new Font("Chiller", Font.PLAIN, 24));
         labelInventoryTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // this decides where in borderlayout they are positioned...
-//        String inventory = controller.gameInventory().toString();
-//        JTextArea inventoryText = new JTextArea();
-//        inventoryText.setFont(new Font("Chiller", Font.PLAIN, 20));
-//        inventoryText.setForeground(Color.RED);
-//        inventoryText.setBackground(Color.black);
-//        inventoryText.setText(inventory.substring(1, inventory.length() - 1));
-//        inventoryText.setLineWrap(true);
-//        inventoryText.setWrapStyleWord(true);
-//        labelInventoryTitle.add(inventoryText);
-
         if(controller.gameInventory().size() > 0 && controller.gameInventory().get(0) != null) {
             ImageIcon inventoryItem1 = new ImageIcon(controller.gameInventory().get(0));
             JLabel item1Label = new JLabel(inventoryItem1);
-            item1Label.setBounds(10, 30, 60, 60);
+            item1Label.setBounds(10, 30, 60, 100);
 
             panelInventory.add(item1Label);
         }
         if(controller.gameInventory().size() > 1 && controller.gameInventory().get(1) != null) {
             ImageIcon inventoryItem2 = new ImageIcon(controller.gameInventory().get(1));
             JLabel item2Label = new JLabel(inventoryItem2);
-            item2Label.setBounds(70, 30, 60, 60);
+            item2Label.setBounds(70, 30, 60, 100);
 
             panelInventory.add(item2Label);
         }
         if(controller.gameInventory().size() > 2 && controller.gameInventory().get(2) != null) {
             ImageIcon inventoryItem3 = new ImageIcon(controller.gameInventory().get(2));
             JLabel item3Label = new JLabel(inventoryItem3);
-            item3Label.setBounds(130, 30, 60, 60);
+            item3Label.setBounds(170, 30, 60, 100);
 
             panelInventory.add(item3Label);
         }
         if(controller.gameInventory().size() > 3 && controller.gameInventory().get(3) != null) {
             ImageIcon inventoryItem4 = new ImageIcon(controller.gameInventory().get(3));
             JLabel item4Label = new JLabel(inventoryItem4);
+            item4Label.setBounds(230, 30, 60, 100);
 
             panelInventory.add(item4Label);
         }
         if(controller.gameInventory().size() > 4 && controller.gameInventory().get(4) != null) {
             ImageIcon inventoryItem5 = new ImageIcon(controller.gameInventory().get(4));
             JLabel item5Label = new JLabel(inventoryItem5);
+            item5Label.setBounds(10, 120, 60, 100);
 
             panelInventory.add(item5Label);
         }
@@ -287,6 +277,12 @@ public class GameFrame extends JFrame {
             }
 
             String convert = controller.getPlayerUpdate().toString();
+            if(convert.contains("You used the matches to light the candle.\nThe illumination reveals a triangular amulet, this may come in handy.")) {
+                setUnlit(false);
+            }
+            if(convert.contains("You throw the blue stone at the beast...")) {
+                quitGame("win");
+            }
             feedbackWrap.setText(convert.substring(1, convert.length() - 1));
             gameText.setText(getOldLocation());
         }
@@ -369,10 +365,7 @@ public class GameFrame extends JFrame {
 
         //Quit/Exit
         quitButton.addActionListener(e -> {
-
-                quitGame();
-
-
+            quitGame("quit");
         });
         quitButton.setPreferredSize(new Dimension(273, 40));
 //        button.addActionListener(this);
@@ -400,16 +393,14 @@ public class GameFrame extends JFrame {
         frame.add(panelRoomDescription);
         frame.add(panelTextFeedback);
     }
-    public void quitGame() {
+    public void quitGame(String endType) {
         panelVisual[1].setVisible(false);
 
         frame.getContentPane().removeAll();
         frame.repaint();
         //frame.add(panelVisual[1]);
-        createQuitScreen();
+        createQuitScreen(endType);
     }
-
-
 
     public void backgroundLayout(int visualNum, String bgImage) {
 
@@ -423,39 +414,241 @@ public class GameFrame extends JFrame {
         labelVisual[visualNum].setIcon(image);
     }
 
-    public void createObject(int visualNum, String Choice1, String Choice2) {
-        Map<String, String> showItems;
-        showItems = controller.areaItems();
+    private void createNpc(String talk, String fight) {
+        Map<String, String> showNPCs = controller.areaNPCs();
         JMenuItem[] dropMenu = new JMenuItem[4];
+        String location = controller.playerLocation();
 
-        if(showItems.size() > 0) {
-            if(showItems.get("0") != null ) {
-                JPopupMenu item1 = new JPopupMenu();
-                dropMenu[1] = new JMenuItem(Choice1);
-                dropMenu[1].addActionListener(e-> {
+        if(showNPCs.size() > 0) {
+            if (showNPCs.get("0") != null) {
+                JPopupMenu npc1 = new JPopupMenu();
+                dropMenu[1] = new JMenuItem(talk);
+                dropMenu[1].addActionListener(e -> {
                     try {
-                        controller.userPrompt(String.format("%s %s", Choice1, showItems.get("0")));
-                        item1.setVisible(false);
+                        controller.userPrompt(String.format("%s %s", talk, showNPCs.get("0")));
+                        npc1.setVisible(false);
                         initialize();
                         createScreen();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
-                item1.add(dropMenu[1]);
-                dropMenu[2] = new JMenuItem(Choice2);
-                dropMenu[2].addActionListener(e-> {
+                npc1.add(dropMenu[1]);
+                dropMenu[2] = new JMenuItem(fight);
+                dropMenu[2].addActionListener(e -> {
                     try {
-                        controller.userPrompt(String.format("%s %s", Choice2, showItems.get("0")));
+                        controller.userPrompt(String.format("%s %s", fight, showNPCs.get("0")));
                         initialize();
+                        createScreen();
+                    }
+                    catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                npc1.add(dropMenu[2]);
+                ImageIcon npc1Icon = new ImageIcon(showNPCs.get("0"));
+                JLabel npc1Label = new JLabel();
+                if(location.equals("Center Courtyard")) {
+                    npc1Label.setBounds(300, 300, 180, 100);
+                }
+                else if(location.equals("Farm")) {
+                    npc1Label.setBounds(310, 300, 280, 150);
+                }
+                else if(location.equals("Church")) {
+                    npc1Label.setBounds(560, 220, 180, 180);
+                }
+                else if(location.equals("Northern Square")) {
+                    npc1Label.setBounds(10, 60, 280, 150);
+                }
+                else if(location.equals("Woods")) {
+                    npc1Label.setBounds(250, 360, 280, 150);
+                }
+                else if(location.equals("Town hall")) {
+                    npc1Label.setBounds(500, 400, 280, 150);
+                }
+
+                npc1Label.setIcon(npc1Icon);
+                npc1Label.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent event) {
+                        if (SwingUtilities.isRightMouseButton(event)) {
+                            npc1.show(npc1Label, event.getX(), event.getY());
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent event) {
+                    }
+                });
+                labelVisual[1].add(npc1Label);
+            }
+            if (showNPCs.get("1") != null) {
+                JPopupMenu npc2 = new JPopupMenu();
+                dropMenu[1] = new JMenuItem(talk);
+                dropMenu[1].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", talk, showNPCs.get("1")));
+                        npc2.setVisible(false);
+                        initialize();
+                        createScreen();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 });
-                item1.add(dropMenu[2]);
+                npc2.add(dropMenu[1]);
+                dropMenu[2] = new JMenuItem(fight);
+                dropMenu[2].addActionListener(e -> {
+                    try {
+                        controller.userPrompt(String.format("%s %s", fight, showNPCs.get("1")));
+                        initialize();
+                        createScreen();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                npc2.add(dropMenu[2]);
+                ImageIcon npc2Icon = new ImageIcon(showNPCs.get("1"));
+                JLabel npc2Label = new JLabel();
+                if(location.equals("Farm")) {
+                    npc2Label.setBounds(20, 380, 180, 150);
+                }
+                else if(location.equals("Woods")) {
+                    npc2Label.setBounds(250, 250, 241, 300);
+                }
+                npc2Label.setIcon(npc2Icon);
+                npc2Label.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent event) {
+
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent event) {
+                        if (SwingUtilities.isRightMouseButton(event)) {
+                            npc2.show(npc2Label, event.getX(), event.getY());
+                        }
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent event) {
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent event) {
+                    }
+                });
+                labelVisual[1].add(npc2Label);
+            }
+        }
+    }
+
+    public void createItemImage(String Choice1, String Choice2) {
+        Map<String, String> showItems;
+        showItems = controller.areaItems();
+        String location = controller.playerLocation();
+        JMenuItem[] dropMenu = new JMenuItem[4];
+
+        if(showItems.size() > 0) {
+            if(showItems.get("0") != null ) {
+                JPopupMenu item1 = new JPopupMenu();
+                dropMenu[0] = new JMenuItem(Choice1);
+                dropMenu[1] = new JMenuItem(Choice2);
                 ImageIcon item1Icon = new ImageIcon(showItems.get("0"));
                 JLabel item1Label = new JLabel();
-                item1Label.setBounds(400,200,100,100);
+                if(!location.equals("Church") && !location.equals("Well")) {
+                    dropMenu[0].addActionListener(e-> {
+                        try {
+                            controller.userPrompt(String.format("%s %s", Choice1, showItems.get("0")));
+                            item1.setVisible(false);
+                            initialize();
+                            createScreen();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+                    dropMenu[1].addActionListener(e-> {
+                        try {
+                            controller.userPrompt(String.format("%s %s", Choice2, showItems.get("0")));
+                            initialize();
+                            createScreen();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+                    item1.add(dropMenu[0]);
+                    item1.add(dropMenu[1]);
+                    item1Label.setBounds(400,200,100,100);
+                }
+                else if(location.equals("Church")){
+                    if(isUnlit()) {
+                        item1Label.setBounds(50, 255, 100, 100);
+                        dropMenu[2] = new JMenuItem("Light");
+                        dropMenu[2].addActionListener(e-> {
+                            try {
+                                controller.userPrompt(String.format("%s %s", "light", showItems.get("0")));
+                                item1.setVisible(false);
+                                initialize();
+                                createScreen();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        });
+                        item1.add(dropMenu[2]);
+
+                    }
+                    else {
+                        item1Icon = new ImageIcon(showItems.get("1"));
+                        item1Label.setBounds(50, 240, 100, 100);
+                    }
+                }
+                else {
+                    dropMenu[2] = new JMenuItem();
+                    dropMenu[2].setText("Search");
+                    dropMenu[2].addActionListener(e-> {
+                        try {
+                            controller.userPrompt(String.format("%s %s", "search", showItems.get("0")));
+                            item1.setVisible(false);
+                            initialize();
+                            createScreen();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+
+                    dropMenu[3] = new JMenuItem();
+                    dropMenu[3].setText("Use");
+                    dropMenu[3].addActionListener(e-> {
+                        try {
+                            controller.userPrompt(String.format("%s %s", "use", "well"));
+                            initialize();
+                            createScreen();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+
+                    item1.add(dropMenu[2]);
+                    item1.add(dropMenu[3]);
+                    item1Label.setBounds(280,130,200,200);
+                }
+
                 item1Label.setIcon(item1Icon);
                 item1Label.addMouseListener(new MouseListener() {
                     @Override
@@ -503,6 +696,7 @@ public class GameFrame extends JFrame {
                     try {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("1")));
                         initialize();
+                        createScreen();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -510,7 +704,9 @@ public class GameFrame extends JFrame {
                 item2.add(dropMenu[2]);
                 ImageIcon item2Icon = new ImageIcon(showItems.get("1"));
                 JLabel item2Label = new JLabel();
-                item2Label.setBounds(50,150,100,100);
+                if(!location.equals("Church")) {
+                    item2Label.setBounds(50,150,100,100);
+                }
                 item2Label.setIcon(item2Icon);
                 item2Label.addMouseListener(new MouseListener() {
                     @Override
@@ -558,6 +754,7 @@ public class GameFrame extends JFrame {
                     try {
                         controller.userPrompt(String.format("%s %s", Choice2, showItems.get("2")));
                         initialize();
+                        createScreen();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -565,7 +762,6 @@ public class GameFrame extends JFrame {
                 item3.add(dropMenu[2]);
                 ImageIcon item3Icon = new ImageIcon(showItems.get("2"));
                 JLabel item3Label = new JLabel();
-//            knifeObjLabel.setBounds(175, 350, 100, 100);
                 item3Label.setBounds(175, 350, 100, 100);
                 item3Label.setIcon(item3Icon);
                 item3Label.addMouseListener(new MouseListener() {
@@ -596,140 +792,6 @@ public class GameFrame extends JFrame {
                 labelVisual[1].add(item3Label);
             }
         }
-        JPopupMenu inspectKnife = new JPopupMenu();
-        JPopupMenu inspectMatches = new JPopupMenu();
-        JPopupMenu inspectCrucifix = new JPopupMenu();
-
-        dropMenu[1] = new JMenuItem(Choice1);
-        dropMenu[1].setActionCommand("TakeKnife");
-        inspectKnife.add(dropMenu[1]);
-
-
-        dropMenu[2] = new JMenuItem(Choice2);
-        dropMenu[2].setActionCommand("KnifeDesc");
-        inspectKnife.add(dropMenu[2]);
-
-        knifeObjLabel = new JLabel();
-        knifeObjLabel.setBounds(175, 350, 200, 200);
-
-        gameIcon = new ImageIcon("images/angryFarmerBack.png");
-        knifeObjLabel.setIcon(gameIcon);
-
-        knifeObjLabel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent event) {
-                if (SwingUtilities.isRightMouseButton(event)) {
-                    inspectKnife.show(knifeObjLabel, event.getX(), event.getY());
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent event) {
-            }
-        });
-
-        dropMenu[1] = new JMenuItem(Choice1);
-//        dropMenu[1].addActionListener(arelysController.objectsActions);
-        dropMenu[1].setActionCommand("takeMatches");
-        inspectMatches.add(dropMenu[1]);
-
-
-        dropMenu[2] = new JMenuItem(Choice2);
-//        dropMenu[2].addActionListener(arelysController.objectsActions);
-        dropMenu[2].setActionCommand("matchesDesc");
-        inspectMatches.add(dropMenu[2]);
-
-        matchesObjLabel = new JLabel();
-        matchesObjLabel.setBounds(400,200,150,100);
-
-        gameIcon = new ImageIcon("images/blueStoneBack (Custom).png");
-        matchesObjLabel.setIcon(gameIcon);
-
-        matchesObjLabel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent event) {
-                if (SwingUtilities.isRightMouseButton(event)) {
-                    inspectMatches.show(matchesObjLabel, event.getX(), event.getY());
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent event) {
-            }
-        });
-
-        dropMenu[1] = new JMenuItem(Choice1);
-//        dropMenu[1].addActionListener(arelysController.objectsActions);
-        dropMenu[1].setActionCommand("takeCrucifix");
-        inspectCrucifix.add(dropMenu[1]);
-
-
-        dropMenu[2] = new JMenuItem(Choice2);
-//        dropMenu[2].addActionListener(arelysController.objectsActions);
-        dropMenu[2].setActionCommand("crucifixDesc");
-        inspectCrucifix.add(dropMenu[2]);
-
-        crucifixObjLabel = new JLabel();
-        crucifixObjLabel.setBounds(50,150,100,100);
-
-        gameIcon = new ImageIcon("images/amuletBackg.png");
-        crucifixObjLabel.setIcon(gameIcon);
-
-        crucifixObjLabel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent event) {
-                if (SwingUtilities.isRightMouseButton(event)) {
-                    inspectCrucifix.show(crucifixObjLabel, event.getX(), event.getY());
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent event) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent event) {
-            }
-        });
-
-        labelVisual[1].add(knifeObjLabel);
-        labelVisual[1].add(matchesObjLabel);
-        labelVisual[1].add(crucifixObjLabel);
     }
 
     public void createDirectionButtons() {
@@ -869,84 +931,25 @@ public class GameFrame extends JFrame {
     public void createScreen() {
 //        First Image Home
         backgroundLayout(1, controller.backgroundJpeg());
-        createObject(1, "take", "look");
+        createItemImage("take", "look");
+        createNpc("talk", "fight");
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
         frame.add(panelVisual[1]);
 
     }
 
-    public void createQuitScreen() {
+    public void createQuitScreen(String endType) {
 //      First Image Home
-        backgroundLayout(1, "./images/theend.jpg");
-        //createObject(1, "get", "Talk");
+        if(endType.equals("quit")) {
+            backgroundLayout(1, "./images/theend.jpg");
+        }
+        else if(endType.equals("win")) {
+            backgroundLayout(1, "images/demonDeath.png");
+        }
+
         panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
         frame.add(panelVisual[1]);
         panelVisual[1].setVisible(true);
-    }
-
-
-    public JPanel getPanelButtons() {
-        return panelButtons;
-    }
-
-    public void setPanelButtons(JPanel panelButtons) {
-        this.panelButtons = panelButtons;
-    }
-
-    public JPanel getPanelInventory() {
-        return panelInventory;
-    }
-
-    public void setPanelInventory(JPanel panelInventory) {
-        this.panelInventory = panelInventory;
-    }
-
-    public JPanel getPanelNav() {
-        return panelNav;
-    }
-
-    public void setPanelNav(JPanel panelNav) {
-        this.panelNav = panelNav;
-    }
-
-    public JPanel getPanelMap() {
-        return panelMap;
-    }
-
-    public void setPanelMap(JPanel panelMap) {
-        this.panelMap = panelMap;
-    }
-
-    public JPanel[] getPanelVisual() {
-        return panelVisual;
-    }
-
-    public void setPanelVisual(JPanel[] panelVisual) {
-        this.panelVisual = panelVisual;
-    }
-
-    public JLabel[] getLabelVisual() {
-        return labelVisual;
-    }
-
-    public void setLabelVisual(JLabel[] labelVisual) {
-        this.labelVisual = labelVisual;
-    }
-
-    public JPanel getPanelRoomDescription() {
-        return panelRoomDescription;
-    }
-
-    public void setPanelRoomDescription(JPanel panelRoomDescription) {
-        this.panelRoomDescription = panelRoomDescription;
-    }
-
-    public JPanel getPanelTextFeedback() {
-        return panelTextFeedback;
-    }
-
-    public void setPanelTextFeedback(JPanel panelTextFeedback) {
-        this.panelTextFeedback = panelTextFeedback;
     }
 
     public String getOldLocation() {
@@ -955,5 +958,13 @@ public class GameFrame extends JFrame {
 
     public void setOldLocation(String oldLocation) {
         this.oldLocation = oldLocation;
+    }
+
+    public boolean isUnlit() {
+        return unlit;
+    }
+
+    public void setUnlit(boolean unlit) {
+        this.unlit = unlit;
     }
 }

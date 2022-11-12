@@ -127,33 +127,16 @@ public class Player implements Serializable {
                     sound.runFX();
                     addInventory(noun);
                 }
-//                else {
-//                    printThis.add(String.format("There is no %s here to take.%n Try again.%n", noun));
-//                }
             }
-//            if (items.contains(noun)) {
-//                //take command, player adds item to inventory
-//                for (String item : items) {
-//                    if (item.equals(noun)) {
-//                        sound.runFX();
-//                        addInventory(noun);
-//                    }
-//                }
-//            }
-//            else {
-//                printThis.add(String.format("There is no %s here to take.%n Try again.%n", noun));
-//            }
         }
         if ("search".equals(verbNoun.get(0))) {
 
             if("Well".equals(getLocation())){
-                System.out.println("There is a triangular indentation in the stone.");
-                if(getInventory().contains("amulet")){
+                printThis.add("You see a small hole that looks as if something was removed from it.");
+                printThis.add("'... For those who are worthy of obtaining the sacred AMULET, place it here, and the power to vanquish shadow and flame shall be yours'.");
+                if(getInventory().contains("images/amuletBackg.png")){
                     setWellActivation(true);
-                    printThis.add("You insert the triangular amulet. The ground rumbles and a grown comes from within the well.");
-                }
-                else {
-                    printThis.add("Something must fit here.");
+                    printThis.add("Try USEing the well now");
                 }
             }
             else {
@@ -166,7 +149,7 @@ public class Player implements Serializable {
             if (item.checkStationaryItemLocation(getLocation(), interactionItem)) {
                 if(amuletWellCondition(interactionItem)){
                     printThis.add("You retrieve a dark blue stone");
-                    addInventory("stone");
+                    addInventory("images/blueStoneBack.png");
                 }
                 else {
 
@@ -199,10 +182,19 @@ public class Player implements Serializable {
 
         //light command, player lights candle for amulet
         if ("light".equals(verbNoun.get(0))) {
-            printThis.add(art.showArt("candle"));
-            printThis.add("The illumination reveals a triangular amulet, this may come in handy.  (amulet added to inventory)");
-            addInventory("amulet");
+            if(!getInventory().contains("images/amuletBackg.png") && getInventory().contains("images/matches.jpg")) {
+                //            printThis.add(art.showArt("candle"));
+                printThis.add("You used the matches to light the candle.\nThe illumination reveals a triangular amulet, this may come in handy.");
+                addInventory("images/amuletBackg.png");
+            }
+            else if(getInventory().contains("images/amuletBackg.png")){
+                printThis.add("You already lit the candle. You can't light it again...");
+            }
+            else {
+                printThis.add("This would light if only you had something...");
+            }
         }
+
         if ("drop".equals(verbNoun.get(0))) {
             String interactionItem = verbNoun.get(1);
             if (getInventory().contains(interactionItem)) {
@@ -215,31 +207,24 @@ public class Player implements Serializable {
         //fight command.
         if ("fight".equals(verbNoun.get(0))) {
             String target = verbNoun.get(1);
-            if(seenNPCs().contains(target)) {
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Choose a weapon from your inventory.");
-                String weapon = scanner1.nextLine().trim().toLowerCase();
-                if (getInventory().contains(weapon)) {
-                    if ("Woods".equals(getLocation())){
-                        if ("stone".equals(weapon)){
-                            printThis = finalBattle();
-                        }
-                        else{
-                            //NPC.demonDamage();
-                            printThis.add("This weapon isn’t doing anything");
-                        }
-                    }
-                    else {
+            if(getInventory().contains("images/knife.jpg") || getInventory().contains("images/blueStoneBack.png")) {
+                if ("Woods".equals(getLocation()) && target.equals("images/catDemon.jpg")){
+                    if (getInventory().contains("images/blueStoneBack.png")){
                         addNpcInventory(target);
-                        printThis.add(String.format("You killed %s with the %s.%n", target, weapon));
+                        printThis = finalBattle();
+                    }
+                    else{
+                        //NPC.demonDamage();
+                        printThis.add("This knife isn’t doing anything");
                     }
                 }
-                else{
-                    printThis.add(String.format("%s is not in your inventory.", weapon));
+                else {
+                    addNpcInventory(target);
+                    printThis.add("You killed them.\nHeaven have mercy on their soul.");
                 }
             }
             else {
-                printThis.add(String.format("There is no %s here... You must be seeing ghosts.%n", target));
+                printThis.add("You need a weapon...");
             }
         }
 
@@ -283,13 +268,13 @@ public class Player implements Serializable {
                     JsonNode description2Node = nameNode.path("description2");
 
                     if (descriptionNode.equals(node)) {
-                        if(!"Woods".equals(getLocation()) || ("Woods".equals(getLocation()) && getInventory().contains("stone"))) {
+                        if(!"Woods".equals(getLocation()) || ("Woods".equals(getLocation()) && getInventory().contains("images/blueStoneBack.png"))) {
                             printThis = node.asText();
 //                            setOldLocation(getLocation());
                         }
                     }
                     else if(description2Node.equals(node)) {
-                        if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
+                        if("Woods".equals(getLocation()) && !getInventory().contains("images/blueStoneBack.png")) {
 //                            setOldLocation(getLocation());
                             printThis = node.asText();
                         }
@@ -303,10 +288,7 @@ public class Player implements Serializable {
 
     private List<String> finalBattle() {
         List<String> finalBattle = new ArrayList<>();
-        finalBattle.add(art.showArt("demon"));
-        finalBattle.add("You throw the blue stone at the beast. \nIt locks into space in the flame and radiates in bright blue light! \n\n“No!!!”, he roars");
-        Console.clear();
-        finalBattle.add("The demon is destroyed in a burst of white light. \n\nYou can finally rest now that the curse has lifted.");
+        finalBattle.add("You throw the blue stone at the beast...");
         setEndGame(true);
 
         return finalBattle;
@@ -316,7 +298,6 @@ public class Player implements Serializable {
         boolean endCondition = false;
         return endCondition;
     }
-
 
     public String getCurrentLocationJpeg() {
         for (JsonNode root : getLocationRootArray()) {
@@ -333,49 +314,49 @@ public class Player implements Serializable {
     }
 
 
-    public List<String> playerCurrentInfo() {
-        List<String> stats = new ArrayList<>();
-
-        for (JsonNode root : getLocationRootArray()) {
-
-            String location = getLocation();
-            // Get Name
-            JsonNode nameNode = root.path(location);
-
-            if (!nameNode.isMissingNode()) {  // if "name" node is not missing
-
-                for (JsonNode node : nameNode) {
-                    // Get node names
-                    JsonNode locationNode = nameNode.path("name");
-
-                    //location
-                    if (locationNode.equals(node)) {
-                        stats.add(String.format("Location: %s", node.asText()));
-                    }
-                }
-            }
-        }
-        //directions
-        stats.add(String.format("Directions: %s", areaDirections().toString()));
-
-        //characters
-        stats.add(String.format("Characters you see: %s", seenNPCs().toString()));
-
-        //items
-        stats.add(String.format("Items you see: %s", foundItems().toString()));
-
-        //Inventory
-        stats.add(String.format("Inventory: %s", getInventory().toString()));
-
-        //Health bar
-        ArrayList<String> healthIconList = new ArrayList<>(0);
-        for (int i = 0; i < getHealthLevel(); i++) {
-            healthIconList.add("♥");
-        }
-        String healthBar = healthIconList.toString().replaceAll("[\\[\\]]", "").replaceAll(",", "");
-        stats.add(String.format("Health: %s", healthBar));
-        return stats;
-    }
+//    public List<String> playerCurrentInfo() {
+//        List<String> stats = new ArrayList<>();
+//
+//        for (JsonNode root : getLocationRootArray()) {
+//
+//            String location = getLocation();
+//            // Get Name
+//            JsonNode nameNode = root.path(location);
+//
+//            if (!nameNode.isMissingNode()) {  // if "name" node is not missing
+//
+//                for (JsonNode node : nameNode) {
+//                    // Get node names
+//                    JsonNode locationNode = nameNode.path("name");
+//
+//                    //location
+//                    if (locationNode.equals(node)) {
+//                        stats.add(String.format("Location: %s", node.asText()));
+//                    }
+//                }
+//            }
+//        }
+//        //directions
+//        stats.add(String.format("Directions: %s", areaDirections().toString()));
+//
+//        //characters
+//        stats.add(String.format("Characters you see: %s", seenNPCs().toString()));
+//
+//        //items
+//        stats.add(String.format("Items you see: %s", foundItems().toString()));
+//
+//        //Inventory
+//        stats.add(String.format("Inventory: %s", getInventory().toString()));
+//
+//        //Health bar
+//        ArrayList<String> healthIconList = new ArrayList<>(0);
+//        for (int i = 0; i < getHealthLevel(); i++) {
+//            healthIconList.add("♥");
+//        }
+//        String healthBar = healthIconList.toString().replaceAll("[\\[\\]]", "").replaceAll(",", "");
+//        stats.add(String.format("Health: %s", healthBar));
+//        return stats;
+//    }
 
     //returns location specific directions
     private ArrayList<String> areaDirections() {
@@ -418,12 +399,10 @@ public class Player implements Serializable {
     }
 
     //returns location specific items
-//    public ArrayList<String> foundItems() {
     public Map<String, String> foundItems() {
         Map<String, String> items = new ConcurrentHashMap<>();
-
         List<String> mapEntry = new ArrayList<>();
-//        ArrayList<String> itemsList = new ArrayList<>(0);
+
         for (JsonNode root : getLocationRootArray()) {
             // Get Name
             JsonNode nameNode = root.path(getLocation());
@@ -433,9 +412,7 @@ public class Player implements Serializable {
                     // Get node names
                     JsonNode itemsNode = nameNode.path("items");
                     if (itemsNode.equals(node)) {
-//                        for (JsonNode item : itemsNode) {
                         for (int i = 0; i < itemsNode.size(); i++) {
-//                            itemsList.add(item.asText());
                             items.put(String.format("%s",i), itemsNode.get(i).asText());
                         }
                     }
@@ -445,18 +422,14 @@ public class Player implements Serializable {
         for(String item : items.values()) {
             if(getInventory().contains(item)) {
                 mapEntry.add(item);
-//                items.remove(item);
             }
         }
         for(Map.Entry<String, String> entry : items.entrySet()) {
-//            if(entry.getValue().equals(mapEntry)) {
             if(mapEntry.contains(entry.getValue())) {
                 items.remove(entry.getKey());
             }
         }
         return items;
-//        itemsList.removeIf(getInventory()::contains);
-//        return itemsList;
     }
 
     //remove an item from player's inventory
@@ -467,7 +440,8 @@ public class Player implements Serializable {
     }
 
     //returns location specific items
-    private ArrayList<String> seenNPCs() {
+    public Map<String, String> seenNPCs() {
+        Map<String, String> npcMap = new ConcurrentHashMap<>();
         ArrayList<String> npcList = new ArrayList<>(0);
 
         for (JsonNode root : getLocationRootArray()) {
@@ -477,31 +451,54 @@ public class Player implements Serializable {
             if (!nameNode.isMissingNode()) {  // if "name" node is not missing
                 for (JsonNode node : nameNode) {
                     // Get node names
-                    JsonNode itemsNode = nameNode.path("characters");
-                    if (itemsNode.equals(node)) {
-                        for (JsonNode npc : itemsNode) {
-                            npcList.add(npc.asText());
+                    JsonNode charactersNode = nameNode.path("characters");
+                    if (charactersNode.equals(node)) {
+                        for (int i = 0; i < charactersNode.size(); i++) {
+                            npcMap.put(String.format("%s",i), charactersNode.get(i).asText());
                         }
                     }
                 }
             }
         }
-        npcList.removeIf(getNpcInventory()::contains);
-        if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
-            int demonIndex = npcList.indexOf("demon");
-            if(!(demonIndex == -1)) {
+//        npcList.removeIf(getNpcInventory()::contains);
+//        if("Woods".equals(getLocation()) && !getInventory().contains("stone")) {
+//            int demonIndex = npcList.indexOf("demon");
+//            if(!(demonIndex == -1)) {
+//                npcList.remove(demonIndex);
+//            }
+//        }
+//        return npcList;
+        for(String character : npcMap.values()) {
+            if(!getNpcInventory().contains(character)) {
+                npcList.add(character);
+            }
+        }
+        if("Woods".equals(getLocation()) && !getInventory().contains("images/blueStoneBack.png")) {
+            int demonIndex = npcList.indexOf("images/catDemon.jpg");
+            if(demonIndex != -1) {
                 npcList.remove(demonIndex);
             }
         }
-        return npcList;
+        if("Woods".equals(getLocation()) && getInventory().contains("images/blueStoneBack.png")) {
+            int catIndex = npcList.indexOf("images/catBack.png");
+            if(catIndex != -1) {
+                npcList.remove(catIndex);
+            }
+        }
+        for(Map.Entry<String, String> entry : npcMap.entrySet()) {
+            if(getNpcInventory().contains(entry.getValue()) || !npcList.contains(entry.getValue())) {
+                npcMap.remove(entry.getKey());
+            }
+        }
+        return npcMap;
     }
 
     private boolean amuletWellCondition(String item) {
         boolean condition = false;
         if("well".equals(item)){
-            if(getInventory().contains("amulet")){
+            if(getInventory().contains("images/amuletBackg.png")){
                 if (wellActivation) {
-                    if (!getInventory().contains("stone")) {
+                    if (!getInventory().contains("images/blueStoneBack.png")) {
                         condition = true;
                     }
                 }
