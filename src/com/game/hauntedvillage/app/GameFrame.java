@@ -252,7 +252,7 @@ public class GameFrame extends JFrame {
 //        JLabel labelTextFeedback = new JLabel();
         JTextArea feedbackWrap = new JTextArea();
         feedbackWrap.setFont(new Font("Chiller", Font.PLAIN, 20));
-        feedbackWrap.setForeground(Color.RED);
+        feedbackWrap.setForeground(Color.GRAY);
         feedbackWrap.setBackground(Color.black);
         feedbackWrap.setLineWrap(true);
         feedbackWrap.setWrapStyleWord(true);
@@ -290,11 +290,11 @@ public class GameFrame extends JFrame {
 //        gameText = new JTextArea(controller.showAreaDescription());
         gameText.setBounds(5, 555, 400, 200);
         gameText.setBackground(Color.black);
-        gameText.setForeground(Color.red);
+        gameText.setForeground(Color.RED);
         gameText.setEditable(false);
         gameText.setLineWrap(true);
         gameText.setWrapStyleWord(true);
-        gameText.setFont(new Font("Chiller", Font.PLAIN, 24));
+        gameText.setFont(new Font("SANS_SERIF", Font.ITALIC, 16));
 
         // this decides where in borderlayout they are positioned...
         panelRoomDescription.add(roomTitle, BorderLayout.PAGE_START);
@@ -310,7 +310,7 @@ public class GameFrame extends JFrame {
 
         String textFeedbackTitleString = feedbackTitleString;
         JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
-        feedbackTitle.setForeground(Color.GRAY);
+        feedbackTitle.setForeground(Color.GREEN);
         feedbackTitle.setFont(new Font("Chiller", Font.ITALIC, 24));
         feedbackTitle.setHorizontalAlignment(SwingConstants.CENTER);
 

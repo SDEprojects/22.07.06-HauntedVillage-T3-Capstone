@@ -150,7 +150,7 @@ public class Player implements Serializable {
             String interactionItem = verbNoun.get(1);
             if (item.checkStationaryItemLocation(getLocation(), interactionItem)) {
                 if(amuletWellCondition(interactionItem)){
-                    printThis.add("You retrieve a dark blue stone");
+                    printThis.add("You insert the amulet into the hole. After a moment of silence a dark blue stone shoots out of the depths of the well and lands next to your feet. \nYou retrieve a dark blue stone and put it in your bag.");
                     addInventory("images/blueStoneBack.png");
                 }
                 else {
@@ -186,7 +186,7 @@ public class Player implements Serializable {
         if ("light".equals(verbNoun.get(0))) {
             if(!getInventory().contains("images/amuletBackg.png") && getInventory().contains("images/matches.jpg")) {
                 //            printThis.add(art.showArt("candle"));
-                printThis.add("You used the matches to light the candle.\nThe illumination reveals a triangular amulet, this may come in handy.");
+                printThis.add("You used the matches to light the candle.\nThe illumination reveals a triangular amulet that may come in handy. \nAn amulet has been added to your inventory.");
                 addInventory("images/amuletBackg.png");
             }
             else if(getInventory().contains("images/amuletBackg.png")){
