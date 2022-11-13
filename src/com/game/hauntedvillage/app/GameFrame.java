@@ -25,7 +25,7 @@ public class GameFrame extends JFrame {
     private JPanel panelMap;
     private JPanel panelRoomDescription;
     private JPanel panelTextFeedback;
-    private JLabel label, gameObjLabel, quitLabel;
+    private JLabel label, labelNav, quitLabel, feedbackTitle, end;
     private ImageIcon icon, gameIcon;
     private JPanel boardGame;
     private JButton playButton, quitButton, exitButton;
@@ -35,7 +35,7 @@ public class GameFrame extends JFrame {
     private JMenuItem[] menuOptions;
     private JLabel[] labelVisual = new JLabel[10];
     private JPanel[] panelVisual = new JPanel[10];
-    private JTextArea gameText;
+    private JTextArea gameText, feedbackWrap;
     private JPanel centerPanel, southPanel, westPanel, eastPanel, northPanel;
     private JButton NorthButton, EastButton, WestButton, SouthButton;
     private Controller controller = new Controller();
@@ -128,7 +128,9 @@ public class GameFrame extends JFrame {
     }
 
     public void initialize() {
-
+        frame.getContentPane().removeAll();
+        frame.revalidate();
+        frame.repaint();
         boardGame.setVisible(false);
         label.setVisible(false);
 
@@ -250,7 +252,7 @@ public class GameFrame extends JFrame {
         // Section: Title of Feedback
         String feedbackTitleString = "";
 //        JLabel labelTextFeedback = new JLabel();
-        JTextArea feedbackWrap = new JTextArea();
+        feedbackWrap = new JTextArea();
         feedbackWrap.setFont(new Font("Chiller", Font.PLAIN, 20));
         feedbackWrap.setForeground(Color.RED);
         feedbackWrap.setBackground(Color.black);
@@ -277,16 +279,16 @@ public class GameFrame extends JFrame {
             if(convert.contains("You used the matches to light the candle.\nThe illumination reveals a triangular amulet, this may come in handy.")) {
                 setUnlit(false);
             }
-            if(convert.contains("You throw the blue stone at the beast...")) {
-                quitGame("win");
-            }
+            //if(convert.contains("You throw the blue stone at the beast...")) {
+                //quitGame("quit");
+                //endGameScreen("win");
+            //}
             feedbackWrap.setText(convert.substring(1, convert.length() - 1));
-            gameText.setText(getOldLocation());
         }
         else {
             setOldLocation(controller.showAreaDescription());
-            gameText.setText(getOldLocation());
         }
+        gameText.setText(getOldLocation());
 //        gameText = new JTextArea(controller.showAreaDescription());
         gameText.setBounds(5, 555, 400, 200);
         gameText.setBackground(Color.black);
@@ -309,7 +311,7 @@ public class GameFrame extends JFrame {
         panelTextFeedback.setBounds(410, 555, 265, 200);
 
         String textFeedbackTitleString = feedbackTitleString;
-        JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
+        feedbackTitle = new JLabel(textFeedbackTitleString);
         feedbackTitle.setForeground(Color.GRAY);
         feedbackTitle.setFont(new Font("Chiller", Font.ITALIC, 24));
         feedbackTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -709,8 +711,13 @@ public class GameFrame extends JFrame {
                 dropMenu[2].addActionListener(e -> {
                     try {
                         controller.userPrompt(String.format("%s %s", fight, showNPCs.get("1")));
-                        initialize();
-                        createScreen();
+                        if (showNPCs.get("1").equals("images/catDemon.jpg")) {
+                            quitGame("win");
+                        }
+                        else {
+                            initialize();
+                            createScreen();
+                        }
                     } catch (IOException | UnsupportedAudioFileException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -995,7 +1002,7 @@ public class GameFrame extends JFrame {
         panelNav.setBackground(Color.BLACK);
         panelNav.setLayout(new BorderLayout());
         panelNav.setBounds(780, 585, 120, 120);
-        JLabel labelNav = new JLabel("Navigation");
+        labelNav = new JLabel("Navigation");
         panelNav.add(labelNav);
         NorthButton = new JButton("N");
         EastButton = new JButton("E");
@@ -1134,18 +1141,34 @@ public class GameFrame extends JFrame {
 
     }
 
+
+    public void endGameScreen(String imagePath) {
+        end = new JLabel();
+        ImageIcon image = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(1000, 800, Image.SCALE_SMOOTH)); // sets frame to size of image
+        end.setBackground(Color.black); // set background color
+        end.setIcon(image);
+
+    }
+
     public void createQuitScreen(String endType) {
 //      First Image Home
         if(endType.equals("quit")) {
-            backgroundLayout(1, "./images/theend.jpg");
+            endGameScreen("./images/theend.jpg");
         }
         else if(endType.equals("win")) {
-            backgroundLayout(1, "images/demonDeath.png");
+            endGameScreen( "images/demonDeath.png");
+            end.setText("You killed the demon!");
+            end.setForeground(new Color(0x8A0303));  // text color
+            end.setOpaque(true); // display background color
+            end.setFont(new Font("Chiller", Font.PLAIN, 110));
+            end.setHorizontalTextPosition(JLabel.CENTER);
+            end.setVerticalTextPosition(JLabel.CENTER);
+            end.setVerticalAlignment(JLabel.CENTER);
+            end.setHorizontalAlignment(JLabel.CENTER);
         }
-
-        panelVisual[1].add(labelVisual[1], BorderLayout.PAGE_START);
-        frame.add(panelVisual[1]);
-        panelVisual[1].setVisible(true);
+        end.setVisible(true);
+        frame.setContentPane(end);
+        frame.setVisible(true);
     }
 
     public String getOldLocation() {

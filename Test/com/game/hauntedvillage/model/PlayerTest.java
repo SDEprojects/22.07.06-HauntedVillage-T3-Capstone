@@ -3,6 +3,7 @@ package com.game.hauntedvillage.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Test;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ public class PlayerTest {
 
     Player player = new Player();
 
-    public PlayerTest() throws IOException {
+    public PlayerTest() throws IOException, UnsupportedAudioFileException {
     }
 
     @Test
