@@ -8,7 +8,8 @@ import java.io.IOException;
 class Main {
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
 
-        GameFrame gameFrame = new GameFrame();
-        gameFrame.titleScreen();
+        GameFrame.getInstance().titleScreen();
+//        GameFrame gameFrame = new GameFrame();
+//        gameFrame.titleScreen();
     }
 }

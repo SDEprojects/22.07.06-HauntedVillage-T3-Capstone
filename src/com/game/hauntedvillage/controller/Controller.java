@@ -1,12 +1,10 @@
 package com.game.hauntedvillage.controller;
 
-//import com.apps.util.Console;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.hauntedvillage.model.MapImage;
 import com.game.hauntedvillage.model.Player;
 import com.game.hauntedvillage.model.Sound;
-//import com.game.HauntedVillage.app.Print;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
@@ -16,14 +14,19 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
-
-    // initialize scanner. takes system input
-//    Scanner scanner = new Scanner(System.in);
     private ArrayList<String> verbNoun = new ArrayList<>(List.of("verb", "noun"));
     private com.game.hauntedvillage.model.Player player = new Player();
     private List<String> playerUpdate = new ArrayList<>();
     private MapImage mapImage = new MapImage();
     private Sound sound = new Sound();
+    private static Controller instance;
+
+    public static Controller getInstance() throws UnsupportedAudioFileException, IOException {
+        if(instance != null) {
+            return instance;
+        }
+        return instance = new Controller();
+    }
 
     public void musicAccessOn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         sound.musicOn();
@@ -40,8 +43,6 @@ public class Controller {
     public void SFXAccessOff() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         sound.SFXOff();
     }
-
-
 
     public Controller() throws IOException, UnsupportedAudioFileException {
     }
@@ -123,10 +124,6 @@ public class Controller {
         //verb-noun pair array using text parser
         ArrayList<String> result = parser.textParser(userInput);
         String userVerb = result.get(0);
-        String userNoun = "";
-        if(result.size() > 1) {
-            userNoun = result.get(1);
-        }
         //checks verbs and nouns for validity
         if (!"verb".equals(userVerb)) {
             if (actionChecker(location, userVerb)) {
