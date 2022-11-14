@@ -3,20 +3,22 @@
     "Home":
     {
       "name": "Home",
-      "description": "You are at home in your familiar log cabin. You look around and see some items that may be of use. \n\nYou can search the house for some useful items, rest to heal, or go east outside.",
+      "description": "You built this cabin with your own hands after moving to this town this year, the year of 1666.\n\nA few months after, this town was struck by illness, and strange creatures roam it's perimeter.\n\nPray thee discovereth the causeth... and stopeth...it",
       "description2": "",
       "actions": ["search", "rest", "go", "take", "speak"],
-      "items": ["matches", "crucifix", "knife"],
+      "items": ["images/matches.jpg", "images/crucifix.jpg", "images/knife.jpg"],
       "directions": {
         "east": "Center Courtyard"
+
       },
-      "characters": []
+      "characters": [],
+      "jpeg": "images/cabinedited.jpg"
     }
   },
   {
     "Center Courtyard": {
       "name": "Center Courtyard",
-      "description": "You are in the center courtyard. You see some of the villagers gathering there. They all look very concerned.  \nTo the West is your house. To the north is the Northern Square. To the South is further outside. To the East is the tavern. \n\nYou may speak to the villagers or go in a direction.",
+      "description": "These poor villagers, they are very troubled by these recent happenings.\n\nJust look at them, they're pitiful...err, I mean, frightened.\n\nI must speak with them.",
       "description2": "",
       "actions": ["speak", "go", "search"],
       "items": [],
@@ -26,14 +28,15 @@
         "south": "Southern Square",
         "west": "Home"
       },
-      "characters": ["villagers"]
+      "characters": ["images/villagersBack.png"],
+      "jpeg": "resources/images/spookyVillageedited.jpg"
     }
   },
 
   {
     "Northern Square": {
       "name": "Northern Square",
-      "description": "You are in the northern square. You see some children playing nearby. \nTo the North is the well and to the East is the Church. \n\nYou may search the area, speak to the child, or go North, East, or South.",
+      "description": "Why are those children on that roof? Strange times indeed.\nIs that blood on the boy's lip and the girl's hands?\nAre their eyes red?\n\nYou must be seeing things...",
       "description2": "",
       "actions": ["search", "leave", "speak", "go"],
       "items": [],
@@ -42,14 +45,15 @@
         "east": "Church",
         "south": "Center Courtyard"
       },
-      "characters": ["children"]
+      "characters": ["images/children.png"],
+      "jpeg": "images/northernSquare2.jpg"
     }
   },
 
   {
     "Southern Square": {
       "name": "Southern Square",
-      "description": "You are in the south square.   \nTo the East is the town hall. To the north is the center courtyard.  \nTo the South is your neighbor's farm. \n\n Go on to the direction you'd like.",
+      "description": "Not much to see here. Seems like somebody got lazy with this area.\n\nAre those buildings falling down?\n\nDreadful sight to see.",
       "description2": "",
       "actions": ["go", "search", "speak"],
       "items": [],
@@ -58,93 +62,99 @@
         "east": "Town hall",
         "south": "Farm"
       },
-      "characters": []
+      "characters": [],
+      "jpeg": "images/southernSquare.jpg"
     }
   },
 
   {
     "Farm": {
       "name": "Farm",
-      "description": "You find yourself in the farm. You see cows are lying on the floor, bleeding. \nA werewolf is tearing a cow apart, drinking its blood, eating its flesh. \nA scarecrow head is twisted and the hand points to the north. \n\nFight the werewolf, wake farmer, or go back north.",
+      "description": "What a beautiful... is that a WEREWOLF!??\n\nWhy is farmer John not terrified?? He seems so calm. Too calm...\n\nHe must be one of them...",
       "description2": "",
       "actions": ["go", "take", "fight", "wake", "search", "speak"],
       "items": ["shovel", "musket"],
       "directions": {
         "north": "Southern Square"
       },
-      "characters": ["werewolf", "farmer"]
+      "characters": ["images/werewolfBack.png", "images/angryFarmerBack.png"],
+      "jpeg": "images/farm.jpg"
     }
   },
 
   {
     "Town hall": {
       "name": "Town hall",
-      "description": "You find yourself in the town hall, cool wind in the hair. It is quiet and dark.  \nWind blows through broken windows and makes squeaky noises. \nAn old clerk holding a candle in the hand walks slowly out of the shadow. \nYou come forward and talk with the clerk. The clerk tells you the recent abnormality. \nCrows from the woods hide in the town hall day and night, staying away from their home, \nthe woods in the north. Obviously, there is something unspeakable in the woods. \nThe old clerk offers you a gift. \n\nTake the gift or go west.",
+      "description": "An uncharacteristically jovial (for this town's present state of affairs) looking clerk is busy with paperwork.\n\nThey seem... incomplete. Like there's a piece of them missing...\n\nYou can't put your finger on why though...",
       "description2": "",
       "actions": ["take", "search", "go", "speak"],
       "items": [],
       "directions": {
-        "north": "Tavern",
         "west": "Southern Square"
       },
-      "characters": ["clerk"]
+      "characters": ["images/clerkBack.png"],
+      "jpeg": "images/townHall.jpg"
     }
   },
 
   {
     "Tavern": {
       "name": "Tavern",
-      "description": "There are broken chairs on the floor and the tavern is empty except for the bar keep. \nSorry but we have no Ale or food. Nothing left here but some animal feed.  \n\n",
+      "description": "Business seems to be booming here. You suppose that the ever looming threat of dark forces incomprehensible to mortal souls reigning down upon existence will do that for a pub...\n\nJust a hunch though.",
       "description2": "",
       "actions": ["take", "go", "search", "speak"],
-      "items": ["feed"],
+      "items": [],
       "directions": {
         "west": "Center Courtyard"
       },
-      "characters": ["keep"]
+      "characters": ["images/barKeep.png"],
+      "jpeg": "images/tavern.jpg"
     }
   },
 
   {
     "Church": {
       "name": "Church",
-      "description": "You hear a cat >>MEOW<< from behind a pew, but don’t get startled. \nIt is a bit dark for an early afternoon visit, but you remember seeing clouds up above, possibly signaling some rain later that evening. \n\nHere you can speak to the pastor, say a prayer, light a candle, or go west to leave.",
+      "description": "The further north you go, the more dilapidated the town appears. There must be something in those woods. But what?...\n\nMaybe this priest knows something.",
       "description2": "",
       "actions": ["speak", "say", "light", "go", "search", "fight"],
-      "items": ["corn", "note"],
+      "items": ["images/candleBackUnlit.png", "images/candleBack.png"],
       "directions": {
         "west": "Northern Square"
       },
-      "characters": ["pastor"]
+      "characters": ["images/priestBack.png"],
+      "jpeg": "images/The-Black-Church.jpg"
     }
   },
 
   {
     "Well": {
       "name": "Well",
-      "description": "The air is remarkably colder here. You’ve been avoiding this area due to the shrieks at night.  \nIt is a rough stone circle with a seemingly bottomless pit in the center. The sky seems to have become dim. \nTo the North the tall trees block out the light and there is only the sound of creaking wood and the rustle of leaves. \nA discarded bucket and rope lay in the yellow grass. \n\nSearch the area, use the well, or go back south to your troubled village.",
+      "description": "The air is remarkably colder here. There's been shrieks at night here. The sky seems to have become dim.\n\nTo the North the tall trees block out the light and there is only the sound of creaking wood and the rustle of leaves.\nThe well is a rough stone circle with a seemingly bottomless pit in the center. Search it?",
       "description2": "",
       "actions": ["search", "use", "go", "speak"],
-      "items": [],
+      "items": ["images/wellBack.png"],
       "directions": {
         "north": "Woods",
         "south": "Northern Square"
       },
-      "characters": []
+      "characters": [],
+      "jpeg": "images/well.jpg"
     }
   },
 
   {
     "Woods": {
       "name": "Woods",
-      "description": "There is hardly any light in this place, only the pale-yellow glow of the moon. \nSnickers can be heard as the wind blows hard. You make out a familiar black cat in a clearing ahead...  \n\nAs you approach, black smoke consumes the cat, transforms, and rises into a large dark beast, eyes burning red. \nI have been watching you, but you can’t stop me now, he roars! \nThe beast raises his arms and a flaming vortex bursts from the ground as he murmurs an incantation. \n\nYou can fight with something from your inventory or you can go back south to the well.",
-      "description2": "You see an unassuming black cat.\n This must be the cat the villagers were talking about.\n Looks like a normal cat...although, you do feel a chill course through your veins as it peers at you as if piercing your soul...\n Silly superstitious villagers...",
+      "description": "'I've been watching you.'\n'I know who you are and why you've come.'\n'But you can’t stop me now!...\n\n...wait, is that the Water Stone of the Void!? I must act quickly.'\nThe beast begins to murmur an incantation.\nDo something!",
+      "description2": "This must be the cat the villagers were talking about.\nLooks like a normal cat...although, you do feel a chill course through your veins as it peers at you as if piercing your soul...\nKill it with fire?",
       "actions": ["fight", "go", "search", "speak"],
       "items": [],
       "directions": {
         "south": "Well"
       },
-      "characters": ["cat", "demon"]
+      "characters": ["images/catBack.png", "images/catDemon.png"],
+      "jpeg": "images/woods.jpg"
     }
   }
 ]
