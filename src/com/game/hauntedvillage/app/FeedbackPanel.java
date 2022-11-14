@@ -12,29 +12,31 @@ class FeedbackPanel {
         Controller controllerInstance = Controller.getInstance();
         String feedbackTitleString = "";
         JTextArea feedbackWrap = new JTextArea();
-        feedbackWrap.setFont(new Font("Chiller", Font.PLAIN, 20));
-        feedbackWrap.setForeground(Color.RED);
+        feedbackWrap.setFont(new Font("SANS_SERIF", Font.ITALIC, 14));
+        feedbackWrap.setForeground(Color.GRAY);
         feedbackWrap.setBackground(Color.black);
         feedbackWrap.setLineWrap(true);
         feedbackWrap.setWrapStyleWord(true);
         if(controllerInstance.getPlayerUpdate().size() > 0) {
-            if (Math.random() < .2) {
-                feedbackTitleString = "The wind seems to mutter...";
-            }
-            else if (Math.random() < .4) {
-                feedbackTitleString = "A distant, aching moan groans...";
-            }
-            else if (Math.random() <.6){
-                feedbackTitleString = "A strange deep voice in your head says...";
-            }
-            else if (Math.random() <.8) {
-                feedbackTitleString = "Behind you, a faint whisper says...";
-            }
-            else {
-                feedbackTitleString = "Something is wrong...";
+            String convert = controllerInstance.getPlayerUpdate().toString();
+            if(convert.contains("Can not")) {
+                if (Math.random() < .2) {
+                    feedbackTitleString = "The wind seems to mutter...";
+                }
+                else if (Math.random() < .4) {
+                    feedbackTitleString = "A distant, aching moan groans...";
+                }
+                else if (Math.random() <.6){
+                    feedbackTitleString = "A strange deep voice in your head says...";
+                }
+                else if (Math.random() <.8) {
+                    feedbackTitleString = "Behind you, a faint whisper says...";
+                }
+                else {
+                    feedbackTitleString = "Something is wrong...";
+                }
             }
 
-            String convert = controllerInstance.getPlayerUpdate().toString();
             if(convert.contains("You used the matches to light the candle.\nThe illumination reveals a triangular amulet, this may come in handy.")) {
                 gameFrameInstance.setUnlit(false);
             }
@@ -48,7 +50,7 @@ class FeedbackPanel {
 
         String textFeedbackTitleString = feedbackTitleString;
         JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
-        feedbackTitle.setForeground(Color.GRAY);
+        feedbackTitle.setForeground(Color.GREEN);
         feedbackTitle.setFont(new Font("Chiller", Font.ITALIC, 24));
         feedbackTitle.setHorizontalAlignment(SwingConstants.CENTER);
 

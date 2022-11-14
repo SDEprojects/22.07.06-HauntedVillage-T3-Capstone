@@ -38,7 +38,7 @@ class RoomDesPanel {
         gameText.setEditable(false);
         gameText.setLineWrap(true);
         gameText.setWrapStyleWord(true);
-        gameText.setFont(new Font("Chiller", Font.PLAIN, 24));
+        gameText.setFont(new Font("SANS_SERIF", Font.ITALIC, 16));
 
         if(controllerInstance.getPlayerUpdate().size() > 0) {
             gameText.setText(getOldLocation());
