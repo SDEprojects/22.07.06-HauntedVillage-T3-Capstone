@@ -6,9 +6,9 @@
     "name": "children",
     "location": "Northern Square",
     "conversations": [
-      "You attempt to speak to the children, but they are too caught up in their game of tag. \nYou hear one of the children teases, “If you get caught you will go missing too!”",
-      "I've never seen that cat before",
-      "My papa told me that the pastor won't come outside"
+      "They're chanting and dancing 'Ring Around the Posies'.\n\nThey stop when they see you and you can make out a whisper, 'Shh, don't tell the grown ups anything. It'll upset *inaudible*'",
+      "The cat is my new friend, but it doesn't like grown ups like you.",
+      "We must find a way to remove the pastor from their sanctuary."
     ],
     "actions": []
   }
@@ -19,9 +19,11 @@
       "name": "villagers",
       "location": "Center Courtyard",
       "conversations": [
-        "The villagers tell you that another child went missing last night and that sightings \nof monsters have been becoming more frequent over the last week near the woods.",
-        "I wouldn't go to the Farm, if I were you. \nThere's been strange happenings at night.",
-        "No one can be trusted these days. I saw my servant whispering spells"
+        "The villagers tell you that sightings of monsters have been becoming more frequent over the last week near the woods.",
+        "I wouldn't go to the Farm, if I were you.\n\nThere's been strange happenings at night.",
+        "No one can be trusted these days.\n\nI saw my servant whispering spells",
+        "Who are you?\n\nHave you always lived here?",
+        "When did you move here?\n\nI've never seen you before."
       ],
       "actions": []
     }
@@ -32,7 +34,9 @@
     {
       "name": "werewolf",
       "location": "Farm",
-      "conversations": ["grrrrrrrrr"],
+      "conversations": ["*Howling* Oooooooooooooooowhoo!!",
+        "*Deep, guttural growling* Hrrrrrrwrrrwrrr!!"
+      ],
       "actions": []
     }
   },
@@ -42,7 +46,9 @@
     {
       "name": "farmer",
       "location": "Farm",
-      "conversations": ["OMG a werewolf!"],
+      "conversations": ["Have you seen my son?\n\nWait... do I know you?...\n\nWhatever, just get outta here, I'll take care of this.",
+        "Where did you come from? Who are you?"
+      ],
       "actions": []
     }
   },
@@ -52,17 +58,22 @@
     {
       "name": "clerk",
       "location": "Town hall",
-      "conversations": ["Where did that cat come from? Have you seen it?", "The pastor sure has been acting strange lately."],
+      "conversations": ["Where did that cat come from?\n\nHave you seen it?",
+        "Who are you?\n\nI've never seen you before."
+      ],
       "actions": []
     }
   },
 
   {
-    "keep":
+    "images/barKeep.png":
     {
       "name": "keep",
       "location": "Tavern",
-      "conversations": ["Pick your poison!", "Strange things be happening' around here lately..."],
+      "conversations": ["Pick your poison!",
+        "Strange things be happenin' around here lately...\n\nLike you...\n\nWho're you?",
+        "Folks passin' through here from the North report members of their group goin' missin'.\n\nThey hear their screams at night but never see them again."
+      ],
       "actions": []
     }
   },
@@ -72,7 +83,9 @@
     {
       "name": "pastor",
       "location": "Church",
-      "conversations": ["Only those chosen by God can hope to light this candle and reveal the blessing... #MatchBox20"],
+      "conversations": ["I don't know who you are...\n\nCould you be the one we've been promised?\n\nI am the protector of this candle and only the chosen few can release the power contained.",
+        "I have been taking sanctuary in this Church.\n\nAre you here to help?"
+      ],
       "actions": []
     }
   },
@@ -82,17 +95,17 @@
     {
       "name": "cat",
       "location": "Woods",
-      "conversations": ["meow"],
+      "conversations": ["I'm just a normal cat...\n\nOh wait... cat's aren't supposed to talk in this dimension... \n\nummm.. meow?..."],
       "actions": []
     }
   },
 
   {
-    "images/catDemon.jpg":
+    "images/catDemon.png":
     {
       "name": "demon",
       "location": "Woods",
-      "conversations": ["Time to feast!"],
+      "conversations": ["I have been feasting on the souls of these villagers!\n\nI've become too powerful for even you to stop me!"],
       "actions": []
     }
   }

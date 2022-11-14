@@ -65,6 +65,9 @@ class NpcImage {
                 else if(location.equals("Town hall")) {
                     npc1Label.setBounds(500, 400, 280, 150);
                 }
+                else if(location.equals("Tavern")) {
+                    npc1Label.setBounds(400, 180, 280, 350);
+                }
 
                 npc1Label.setIcon(npc1Icon);
                 npc1Label.addMouseListener(new MouseListener() {
@@ -112,7 +115,7 @@ class NpcImage {
                 dropMenu[2].addActionListener(e -> {
                     try {
                         controllerInstance.userPrompt(String.format("%s %s", fight, showNPCs.get("1")));
-                        if(showNPCs.get("1").equals("images/catDemon.jpg")) {
+                        if(showNPCs.get("1").equals("images/catDemon.png")) {
                             gameFrameInstance.quitGame("win");
                         }
                         else {

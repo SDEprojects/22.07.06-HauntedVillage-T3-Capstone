@@ -207,7 +207,8 @@ public class GameFrame extends JFrame {
         }
         else if(endType.equals("win")) {
             endGameScreen( "images/demonDeath.png");
-            end.setText("You killed the demon!");
+
+            end.setText("It's trapped in The Void...");
             end.setForeground(new Color(0x8A0303));  // text color
             end.setOpaque(true); // display background color
             end.setFont(new Font("Chiller", Font.PLAIN, 110));

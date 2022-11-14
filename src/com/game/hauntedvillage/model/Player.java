@@ -210,7 +210,7 @@ public class Player implements Serializable {
         if ("fight".equals(verbNoun.get(0))) {
             String target = verbNoun.get(1);
             if(getInventory().contains("images/knife.jpg") || getInventory().contains("images/blueStoneBack.png")) {
-                if ("Woods".equals(getLocation()) && target.equals("images/catDemon.jpg")){
+                if ("Woods".equals(getLocation()) && target.equals("images/catDemon.png")){
                     if (getInventory().contains("images/blueStoneBack.png")){
                         addNpcInventory(target);
                         printThis = finalBattle();
@@ -222,7 +222,7 @@ public class Player implements Serializable {
                 }
                 else {
                     addNpcInventory(target);
-                    printThis.add("You killed them.\nHeaven have mercy on their soul.");
+                    printThis.add("You killed them with the KNIFE.\nHeaven have mercy on their soul.");
                 }
             }
             else {
@@ -476,7 +476,7 @@ public class Player implements Serializable {
             }
         }
         if("Woods".equals(getLocation()) && !getInventory().contains("images/blueStoneBack.png")) {
-            int demonIndex = npcList.indexOf("images/catDemon.jpg");
+            int demonIndex = npcList.indexOf("images/catDemon.png");
             if(demonIndex != -1) {
                 npcList.remove(demonIndex);
             }
