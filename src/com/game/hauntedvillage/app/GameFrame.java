@@ -59,7 +59,7 @@ public class GameFrame extends JFrame {
         label.setForeground(new Color(0x8A0303));  // text color
         label.setBackground(Color.black); // set background color
         label.setOpaque(true); // display background color
-        label.setFont(new Font("Chiller", Font.PLAIN, 110));
+        label.setFont(new Font("Courier", Font.PLAIN, 110));
 
         label.setIcon(image);
         label.setHorizontalTextPosition(JLabel.CENTER);
@@ -71,12 +71,12 @@ public class GameFrame extends JFrame {
         boardGame.setLayout(new GridLayout(1, 2));
         boardGame.setBackground(Color.black);
         boardGame.setBounds(350, 650, 300, 45);
-        setFont(new Font("Chiller", Font.ITALIC, 40));
+        setFont(new Font("Courier", Font.ITALIC, 40));
 
         // BOARD START BUTTON
         JButton playButton = new JButton("START GAME");
         boardGame.add(playButton);
-        playButton.setFont(new Font("Chiller", Font.ITALIC, 20));
+        playButton.setFont(new Font("Courier", Font.ITALIC, 20));
         playButton.setForeground(Color.BLACK);
         playButton.setOpaque(true);
         playButton.setBackground(Color.DARK_GRAY);
@@ -101,7 +101,7 @@ public class GameFrame extends JFrame {
         playButton.setFocusPainted(false);
 
         JButton endButton = new JButton("Quit");
-        endButton.setFont(new Font("Chiller", Font.ITALIC, 30));
+        endButton.setFont(new Font("Courier", Font.ITALIC, 20));
         endButton.setForeground(Color.BLACK);
         endButton.setOpaque(true);
         endButton.setBackground(Color.DARK_GRAY);
@@ -211,7 +211,7 @@ public class GameFrame extends JFrame {
             end.setText("It's trapped in The Void...");
             end.setForeground(new Color(0x8A0303));  // text color
             end.setOpaque(true); // display background color
-            end.setFont(new Font("Chiller", Font.PLAIN, 110));
+            end.setFont(new Font("Courier", Font.PLAIN, 80));
             end.setHorizontalTextPosition(JLabel.CENTER);
             end.setVerticalTextPosition(JLabel.CENTER);
             end.setVerticalAlignment(JLabel.CENTER);

@@ -18,12 +18,12 @@ class MapPanel {
         panelMap.setBounds(680, 50, 300, 300);
         JLabel labelMap = new JLabel("Map");
         labelMap.setForeground(Color.GREEN);
-        labelMap.setFont(new Font("Chiller", Font.PLAIN, 24));
+        labelMap.setFont(new Font("Courier", Font.PLAIN, 24));
         panelMap.add(labelMap);
         JList mapContent = new JList(controllerInstance.gameMap().toArray());
         mapContent.setForeground(Color.RED);
         mapContent.setBackground(Color.black);
-        mapContent.setFont(new Font("Chiller", Font.PLAIN, 14));
+        mapContent.setFont(new Font("Courier", Font.PLAIN, 9));
         panelMap.add(mapContent);
 
         return panelMap;

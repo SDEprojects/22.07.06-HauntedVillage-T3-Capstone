@@ -23,7 +23,7 @@ class InventoryPanel {
         String inventoryTitleString = "Inventory";
         JLabel labelInventoryTitle = new JLabel(inventoryTitleString);
         labelInventoryTitle.setForeground(Color.GREEN);
-        labelInventoryTitle.setFont(new Font("Chiller", Font.PLAIN, 24));
+        labelInventoryTitle.setFont(new Font("Courier", Font.PLAIN, 24));
         labelInventoryTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         if(controllerInstance.gameInventory().size() > 0 && controllerInstance.gameInventory().get(0) != null) {

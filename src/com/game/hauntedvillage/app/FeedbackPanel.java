@@ -51,7 +51,7 @@ class FeedbackPanel {
         String textFeedbackTitleString = feedbackTitleString;
         JLabel feedbackTitle = new JLabel(textFeedbackTitleString);
         feedbackTitle.setForeground(Color.GREEN);
-        feedbackTitle.setFont(new Font("Chiller", Font.ITALIC, 24));
+        feedbackTitle.setFont(new Font("Courier", Font.ITALIC, 14));
         feedbackTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         // FEEDBACK

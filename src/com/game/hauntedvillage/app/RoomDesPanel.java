@@ -22,7 +22,7 @@ class RoomDesPanel {
         String roomTitleString = controllerInstance.playerLocation();
         JLabel roomTitle = new JLabel(roomTitleString);
         roomTitle.setForeground(Color.GREEN);
-        roomTitle.setFont(new Font("Chiller", Font.PLAIN, 20));
+        roomTitle.setFont(new Font("Courier", Font.PLAIN, 20));
         roomTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         String roomDescription = "This room is empty and dark";
