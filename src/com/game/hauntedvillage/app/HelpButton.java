@@ -19,7 +19,7 @@ class HelpButton {
         //button.setIcon(icon);// adds pic to button
         helpButton.setHorizontalTextPosition(JButton.RIGHT);
         helpButton.setVerticalTextPosition(JButton.CENTER);
-        helpButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        helpButton.setFont(new Font("Courier", Font.ITALIC, 40));
 //        settingsButton.setIconTextGap(5);
         helpButton.setForeground(Color.red);  //(new Color(0x8A0303));
         helpButton.setBackground(Color.DARK_GRAY);
@@ -34,7 +34,7 @@ class HelpButton {
                 JFrame frame = new JFrame("Help");
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setBounds(300,300,400,250);
-                //frame.setFont(new Font("Chiller", Font.PLAIN, 24));
+
                 frame.setVisible(true);
                 //ICON
                 frame.setIconImage(icon.getImage()); // change icon in upper left
@@ -43,7 +43,7 @@ class HelpButton {
                 JPanel panelPopUpSettings = new JPanel();
                 panelPopUpSettings.setBackground(Color.BLACK);
                 panelPopUpSettings.setForeground(Color.GREEN);
-                panelPopUpSettings.setFont(new Font("Chiller", Font.PLAIN, 18));
+                panelPopUpSettings.setFont(new Font("Courier", Font.PLAIN, 18));
 
                 // ADD text
                 String helpTitle = "                   Help with Point and Click";

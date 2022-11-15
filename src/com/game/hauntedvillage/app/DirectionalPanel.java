@@ -52,7 +52,7 @@ class DirectionalPanel {
         northButton.setText("N");
         northButton.setHorizontalTextPosition(JButton.CENTER);
         northButton.setVerticalTextPosition(JButton.CENTER);
-        northButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        northButton.setFont(new Font("Courier", Font.ITALIC, 30));
         northButton.setPreferredSize(new Dimension(40, 40));
         northButton.setSize(40, 40);
         northButton.setForeground(Color.red);  //(new Color(0x8A0303));
@@ -80,7 +80,7 @@ class DirectionalPanel {
         //button.setIcon(icon);// adds pic to button
         eastButton.setHorizontalTextPosition(JButton.CENTER);
         eastButton.setVerticalTextPosition(JButton.CENTER);
-        eastButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        eastButton.setFont(new Font("Courier", Font.ITALIC, 30));
         eastButton.setSize(40, 40);
         eastButton.setForeground(Color.red);  //(new Color(0x8A0303));
         eastButton.setBackground(Color.DARK_GRAY);
@@ -108,7 +108,7 @@ class DirectionalPanel {
         //button.setIcon(icon);// adds pic to button
         westButton.setHorizontalTextPosition(JButton.RIGHT);
         westButton.setVerticalTextPosition(JButton.CENTER);
-        westButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        westButton.setFont(new Font("Courier", Font.ITALIC, 30));
         westButton.setForeground(Color.red);  //(new Color(0x8A0303));
         westButton.setBackground(Color.DARK_GRAY);
         westButton.setBorder(BorderFactory.createEtchedBorder());
@@ -136,7 +136,7 @@ class DirectionalPanel {
         //button.setIcon(icon);// adds pic to button
         southButton.setHorizontalTextPosition(JButton.RIGHT);
         southButton.setVerticalTextPosition(JButton.CENTER);
-        southButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        southButton.setFont(new Font("Courier", Font.ITALIC, 30));
         southButton.setForeground(Color.red);  //(new Color(0x8A0303));
         southButton.setBackground(Color.DARK_GRAY);
         southButton.setBorder(BorderFactory.createEtchedBorder());
