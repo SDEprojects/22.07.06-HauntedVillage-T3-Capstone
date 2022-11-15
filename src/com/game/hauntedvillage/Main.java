@@ -9,7 +9,6 @@ class Main {
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
 
         GameFrame.getInstance().titleScreen();
-//        GameFrame gameFrame = new GameFrame();
-//        gameFrame.titleScreen();
+
     }
 }

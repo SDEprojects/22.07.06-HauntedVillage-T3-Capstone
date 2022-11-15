@@ -19,7 +19,7 @@ class QuitButton {
         //button.setIcon(icon);// adds pic to button
         quitButton.setHorizontalTextPosition(JButton.RIGHT);
         quitButton.setVerticalTextPosition(JButton.CENTER);
-        quitButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        quitButton.setFont(new Font("Courier", Font.ITALIC, 40));
 //        settingsButton.setIconTextGap(5);
         quitButton.setForeground(Color.red);  //(new Color(0x8A0303));
         quitButton.setBackground(Color.DARK_GRAY);

@@ -21,7 +21,7 @@ class SettingsButton {
         settingsButton.setText("Settings");
         settingsButton.setHorizontalTextPosition(JButton.RIGHT);
         settingsButton.setVerticalTextPosition(JButton.CENTER);
-        settingsButton.setFont(new Font("Chiller", Font.ITALIC, 40));
+        settingsButton.setFont(new Font("Courier", Font.ITALIC, 40));
         settingsButton.setForeground(Color.red);  //(new Color(0x8A0303));
         settingsButton.setBackground(Color.DARK_GRAY);
         settingsButton.setBorder(BorderFactory.createEtchedBorder());
@@ -39,7 +39,7 @@ class SettingsButton {
                 frame.setVisible(true);
                 frame.getContentPane().setBackground(Color.BLACK);
                 frame.setForeground(Color.GREEN);
-                frame.setFont(new Font("Chiller", Font.PLAIN, 18));
+                frame.setFont(new Font("Courier", Font.PLAIN, 18));
                 //ICON
                 frame.setIconImage(icon.getImage()); // change icon in upper left
                 // Section: The Panel
@@ -56,7 +56,7 @@ class SettingsButton {
                 bSFXOn.setHorizontalTextPosition(JButton.RIGHT);
                 bSFXOn.setVerticalTextPosition(JButton.CENTER);
                 bSFXOn.setPreferredSize(new Dimension(73, 40));
-                bSFXOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOn.setFont(new Font("Courier", Font.ITALIC, 40));
                 bSFXOn.setForeground(Color.red);  //(new Color(0x8A0303));
                 bSFXOn.setBackground(Color.DARK_GRAY);
                 bSFXOn.setBorder(BorderFactory.createEtchedBorder());
@@ -87,7 +87,7 @@ class SettingsButton {
                 bSFXOff.setHorizontalTextPosition(JButton.RIGHT);
                 bSFXOff.setVerticalTextPosition(JButton.CENTER);
                 bSFXOff.setPreferredSize(new Dimension(73, 40));
-                bSFXOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bSFXOff.setFont(new Font("Courier", Font.ITALIC, 40));
                 bSFXOff.setForeground(Color.red);  //(new Color(0x8A0303));
                 bSFXOff.setBackground(Color.DARK_GRAY);
                 bSFXOff.setBorder(BorderFactory.createEtchedBorder());
@@ -117,7 +117,7 @@ class SettingsButton {
                 bMusicOn.setHorizontalTextPosition(JButton.RIGHT);
                 bMusicOn.setVerticalTextPosition(JButton.CENTER);
                 bMusicOn.setPreferredSize(new Dimension(73, 40));
-                bMusicOn.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOn.setFont(new Font("Courier", Font.ITALIC, 40));
                 bMusicOn.setFocusable(false); // gets rid of box around button
                 bMusicOn.setForeground(Color.red);  //(new Color(0x8A0303));
                 bMusicOn.setBackground(Color.DARK_GRAY);
@@ -150,7 +150,7 @@ class SettingsButton {
                 bMusicOff.setHorizontalTextPosition(JButton.RIGHT);
                 bMusicOff.setVerticalTextPosition(JButton.CENTER);
                 bMusicOff.setPreferredSize(new Dimension(73, 40));
-                bMusicOff.setFont(new Font("Chiller", Font.ITALIC, 40));
+                bMusicOff.setFont(new Font("Courier", Font.ITALIC, 40));
                 bMusicOff.setFocusable(false); // gets rid of box around button
                 bMusicOff.setForeground(Color.red);  //(new Color(0x8A0303));
                 bMusicOff.setBackground(Color.DARK_GRAY);
