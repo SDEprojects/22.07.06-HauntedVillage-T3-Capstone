@@ -211,7 +211,7 @@ public class GameFrame extends JFrame {
             end.setText("It's trapped in The Void...");
             end.setForeground(new Color(0x8A0303));  // text color
             end.setOpaque(true); // display background color
-            end.setFont(new Font("Courier", Font.PLAIN, 80));
+            end.setFont(new Font("Courier", Font.PLAIN, 60));
             end.setHorizontalTextPosition(JLabel.CENTER);
             end.setVerticalTextPosition(JLabel.CENTER);
             end.setVerticalAlignment(JLabel.CENTER);
